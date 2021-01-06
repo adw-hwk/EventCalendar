@@ -47,7 +47,7 @@ header {
   position: relative;
   flex: 1;
   flex-basis: 55%;
-  clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 0% 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 81.82% 100%, 0% 100%);
   overflow: hidden; }
   .hero-article-wrapper img {
     position: absolute;
@@ -92,29 +92,50 @@ header {
   padding: 1rem 1.5rem 1rem 0.25rem; }
 
 .event-wrapper {
-  padding: 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto; }
+  padding: 0;
+  margin: 0; }
 
 .event {
   display: flex;
   width: 100%;
-  margin-bottom: 1.5rem;
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2); }
+  overflow: hidden; }
+  .event.minor {
+    background-color: #444; }
+    .event.minor .details {
+      padding: 2rem 0;
+      background-color: #888; }
+      .event.minor .details .text {
+        background-color: transparent;
+        color: white; }
+  .event.major {
+    background-color: #00569d; }
+    .event.major .details {
+      padding: 8rem 0; }
+  .event.seasonal {
+    background-color: #c24622; }
+    .event.seasonal .details {
+      padding: 4rem 0; }
+      .event.seasonal .details .text .title {
+        font-family: 'Vidaloka'; }
   .event .details {
-    flex: 3;
+    flex: 1;
+    flex-basis: 55%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 5rem;
-    position: relative; }
+    position: relative;
+    background-color: #fff; }
+    .event .details .text {
+      padding: 2rem;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 8px;
+      margin: 0 auto;
+      max-width: 650px; }
     .event .details img {
       position: absolute;
       top: 0;
       right: 0;
-      width: 120%;
+      width: 100%;
       height: 100%;
       object-fit: cover;
       z-index: -1; }
@@ -126,23 +147,13 @@ header {
       font-size: 2.2rem; }
     .event .details .venue {
       font-size: 1.6rem; }
-  .event.special .date table .day {
-    border-color: inherit; }
-  .event.special .details,
-  .event.special .date {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem; }
-  .event.special .date {
-    background-color: #eee;
-    color: #444; }
   .event .date {
     flex: 1;
-    padding: 6rem 1rem;
+    flex-basis: 45%;
     z-index: 1;
     position: relative;
     overflow: hidden;
     text-align: center;
-    background-color: salmon;
     color: white;
     text-transform: uppercase;
     font-family: 'Vidaloka';
@@ -155,7 +166,7 @@ header {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: -1; }
+      z-index: 2; }
     .event .date table {
       margin: auto;
       /* background-color: rgba(255, 255, 255, 0.8); */
@@ -168,7 +179,11 @@ header {
       .event .date table .day {
         border-top: 1px solid rgba(255, 255, 255, 0.5);
         font-size: 2rem; }
-  .event:nth-of-type(1n) .date {
-    clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 0% 100%); }
-  .event:nth-of-type(2n) .date {
-    clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); }
+  .event:nth-of-type(odd) .details {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 18.18% 100%);
+    padding-left: 10%; }
+  .event:nth-of-type(even) {
+    flex-direction: row-reverse; }
+    .event:nth-of-type(even) .details {
+      clip-path: polygon(0% 0%, 100% 0%, 81.82% 100%, 0% 100%);
+      padding-right: 10%; }
