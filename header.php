@@ -21,6 +21,11 @@
 
         <header>
 
-            <a href="#">February</a>
+            <a id="prev-month" class="month-navigation"><<</a>
+
+            <a class="month-text"><strong>2021</strong></a>
+
+            <a id="next-month" class="month-navigation">>></a>
+
 
         </header>

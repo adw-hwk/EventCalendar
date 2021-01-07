@@ -35,6 +35,23 @@ header {
     color: inherit;
     font-weight: 200;
     font-size: 1.6rem; }
+  header .month-navigation {
+    font-weight: bold; }
+    header .month-navigation:hover {
+      cursor: pointer; }
+  header .month-text {
+    transform: rotateY(0deg);
+    transition: transform 250ms ease-in-out;
+    display: inline-block;
+    width: 10rem;
+    text-align: center;
+    font-size: 1.8rem; }
+    header .month-text.spin {
+      transform: rotateY(90deg); }
+    header .month-text strong {
+      font-size: inherit;
+      letter-spacing: 2px;
+      font-size: 1.8rem; }
 
 .hero-wrapper {
   padding-top: 4rem;
@@ -42,54 +59,55 @@ header {
   height: 100vh;
   display: flex;
   background-color: #eee; }
-
-.hero-article-wrapper {
-  position: relative;
-  flex: 1;
-  flex-basis: 55%;
-  clip-path: polygon(0% 0%, 100% 0%, 81.82% 100%, 0% 100%);
-  overflow: hidden; }
-  .hero-article-wrapper img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    display: block;
-    z-index: -1; }
-  .hero-article-wrapper .hero-title {
-    margin: 1rem 1rem 0;
-    padding: 0.5rem 1rem;
-    padding-top: 1rem;
-    background: salmon;
-    color: white;
-    z-index: 2;
-    display: inline-block;
-    font-size: 3rem;
-    font-weight: 200;
-    border-radius: 5px;
-    opacity: 0.85; }
-  .hero-article-wrapper .date {
-    margin: 1rem 1rem 0;
-    padding: 0.5rem 1rem;
-    padding-top: 1rem;
-    background: white;
-    z-index: 2;
-    display: inline-block;
-    font-weight: 700;
-    border-radius: 5px;
-    opacity: 0.85; }
-
-.hero-text-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  flex-basis: 45%;
-  font-family: 'Vidaloka';
-  font-size: 2.4rem;
-  padding: 1rem 1.5rem 1rem 0.25rem; }
+  .hero-wrapper .hero-swiper-container {
+    flex: 1;
+    flex-basis: 55%;
+    clip-path: polygon(0% 0%, 100% 0%, 81.82% 100%, 0% 100%);
+    overflow: hidden; }
+    .hero-wrapper .hero-swiper-container .hero-article-wrapper article {
+      position: relative;
+      width: 100%;
+      height: 100%; }
+      .hero-wrapper .hero-swiper-container .hero-article-wrapper article img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: -1; }
+      .hero-wrapper .hero-swiper-container .hero-article-wrapper article .hero-title {
+        margin: 1rem 1rem 0;
+        padding: 0.5rem 1rem;
+        padding-top: 1rem;
+        background: salmon;
+        color: white;
+        z-index: 2;
+        display: inline-block;
+        font-size: 3rem;
+        font-weight: 200;
+        border-radius: 5px;
+        opacity: 0.85; }
+      .hero-wrapper .hero-swiper-container .hero-article-wrapper article .date {
+        margin: 1rem 1rem 0;
+        padding: 0.5rem 1rem;
+        padding-top: 1rem;
+        background: white;
+        z-index: 2;
+        display: inline-block;
+        font-weight: 700;
+        border-radius: 5px;
+        opacity: 0.85; }
+  .hero-wrapper .hero-text-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    flex-basis: 45%;
+    font-family: 'Vidaloka';
+    font-size: 2.4rem;
+    padding: 1rem 1.5rem 1rem 0.25rem; }
 
 .event-wrapper {
   padding: 0;
