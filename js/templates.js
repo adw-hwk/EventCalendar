@@ -16,8 +16,39 @@ const months = [
 const __DOM_templates = {
 
 
-        hero: () => {
+        hero: (featured, month = "2021") => {
 
+                const articlesHTML = [];
+
+                const heroText = `<h1>What will you be doing in ${month}?`;
+
+                featured.forEach((article) => {
+
+                            finishDate = parseInt(article.end_date_details.day) > parseInt(article.start_date_details.day) ? {
+                                day: article.end_date_details.day,
+                                month: months[parseInt(article.end_date_details.month) - 1]
+                            } : null;
+
+                            startDate = {
+                                day: article.start_date_details.day,
+                                month: months[parseInt(article.start_date_details.month) - 1]
+                            };
+                            const HTML = `
+                    <article class="swiper-slide">
+
+                        <img src="${article.image.url}" alt="Event Image">
+            
+                        <div class="hero-title">${article.title}</div><br>
+            
+                        <div class="date">${finishDate == null ? `${startDate.day} ${startDate.month}` : `${startDate.day} ${startDate.month} - ${finishDate.day} ${finishDate.month}`}</div>
+    
+                    </article>
+                `
+
+                articlesHTML.push(HTML);
+            })
+
+            return { articlesHTML, heroText }
         },
 
         event: (e) => {
@@ -63,8 +94,6 @@ const __DOM_templates = {
 
                 };
 
-
-
                 return `
             <div class="event ${vals.type}">
 
@@ -72,7 +101,7 @@ const __DOM_templates = {
                     <table>
                         <tbody>
                             <tr>
-                                <td class="ddmm">${vals.finishDate == null ? `${vals.startDate.day} ${vals.startDate.month}` : `${vals.startDate.day} ${vals.startDate.month} - ${vals.finishDate.day} ${vals.finishDate.month}`}</td>
+                                <td class="ddmm">${vals.finishDate == null ? `${vals.startDate.day} ${vals.startDate.month.slice(0,3)}` : `${vals.startDate.day} ${vals.startDate.month.slice(0,3)} - ${vals.finishDate.day} ${vals.finishDate.month.slice(0,3)}`}</td>
                             </tr>
                             <tr>
                                 <td class="day">${vals.finishDate == null ? `${vals.startDate.dayOfWeek}` : `${vals.startDate.dayOfWeek} - ${vals.finishDate.dayOfWeek}`}</td>
