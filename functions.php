@@ -36,4 +36,15 @@ function allow_post_thumbnails() {
 }
 add_action( 'after_setup_theme', 'allow_post_thumbnails' );
 
+
+function remove_menus(){  
+
+  remove_menu_page( 'edit.php' );                   //Posts  
+  remove_menu_page( 'edit.php?post_type=page' );    //Pages  
+  remove_menu_page( 'edit-comments.php' );          //Comments  
+
+}  
+add_action( 'admin_menu', 'remove_menus' );  
+
+
 ?>

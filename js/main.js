@@ -26,6 +26,8 @@ const dataController = (() => {
 
             console.log(`Fetch took ${(timeEnd - timeStart)}ms.`);
 
+            console.log(events.next_rest_url);
+
             return events;
 
         },
@@ -92,7 +94,14 @@ const UIController = (() => {
         prevMonthBtn: document.querySelector('#prev-month'),
         nextMonthBtn: document.querySelector('#next-month'),
 
-        monthText: document.querySelector('header .month-text')
+        monthText: document.querySelector('header .month-text'),
+        monthArrowString: '.month-text i',
+        monthMenu: document.querySelector('.months-dropdown-menu'),
+        menuElements: [document.querySelector('header .month-text'), document.querySelector('.month-text strong'), document.querySelector('.month-text i')],
+
+        loader: document.querySelector('#page-loader'),
+
+        content: document.querySelector('.page-content')
     }
 
     const templates = __DOM_templates;
@@ -127,9 +136,11 @@ const UIController = (() => {
             const swiper = new Swiper(container, {
                 effect: 'fade',
                 autoplay: {
-                    delay: 2500,
+                    delay: 2000,
+                    disableOnInteraction: false
                 },
-                speed: 1000
+                speed: 700,
+                parallax: true
             });
 
             return swiper;
@@ -149,31 +160,67 @@ const UIController = (() => {
 
         },
 
-        updateMonthText: (state, delay) => {
+        updateMonthText: (state, delay = 200) => {
             DOM.monthText.style.transition = `transform ${delay}ms ease-in-out`
             DOM.monthText.classList.add('spin');
 
             setTimeout(() => {
-                DOM.monthText.innerHTML = state.currentMonth == 0 ? `<strong>2021</strong>` : `${months[state.currentMonth].slice(0,3).toUpperCase()}`;
+                DOM.monthText.innerHTML = state.currentMonth == 0 ? `<strong>2021</strong> | Jan  <i class="fas fa-angle-down"></i>` : `${months[state.currentMonth]}  <i class="fas fa-angle-down"></i>`;
                 DOM.monthText.classList.remove('spin');
             }, delay);
         },
 
         toggleNavArrows: (state) => {
 
-            console.log(state.currentMonth);
-
             if (state.currentMonth == 0) {
-                DOM.nextMonthBtn.style.visibility = "visible";
-                DOM.prevMonthBtn.style.visibility = "hidden";
+                DOM.nextMonthBtn.style.opacity = "1";
+                DOM.prevMonthBtn.style.opacity = "0";
             } else if (state.currentMonth == 11) {
-                DOM.nextMonthBtn.style.visibility = "hidden";
-                DOM.prevMonthBtn.style.visibility = "visible";
+                DOM.nextMonthBtn.style.opacity = "0";
+                DOM.prevMonthBtn.style.opacity = "1";
             } else {
-                DOM.nextMonthBtn.style.visibility = "visible";
-                DOM.prevMonthBtn.style.visibility = "visible";
+                DOM.nextMonthBtn.style.opacity = "1";
+                DOM.prevMonthBtn.style.opacity = "1";
             }
+        },
+
+        showLoader: () => {
+            DOM.loader.style.transition = "none";
+            DOM.loader.style.opacity = "1";
+            DOM.loader.style.display = "flex";
+        },
+
+        hideLoader: (fadeDelay = 250) => {
+            DOM.loader.style.transition = `opacity ${fadeDelay}ms linear`
+            DOM.loader.style.opacity = "0";
+            setTimeout(() => {
+                DOM.loader.style.display = "none";
+            }, fadeDelay);
+
+        },
+
+        //delay set to 400ms in CSS
+        showDropdownMenu: () => {
+            DOM.monthMenu.style.display = "grid";
+            setTimeout(() => {
+                DOM.monthMenu.classList.add('open');
+                document.querySelector(DOM.monthArrowString).classList.add('open');
+                DOM.content.classList.add('menu-open');
+            }, 25)
+
+        },
+
+        //delay set to 400ms in CSS
+        hideDropdownMenu: () => {
+            DOM.monthMenu.classList.remove('open');
+            document.querySelector(DOM.monthArrowString).classList.remove('open');
+            DOM.content.classList.remove('menu-open');
+            setTimeout(() => {
+                DOM.monthMenu.style.display = "none";
+            }, 400)
         }
+
+
     }
 
 })();
@@ -188,35 +235,47 @@ const controller = ((dataCtrl, UICtrl) => {
 
         if (state.currentMonth !== state.displayedMonth) {
 
+            if (!state.monthsVisited.includes(state.currentMonth)) {
+                UICtrl.showLoader();
+            }
+
             if (state.currentMonth == 0) {
                 UICtrl.homepage(dataCtrl.getAllFeatured(state.events));
-                dataCtrl.state.displayedMonth = 0;
-                dataCtrl.state.swiper.update();
-                UICtrl.updateMonthText(state, 250);
+                state.displayedMonth = 0;
+                state.swiper.update();
+                UICtrl.updateMonthText(state);
                 UICtrl.toggleNavArrows(state);
 
                 return;
             }
 
             const month = months[state.currentMonth];
-
             const monthEvents = state.events[month];
-
             const monthFeatured = dataCtrl.getMonthFeatured(monthEvents);
-
             const heroHTML = templates.hero(monthFeatured, month);
 
             UICtrl.writeHero(heroHTML.articlesHTML, heroHTML.heroText);
 
+            if (!state.monthsVisited.includes(state.currentMonth)) {
+
+                if (UICtrl.DOM.heroSwiperContainer.querySelector('img')) {
+                    UICtrl.DOM.heroSwiperContainer.querySelector('img').addEventListener('load', () => {
+                        UICtrl.hideLoader();
+                    });
+                } else {
+                    UICtrl.hideLoader();
+                }
+                state.monthsVisited.push(state.currentMonth);
+            }
+
             UICtrl.writeEvents(monthEvents);
-
-            dataCtrl.state.swiper.update();
-
-            UICtrl.updateMonthText(state, 250);
-
+            state.swiper.update();
+            UICtrl.updateMonthText(state);
             UICtrl.toggleNavArrows(state);
-
             state.displayedMonth = state.currentMonth;
+            dataCtrl.state.swiper.destroy();
+            UICtrl.initHeroSwiper(UICtrl.DOM.heroSwiperContainer);
+
         }
 
     }
@@ -227,7 +286,6 @@ const controller = ((dataCtrl, UICtrl) => {
             if (dataCtrl.state.currentMonth > 0) {
                 dataCtrl.state.currentMonth--;
                 updatePage(dataCtrl.state)
-                console.log(dataCtrl.state)
             }
         });
         UICtrl.DOM.nextMonthBtn.addEventListener('click', () => {
@@ -235,17 +293,66 @@ const controller = ((dataCtrl, UICtrl) => {
             if (dataCtrl.state.currentMonth < 11) {
                 dataCtrl.state.currentMonth++;
                 updatePage(dataCtrl.state)
-                console.log(dataCtrl.state)
+            }
+        });
+        UICtrl.DOM.monthText.addEventListener('click', () => {
+
+            if (UICtrl.DOM.monthMenu.classList.contains('open')) {
+                UICtrl.hideDropdownMenu();
+            } else {
+                UICtrl.showDropdownMenu();
+            }
+
+        });
+
+        window.addEventListener('click', (e) => {
+
+            if (UICtrl.DOM.monthMenu.classList.contains('open') && e.target.closest('a') !== UICtrl.DOM.monthText) {
+                UICtrl.hideDropdownMenu();
+            }
+        });
+
+        const monthMenuArr = Array.prototype.slice.call(document.querySelectorAll('.months-dropdown-menu .month'));
+
+
+        UICtrl.DOM.monthMenu.addEventListener('click', (e) => {
+
+            if (monthMenuArr.includes(e.target.closest('div.month'))) {
+                dataCtrl.state.currentMonth = monthMenuArr.indexOf(e.target.closest('div.month'));
+
+
+
+                console.log(dataCtrl.state.currentMonth);
+
+                if (dataCtrl.state.currentMonth == 0) {
+                    UICtrl.homepage(dataCtrl.getAllFeatured(dataCtrl.state.events));
+                    UICtrl.updateMonthText(dataCtrl.state);
+                    UICtrl.toggleNavArrows(dataCtrl.state);
+                    dataCtrl.state.displayedMonth = dataCtrl.state.currentMonth;
+                    dataCtrl.state.swiper.destroy();
+                    UICtrl.initHeroSwiper(UICtrl.DOM.heroSwiperContainer);
+                } else {
+                    updatePage(dataCtrl.state)
+                }
+
 
             }
+
+
         })
     }
 
     return {
         init: async() => {
 
+            UICtrl.showLoader();
+
             dataCtrl.state.currentMonth = 0;
             dataCtrl.state.displayedMonth = 0;
+
+            dataCtrl.state.monthsVisited = new Array();
+
+            dataCtrl.state.monthsVisited.push(dataCtrl.state.currentMonth);
 
             const events = await dataCtrl.fetchEvents();
 
@@ -257,11 +364,22 @@ const controller = ((dataCtrl, UICtrl) => {
 
             UICtrl.writeHero(heroHTML.articlesHTML, heroHTML.heroText);
 
+            // hide loader once first hero image loads
+            UICtrl.DOM.heroSwiperContainer.querySelector('img').addEventListener('load', () => {
+                UICtrl.hideLoader();
+            });
+
             dataCtrl.state.swiper = UICtrl.initHeroSwiper(UICtrl.DOM.heroSwiperContainer);
 
             setupEventListeners();
 
             UICtrl.toggleNavArrows(dataCtrl.state);
+
+            // UICtrl.DOM.heroSwiperContainer.addEventListener('load', () => {
+            //     UICtrl.hideLoader();
+            // });
+            // UICtrl.hideLoader();
+
 
         }
     }

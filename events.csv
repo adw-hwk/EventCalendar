@@ -1,0 +1,197 @@
+title,start_date,start_time,end_date,end_time,all_day,venue,city,state,description,category,tags,featured
+Chinese New Year,2021-02-12,,2021-02-12,,true,,,,,seasonal,,false
+Valentine's Day,2021-02-14,,2021-02-14,,true,,,,,seasonal,,false
+Labour Day (WA),2021-03-01,,2021-03-01,,true,,,,,seasonal,,false
+Labour Day(VIC),2021-03-08,,2021-03-08,,true,,,,,seasonal,,false
+St Patrick's Day,2021-03-17,,2021-03-17,,true,,,,,seasonal,,false
+Good Friday,2021-04-02,,2021-04-02,,true,,,,,seasonal,,false
+Daylight Saving Time Ends,2021-04-04,,2021-04-04,,true,,,,,seasonal,,false
+Easter Monday,2021-04-05,,2021-04-05,,true,,,,,seasonal,,false
+ANZAC DAY,2021-04-25,,2021-04-25,,true,,,,,seasonal,,false
+ANZAC Day Holiday,2021-04-26,,2021-04-26,,true,,,,,seasonal,,false
+May Day (NT),2021-05-03,,2021-05-03,,true,,,,,seasonal,,false
+Labour Day (QLD),2021-05-03,,2021-05-03,,true,,,,,seasonal,,false
+Mother's Day,2021-05-09,,2021-05-09,,true,,,,,seasonal,,false
+Queen's Birthday (NSW/VIC/SA/TAS/NT),2021-06-14,,2021-06-14,,true,,,,,seasonal,,false
+Father's Day,2021-09-05,,2021-09-05,,true,,,,,seasonal,,false
+AFL Grand Final Holiday (VIC),2021-09-24,,2021-09-24,,true,,,,,seasonal,,false
+Queen's Birthday (WA),2021-09-27,,2021-09-27,,true,,,,,seasonal,,false
+Daylight Saving Time Starts,2021-10-03,,2021-06-14,,true,,,,,seasonal,,false
+Queen's Birthday (QLD),2021-10-04,,2021-10-04,,true,,,,,seasonal,,false
+Labour Day (ACT/NSW/SA),2021-10-04,,2021-10-04,,true,,,,,seasonal,,false
+Melbourne Cup Day,2021-11-02,,2021-11-02,,true,,,,,seasonal,,false
+Rememberance Day,2021-11-11,,2021-11-11,,true,,,,,seasonal,,false
+Christmas Eve,2021-12-24,,2021-12-24,,true,,,,,seasonal,,false
+Christmas Day,2021-12-25,,2021-12-25,,true,,,,,seasonal,,false
+Boxing Day,2021-12-26,,2021-12-26,,true,,,,,seasonal,,false
+New Year's Eve,2021-12-31,,2021-12-31,,true,,,,,seasonal,,false
+Minor Event,2021-02-16,10:30:00,2021-02-16,16:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-03-13,10:30:00,2021-03-13,16:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-04-07,10:30:00,2021-04-07,16:00:00,false,Venue,City,STATE,,minor,,false
+Minor Event,2021-05-12,10:30:00,2021-05-12,16:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-06-23,10:30:00,2021-06-23,16:00:00,false,Venue,City,STATE,,minor,,false
+Minor Event,2021-07-09,10:30:00,2021-07-09,16:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-08-18,10:30:00,2021-08-18,16:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-09-17,10:30:00,2021-09-17,16:00:00,false,Venue,City,STATE,,minor,,false
+Minor Event,2021-10-01,10:30:00,2021-10-01,16:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-11-29,10:30:00,2021-11-29,16:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-12-10,10:30:00,2021-12-10,16:00:00,false,Venue,City,STATE,,minor,,false
+Minor Event,2021-02-06,18:30:00,2021-02-06,22:00:00,false,Venue,City,STATE,,minor,,false
+Minor Event,2021-03-26,18:30:00,2021-03-26,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-04-17,18:30:00,2021-04-17,22:00:00,false,Venue,City,STATE,,minor,,false
+Minor Event,2021-05-19,18:30:00,2021-05-19,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-06-03,18:30:00,2021-06-03,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-07-15,18:30:00,2021-07-15,22:00:00,false,Venue,City,STATE,,minor,,false
+Minor Event,2021-08-28,18:30:00,2021-08-28,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-09-12,18:30:00,2021-09-12,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-10-08,18:30:00,2021-10-08,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Minor Event,2021-11-22,18:30:00,2021-11-22,22:00:00,false,Venue,City,STATE,,minor,,false
+Minor Event,2021-12-17,18:30:00,2021-12-17,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",minor,,false
+Major Event,2021-02-09,18:30:00,2021-02-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-02-18,18:30:00,2021-02-18,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-02-27,18:30:00,2021-02-27,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-03-09,,2021-03-11,,true,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-03-18,18:30:00,2021-03-18,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-03-27,18:30:00,2021-03-27,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-04-09,18:30:00,2021-04-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-04-18,18:30:00,2021-04-18,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-04-27,18:30:00,2021-04-27,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-05-09,18:30:00,2021-05-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-05-18,,2021-05-23,,true,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-05-27,18:30:00,2021-05-27,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-06-09,18:30:00,2021-06-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-06-18,18:30:00,2021-06-18,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-06-27,18:30:00,2021-06-27,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-07-09,18:30:00,2021-07-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-07-18,,2021-07-20,,true,Venue,City,STATE,,,,true
+Major Event,2021-07-27,18:30:00,2021-07-27,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-08-09,18:30:00,2021-08-09,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-08-18,18:30:00,2021-08-18,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-08-27,18:30:00,2021-08-27,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-09-09,18:30:00,2021-09-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-09-18,18:30:00,2021-09-18,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-09-27,18:30:00,2021-09-27,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-10-09,18:30:00,2021-10-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-10-18,,2021-10-21,,true,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-10-27,18:30:00,2021-10-27,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-11-09,18:30:00,2021-11-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-11-18,18:30:00,2021-11-18,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-11-25,,2021-11-27,,true,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-12-09,18:30:00,2021-12-09,22:00:00,false,Venue,City,STATE,,,,true
+Major Event,2021-12-18,18:30:00,2021-12-18,22:00:00,false,Venue,City,STATE,"<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pellentesque, turpis ut ultricies consequat, nibh diam sodales justo, ac pulvinar lectus urna nec lacus. In hac habitasse platea dictumst. Maecenas sed risus libero. Nam facilisis risus aliquet magna volutpat, eu faucibus nunc porttitor. Nunc eget mattis orci, dapibus pulvinar neque. Aenean dictum dictum velit sit amet efficitur. Donec eget metus justo.
+</p>
+<p>
+Sed in erat vitae velit finibus ornare. Etiam malesuada lobortis risus in porta. In dapibus convallis lacus. Aenean hendrerit risus a massa blandit, quis interdum libero egestas. Vestibulum ultricies id tellus a tincidunt. Sed velit tortor, interdum non neque id, ultrices molestie arcu. Morbi auctor tristique metus ut efficitur. Ut condimentum nibh ligula, sit amet accumsan elit vulputate non. Integer a enim dolor.
+</p>",,,true
+Major Event,2021-12-27,18:30:00,2021-12-27,22:00:00,false,Venue,City,STATE,,,,true
