@@ -11,46 +11,67 @@ const dataController = (() => {
 
         fetchEvents: async() => {
 
+            let eventsArr;
+
             const timeStart = new Date().getTime();
 
-            const events = await fetch(siteURL + endpoint + query)
-                .then((response) => {
-                    return response.json();
+            await fetch(siteURL + endpoint + query)
+                .then(async(response) => {
+                    const initialReq = await response.json();
+
+                    eventsArr = initialReq.events;
+
+                    let nextURL = initialReq.next_rest_url;
+
+                    while (nextURL !== undefined) {
+                        await fetch(nextURL)
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((response) => {
+                                nextURL = response.next_rest_url;
+                                response.events.forEach((event) => {
+                                    eventsArr.push(event);
+                                })
+                            }).catch(() => {
+                                alert('Error fetching calendar, try refreshing the page.');
+                            })
+                    }
+
                 })
                 .catch(() => {
-                    alert('Error fetching calendar  :(');
+                    alert('Error fetching calendar, try refreshing the page.');
                 });
 
             const timeEnd = new Date().getTime();
 
-
             console.log(`Fetch took ${(timeEnd - timeStart)}ms.`);
 
-            console.log(events.next_rest_url);
+            console.log(`Events: ${eventsArr.length}`);
 
-            return events;
+            return eventsArr;
 
         },
 
         sortEvents: (allEvents) => {
 
-            let events = {};
+            let sortedEvents = {};
 
             months.forEach((month, index) => {
-                allEvents.events.forEach((e) => {
+                allEvents.forEach((e) => {
                     if (parseInt(e.start_date_details.month) == index + 1) {
 
                         // initialise month event array
-                        if (!events[month]) {
-                            events[month] = new Array();
+                        if (!sortedEvents[month]) {
+                            sortedEvents[month] = new Array();
                         }
 
-                        events[month].push(e);
+                        sortedEvents[month].push(e);
                     }
                 })
             });
 
-            return events;
+            return sortedEvents;
         },
 
         getAllFeatured: (events) => {
@@ -374,12 +395,6 @@ const controller = ((dataCtrl, UICtrl) => {
             setupEventListeners();
 
             UICtrl.toggleNavArrows(dataCtrl.state);
-
-            // UICtrl.DOM.heroSwiperContainer.addEventListener('load', () => {
-            //     UICtrl.hideLoader();
-            // });
-            // UICtrl.hideLoader();
-
 
         }
     }
