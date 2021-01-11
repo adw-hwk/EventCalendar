@@ -8,7 +8,7 @@ body {
   color: #444; }
 
 body {
-  overflow-y: scroll; }
+  overflow: hidden; }
 
 *,
 *::before,
@@ -35,99 +35,31 @@ body {
     color: #999;
     font-weight: bold; }
 
-.lds-grid {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px; }
-
-.lds-grid div {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #fff;
-  animation: lds-grid 1.2s linear infinite; }
-
-.lds-grid div:nth-child(1) {
-  top: 8px;
-  left: 8px;
-  animation-delay: 0s; }
-
-.lds-grid div:nth-child(2) {
-  top: 8px;
-  left: 32px;
-  animation-delay: -0.4s; }
-
-.lds-grid div:nth-child(3) {
-  top: 8px;
-  left: 56px;
-  animation-delay: -0.8s; }
-
-.lds-grid div:nth-child(4) {
-  top: 32px;
-  left: 8px;
-  animation-delay: -0.4s; }
-
-.lds-grid div:nth-child(5) {
-  top: 32px;
-  left: 32px;
-  animation-delay: -0.8s; }
-
-.lds-grid div:nth-child(6) {
-  top: 32px;
-  left: 56px;
-  animation-delay: -1.2s; }
-
-.lds-grid div:nth-child(7) {
-  top: 56px;
-  left: 8px;
-  animation-delay: -0.8s; }
-
-.lds-grid div:nth-child(8) {
-  top: 56px;
-  left: 32px;
-  animation-delay: -1.2s; }
-
-.lds-grid div:nth-child(9) {
-  top: 56px;
-  left: 56px;
-  animation-delay: -1.6s; }
-
-@keyframes lds-grid {
-  0%,
-  100% {
-    opacity: 1; }
-  50% {
-    opacity: 0.5; } }
-
-@keyframes arrow-bounce {
-  0% {
-    transform: translateY(0px); }
-  50% {
-    transform: translateY(8px); }
-  100% {
-    transform: translateY(0px); } }
-
 #page-wrapper {
   margin: 0;
   padding: 0;
-  position: relative; }
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #eee; }
+  #page-wrapper header {
+    flex: 0 0 auto; }
+  #page-wrapper .calendar-swiper {
+    flex: 1; }
 
 header {
   width: 100%;
-  height: 5rem;
   margin: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   z-index: 2000;
   background-color: #333;
-  color: white; }
+  color: white;
+  height: 5rem; }
   header a {
     text-decoration: none;
     color: inherit;
@@ -207,24 +139,35 @@ header {
         font-weight: 600;
         border: 1px solid rgba(220, 220, 220, 0.75); }
 
-.page-content {
-  background: #eee;
-  transition: filter 400ms ease-in-out, opacity 400ms ease-in-out; }
-  .page-content.menu-open {
-    filter: blur(10px);
-    opacity: 0.5; }
+.calendar-swiper {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; }
+  .calendar-swiper .swiper-wrapper {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; }
+    .calendar-swiper .swiper-wrapper .swiper-slide {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto; }
 
 .hero-wrapper {
   width: 100%;
-  height: 100vh;
-  display: flex;
-  background-color: #eee;
-  padding-top: 5rem; }
+  height: calc(100vh - 5rem);
+  display: flex; }
   .hero-wrapper .hero-swiper-container {
     flex: 1;
     flex-basis: 55%;
     clip-path: polygon(0% 0%, 100% 0%, 81.82% 100%, 0% 100%);
-    overflow: hidden; }
+    overflow: hidden;
+    background-color: #eee; }
     .hero-wrapper .hero-swiper-container .hero-article-wrapper article {
       position: relative;
       width: 100%;
@@ -262,13 +205,24 @@ header {
         opacity: 0.85; }
   .hero-wrapper .hero-text-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     flex: 1;
-    flex-basis: 45%;
-    font-family: 'Vidaloka';
-    font-size: 2.4rem;
-    padding: 1rem 1.5rem 1rem 0.25rem; }
+    flex-basis: 45%; }
+    .hero-wrapper .hero-text-wrapper .upper,
+    .hero-wrapper .hero-text-wrapper .lower {
+      flex: 1;
+      position: relative; }
+    .hero-wrapper .hero-text-wrapper .lower {
+      background-color: #00467f; }
+    .hero-wrapper .hero-text-wrapper .lower:before {
+      position: absolute;
+      top: 0;
+      right: 100%;
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+      background-color: inherit; }
 
 .event-wrapper {
   padding: 0;
