@@ -45,7 +45,6 @@ const dataController = (() => {
 
             const timeEnd = new Date().getTime();
 
-
             console.log(`Fetch took ${(timeEnd - timeStart)}ms.`);
 
             console.log(`Events: ${eventsArr.length}`);
@@ -56,23 +55,25 @@ const dataController = (() => {
 
         sortEvents: (allEvents) => {
 
-            let events = {};
+            let sortedEvents = {};
 
             months.forEach((month, index) => {
                 allEvents.forEach((e) => {
                     if (parseInt(e.start_date_details.month) == index + 1) {
 
                         // initialise month event array
-                        if (!events[month]) {
-                            events[month] = new Array();
+                        if (!sortedEvents[month]) {
+                            sortedEvents[month] = new Array();
                         }
 
-                        events[month].push(e);
+                        sortedEvents[month].push(e);
+
+                        allEvents.splice(allEvents.indexOf(e), 1);
                     }
                 })
             });
 
-            return events;
+            return sortedEvents;
         },
 
         getAllFeatured: (events) => {
