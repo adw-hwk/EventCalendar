@@ -10,6 +10,12 @@ body {
 body {
   overflow: hidden; }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  scroll-behavior: smooth; }
+
 .lds-ellipsis {
   display: inline-block;
   position: relative;
@@ -75,11 +81,6 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555; }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box; }
-
 #page-wrapper {
   margin: 0;
   padding: 0;
@@ -88,11 +89,34 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background-color: #eee; }
+  background-color: #eee;
+  position: relative; }
   #page-wrapper header {
     flex: 0 0 auto; }
   #page-wrapper .calendar-swiper {
     flex: 1; }
+  #page-wrapper .cal-loader {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    #page-wrapper .cal-loader span {
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-weight: 200;
+      font-size: 2.5rem; }
+    #page-wrapper .cal-loader.fade {
+      opacity: 0; }
+    #page-wrapper .cal-loader.hidden {
+      display: none; }
 
 header {
   width: 100%;
@@ -102,16 +126,25 @@ header {
   justify-content: center;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   z-index: 2000;
-  background-color: #333;
+  background-color: #00366f;
   color: white;
   height: 5rem;
   position: relative; }
+  header .logo {
+    position: absolute;
+    left: 1rem;
+    height: 2.5rem; }
+  header .navigation {
+    position: relative;
+    display: flex;
+    justify-content: center; }
   header a {
     flex: 0;
     flex-basis: 3rem;
     display: flex;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    transition: opacity 250ms ease-in-out; }
     header a:hover {
       cursor: pointer; }
     header a:focus {
@@ -137,11 +170,12 @@ header {
         align-items: center; }
   header .show-months-btn {
     position: absolute;
-    right: 1rem;
+    right: -5rem;
     top: 0;
     width: 3rem;
     height: 100%;
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
     color: inherit;
@@ -184,8 +218,7 @@ header {
         padding: 0.5rem;
         background: rgba(0, 69, 127, 0.9);
         color: white;
-        font-weight: bold;
-        font-family: "Vidaloka"; }
+        font-weight: 600; }
       header .months-dropdown-menu .month .body {
         flex: 1;
         display: flex;
@@ -202,6 +235,8 @@ header {
   padding: 0;
   width: 100%;
   height: 100%; }
+  .calendar-swiper.blur {
+    filter: blur(8px); }
   .calendar-swiper .swiper-wrapper {
     margin: 0;
     padding: 0;
@@ -219,36 +254,18 @@ header {
       .calendar-swiper .swiper-wrapper .swiper-slide .hero-wrapper,
       .calendar-swiper .swiper-wrapper .swiper-slide .event-wrapper {
         transition: filter 250ms ease-in-out; }
-      .calendar-swiper .swiper-wrapper .swiper-slide.blur .hero-wrapper,
-      .calendar-swiper .swiper-wrapper .swiper-slide.blur .event-wrapper {
-        filter: blur(8px); }
 
-.cal-loader {
-  width: 100vw;
-  height: calc(100vh - 5rem);
-  position: fixed;
-  top: 0;
-  z-index: 5000;
-  background-color: whitesmoke;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; }
-  .cal-loader span {
-    display: inline-block;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-weight: 200;
-    font-size: 2.5rem; }
-  .cal-loader.fade {
-    opacity: 0; }
-  .cal-loader.hidden {
-    display: none; }
+@keyframes bounce {
+  0% {
+    transform: translateY(0); }
+  100% {
+    transform: translateY(1rem); } }
 
 .hero-wrapper {
   width: 100%;
   height: calc(100vh - 5rem);
-  display: flex; }
+  display: flex;
+  position: relative; }
   .hero-wrapper .hero-swiper-container {
     flex: 1;
     flex-basis: 55%;
@@ -290,7 +307,7 @@ header {
         background: white;
         z-index: 2;
         display: inline-block;
-        font-weight: 700;
+        font-weight: 600;
         border-radius: 5px;
         opacity: 0.85;
         display: inline-block;
@@ -304,21 +321,98 @@ header {
     .hero-wrapper .hero-text-wrapper .lower {
       flex: 1;
       position: relative;
-      padding: 1rem; }
+      padding: 1rem 1rem 1rem 2rem; }
     .hero-wrapper .hero-text-wrapper .upper {
       display: flex;
-      align-items: flex-end; }
-      .hero-wrapper .hero-text-wrapper .upper h1 {
-        font-size: 5rem;
-        margin: 0;
-        font-weight: 500; }
+      flex-direction: column;
+      justify-content: center;
+      position: relative; }
+      .hero-wrapper .hero-text-wrapper .upper .text {
+        color: white;
+        text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+        position: relative; }
+        .hero-wrapper .hero-text-wrapper .upper .text h1 {
+          font-size: 12rem;
+          margin: 0;
+          line-height: 10rem;
+          font-weight: 600; }
+        .hero-wrapper .hero-text-wrapper .upper .text h2 {
+          font-size: 8rem;
+          margin: 0;
+          line-height: 7.5rem;
+          font-weight: 600; }
+        .hero-wrapper .hero-text-wrapper .upper .text h4 {
+          font-size: 2.2rem;
+          margin: 0;
+          font-weight: 500;
+          text-transform: uppercase;
+          line-height: 1;
+          opacity: 0.75; }
+        .hero-wrapper .hero-text-wrapper .upper .text .scroll-prompt {
+          position: absolute;
+          top: 100%;
+          left: 1rem;
+          display: inline-block;
+          text-align: center;
+          margin-top: 2rem;
+          background-color: rgba(0, 0, 0, 0.6);
+          color: white;
+          z-index: 10;
+          padding: 0.75rem;
+          border-radius: 10px;
+          font-size: 1.5rem; }
+          .hero-wrapper .hero-text-wrapper .upper .text .scroll-prompt span {
+            font-weight: 300;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem; }
+          .hero-wrapper .hero-text-wrapper .upper .text .scroll-prompt i {
+            line-height: 0.5;
+            animation: bounce 0.6s;
+            animation-direction: alternate;
+            animation-iteration-count: infinite; }
+          .hero-wrapper .hero-text-wrapper .upper .text .scroll-prompt:hover {
+            cursor: pointer; }
+      .hero-wrapper .hero-text-wrapper .upper img {
+        position: absolute;
+        height: 100%;
+        width: 125%;
+        object-fit: cover;
+        top: 0;
+        right: 0;
+        filter: brightness(0.5);
+        z-index: -1; }
     .hero-wrapper .hero-text-wrapper .lower {
       background-color: #00467f;
-      color: white; }
-      .hero-wrapper .hero-text-wrapper .lower h1 {
-        font-size: 12rem;
-        margin: 0;
-        font-weight: 800; }
+      color: white;
+      display: flex;
+      align-items: center;
+      font-size: 1.6rem;
+      font-weight: 300; }
+      .hero-wrapper .hero-text-wrapper .lower .text {
+        display: flex; }
+      .hero-wrapper .hero-text-wrapper .lower .counter {
+        font-size: 6rem;
+        line-height: 6rem;
+        font-weight: 600;
+        display: inline-block;
+        flex: 0 0 auto;
+        padding-top: 2rem; }
+      .hero-wrapper .hero-text-wrapper .lower .hero-blurb {
+        flex: 1;
+        border-left: 2px solid white;
+        padding-left: 1rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        margin-left: 1rem; }
+      .hero-wrapper .hero-text-wrapper .lower .home-cta {
+        padding: 0.75rem 1rem;
+        background-color: salmon;
+        color: white;
+        border-radius: 3px;
+        margin-top: 2.5rem;
+        display: inline-block; }
+        .hero-wrapper .hero-text-wrapper .lower .home-cta:hover {
+          cursor: pointer; }
     .hero-wrapper .hero-text-wrapper .lower:before {
       position: absolute;
       top: 0;
@@ -353,8 +447,6 @@ header {
     background-color: #c24622; }
     .event.seasonal .details {
       padding: 4rem 0; }
-      .event.seasonal .details .text .title {
-        font-family: "Vidaloka"; }
   .event .details {
     flex: 1;
     flex-basis: 55%;
@@ -381,7 +473,7 @@ header {
       font-size: 1.5rem !important;
       width: 3rem; }
     .event .details .title {
-      font-weight: bold;
+      font-weight: 600;
       font-size: 2.2rem; }
     .event .details .venue {
       font-size: 1.6rem; }
@@ -394,7 +486,6 @@ header {
     text-align: center;
     color: white;
     text-transform: uppercase;
-    font-family: "Vidaloka";
     display: flex;
     align-items: center; }
     .event .date img {
