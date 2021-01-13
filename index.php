@@ -11,11 +11,11 @@
 
     <header>
 
-    <img src="<?php echo get_template_directory_uri() . '/img/logo-white.png' ?>" alt="" class="logo">
+    <img src="<?php echo get_template_directory_uri() . '/img/logo-white.png' ?>" alt="" class="header-logo">
 
 
         <div class="navigation">
-            <a id="prev-month-nav" class="month-navigation" style="opacity: 0;"><i class="fas fa-angle-double-left"></i></a>
+            <a id="prev-month-nav" class="month-navigation"><i class="fas fa-angle-double-left"></i></a>
 
             <div class="swiper-container month-text-container">
                 <div class="swiper-wrapper">
@@ -85,51 +85,51 @@
         <div class="months-dropdown-menu">
         
             <div class="month">
-                <div class="banner">01</div>
+                <div class="banner">01 <span> | <strong>2021</strong> | January</span></div>
                 <div class="body">January</div>
             </div>
             <div class="month">
-                <div class="banner">02</div>
+                <div class="banner">02 <span> | February</span></div>
                 <div class="body">February</div>
             </div>
             <div class="month">
-                <div class="banner">03</div>
+                <div class="banner">03 <span> | March</span></div>
                 <div class="body">March</div>
             </div>
             <div class="month">
-                <div class="banner">04</div>
+                <div class="banner">04 <span> | April</span></div>
                 <div class="body">April</div>
             </div>
             <div class="month">
-                <div class="banner">05</div>
+                <div class="banner">05 <span> | May</span></div>
                 <div class="body">May</div>
             </div>
             <div class="month">
-                <div class="banner">06</div>
+                <div class="banner">06 <span> | June</span></div>
                 <div class="body">June</div>
             </div>
             <div class="month">
-                <div class="banner">07</div>
+                <div class="banner">07 <span> | July</span></div>
                 <div class="body">July</div>
             </div>
             <div class="month">
-                <div class="banner">08</div>
+                <div class="banner">08 <span> | August</span></div>
                 <div class="body">August</div>
             </div>
             <div class="month">
-                <div class="banner">09</div>
+                <div class="banner">09 <span> | September</span></div>
                 <div class="body">September</div>
             </div>
             <div class="month">
-                <div class="banner">10</div>
+                <div class="banner">10 <span> | October</span></div>
                 <div class="body">October</div>
             </div>
             <div class="month">
-                <div class="banner">11</div>
+                <div class="banner">11 <span> | November</span></div>
                 <div class="body">November</div>
             </div>
             <div class="month">
-                <div class="banner">12</div>
+                <div class="banner">12 <span> | December</span></div>
                 <div class="body">December</div>
             </div>
 
@@ -159,7 +159,12 @@
                     <div class="hero-text-wrapper">
 
                         <div class="upper">
-                            <div class="text">
+                        <img src="<?php echo get_template_directory_uri() . '/img/logo-white.png' ?>" alt="" class="hero-logo">
+
+                            <div class="text homepage-text">
+
+
+
                                 <h4>What's on for your</h4>
                                 <h1>2021</h1>
                             </div>

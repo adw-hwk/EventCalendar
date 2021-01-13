@@ -158,6 +158,7 @@ window.addEventListener('load', () => {
                             monthText: document.querySelector('header .month-text'),
                             monthArrowString: '.month-text i',
                             monthMenu: document.querySelector('.months-dropdown-menu'),
+                            dropdownMonthArr: Array.prototype.slice.call(document.querySelector('.months-dropdown-menu').querySelectorAll('.month')),
                             menuElements: [document.querySelector('header .month-text'), document.querySelector('.month-text strong'), document.querySelector('.month-text i')],
 
                             loader: document.querySelector('#page-wrapper .cal-loader'),
@@ -363,6 +364,16 @@ window.addEventListener('load', () => {
                                 });
 
                                 return sortedImages;
+                            },
+
+                            setActiveMenuMonth: (currentMonth) => {
+                                DOM.dropdownMonthArr.forEach((month) => {
+                                    if (month.classList.contains('active')) {
+                                        month.classList.remove('active');
+                                    }
+                                });
+
+                                DOM.dropdownMonthArr[currentMonth].classList.add('active');
                             }
     
     
@@ -550,10 +561,15 @@ window.addEventListener('load', () => {
 
                                 setImgSrc(image);
 
-                            })
+                            });
+
+                            UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
                             
+                            UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
 
                             dataCtrl.state.monthsVisited.push(this.activeIndex);
+
+
 
 
                           },
@@ -575,6 +591,8 @@ window.addEventListener('load', () => {
 
                               }
                               dataCtrl.state.currentMonth = this.activeIndex;
+
+                              UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
 
                               UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
 
