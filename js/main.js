@@ -26,73 +26,79 @@ window.addEventListener('load', () => {
                 return {
                     state: state,
 
-                    fetchEvents: async() => {
+                    // these functions were used when the events were fetched via the WP REST API
+                    // this became slow so the events are now fetched on the backend and added to the
+                    // page as a JavaScript object making these functions obsolete
+                    // should they ever be used again then the code will need to be changed in this file
+                    // a bit since these methods return the data structured differently
 
-                        let eventsArr;
+                    // fetchEvents: async() => {
 
-                        const timeStart = new Date().getTime();
+                    //     let eventsArr;
 
-                        await fetch(siteURL + endpoint + query)
-                            .then(async(response) => {
-                                const initialReq = await response.json();
+                    //     const timeStart = new Date().getTime();
 
-                                eventsArr = initialReq.events;
+                    //     await fetch(siteURL + endpoint + query)
+                    //         .then(async(response) => {
+                    //             const initialReq = await response.json();
 
-                                let nextURL = initialReq.next_rest_url;
+                    //             eventsArr = initialReq.events;
+
+                    //             let nextURL = initialReq.next_rest_url;
 
 
-                                while (nextURL !== undefined) {
+                    //             while (nextURL !== undefined) {
 
-                                    await fetch(nextURL)
-                                        .then((response) => {
-                                            return response.json();
-                                        })
-                                        .then((response) => {
-                                            nextURL = response.next_rest_url;
-                                            response.events.forEach((event) => {
-                                                eventsArr.push(event);
-                                            })
-                                        }).catch(() => {
-                                            alert('Error fetching calendar, try refreshing the page.');
-                                        })
-                                }
+                    //                 await fetch(nextURL)
+                    //                     .then((response) => {
+                    //                         return response.json();
+                    //                     })
+                    //                     .then((response) => {
+                    //                         nextURL = response.next_rest_url;
+                    //                         response.events.forEach((event) => {
+                    //                             eventsArr.push(event);
+                    //                         })
+                    //                     }).catch(() => {
+                    //                         alert('Error fetching calendar, try refreshing the page.');
+                    //                     })
+                    //             }
 
-                            })
-                            .catch(() => {
-                                alert('Error fetching calendar, try refreshing the page.');
-                            });
+                    //         })
+                    //         .catch(() => {
+                    //             alert('Error fetching calendar, try refreshing the page.');
+                    //         });
 
-                        const timeEnd = new Date().getTime();
+                    //     const timeEnd = new Date().getTime();
 
-                        console.log(`Fetch took ${(timeEnd - timeStart)}ms.`);
+                    //     console.log(`Fetch took ${(timeEnd - timeStart)}ms.`);
 
-                        console.log(`Events: ${eventsArr.length}`);
+                    //     console.log(`Events: ${eventsArr.length}`);
 
-                        return eventsArr;
+                    //     return eventsArr;
 
-                    },
+                    // },
 
-                    sortEvents: (allEvents) => {
+                    // sortEvents: (allEvents) => {
 
-                        let sortedEvents = {};
+                    //     let sortedEvents = {};
 
-                        months.forEach((month, index) => {
-                            allEvents.forEach((e) => {
-                                if (parseInt(e.start_date.month) == index + 1) {
+                    //     months.forEach((month, index) => {
+                    //         allEvents.forEach((e) => {
+                    //             if (parseInt(e.start_date.month) == index + 1) {
 
-                                    // initialise month event array
-                                    if (!sortedEvents[month]) {
-                                        sortedEvents[month] = new Array();
-                                    }
+                    //                 // initialise month event array
+                    //                 if (!sortedEvents[month]) {
+                    //                     sortedEvents[month] = new Array();
+                    //                 }
 
-                                    sortedEvents[month].push(e);
+                    //                 sortedEvents[month].push(e);
 
-                                }
-                            })
-                        });
+                    //             }
+                    //         })
+                    //     });
 
-                        return sortedEvents;
-                    },
+                    //     return sortedEvents;
+                    // },
 
                     getAllFeatured: (events) => {
                         let featuredArr = [];
@@ -466,9 +472,10 @@ return {
 
         dataCtrl.state.monthsVisited = new Array();
 
-        dataCtrl.state.events = __calEvents
+        // __calEvents is the global JS object of events from the WP database that is
+        // added to the HTML page when it's rendered
 
-        console.log(dataCtrl.state.events);
+        dataCtrl.state.events = __calEvents;
 
         const homepageEvents = dataCtrl.getHomepageFeatured(dataCtrl.state.events)
 
