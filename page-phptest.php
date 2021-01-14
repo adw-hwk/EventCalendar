@@ -25,18 +25,33 @@
         $posts = array();
 
         $sorted_events = array(
-            1 => array(),
-            2 => array(),
-            3 => array(),
-            4 => array(),
-            5 => array(),
-            6 => array(),
-            7 => array(),
-            8 => array(),
-            9 => array(),
-            10 => array(),
-            11 => array(),
-            12 => array(),
+            'January' => array(),
+            'February' => array(),
+            'March' => array(),
+            'April' => array(),
+            'May' => array(),
+            'June' => array(),
+            'July' => array(),
+            'August' => array(),
+            'September' => array(),
+            'October' => array(),
+            'November' => array(),
+            'December' => array(),
+        );
+
+        $months = array(
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
         );
 
         $homepage_events = array();
@@ -50,24 +65,25 @@
             $meta = get_post_meta($event_ID);
 
             $category = count(tribe_get_event_cat_slugs($event_ID)) > 0 ? tribe_get_event_cat_slugs($event_ID)[0] : null;
-            // console_log(get_the_tags($event_ID));
 
             $start_date_arr = array (
                 'year' => date_parse($meta['_EventStartDateUTC'][0])["year"],
                 'month' => date_parse($meta['_EventStartDateUTC'][0])["month"],
                 'day' => date_parse($meta['_EventStartDateUTC'][0])["day"],
                 'hour' => date_parse($meta['_EventStartDateUTC'][0])["hour"],
-                'minute' => date_parse($meta['_EventStartDateUTC'][0])["minute"]
+                'minute' => date_parse($meta['_EventStartDateUTC'][0])["minute"],
+                'UTC' => $meta['_EventStartDateUTC'][0]
             );
-
+    
             $end_date_parsed = date_parse($meta->_EventEndDateUTC);
-
+    
             $end_date_arr = array (
                 'year' => date_parse($meta['_EventEndDateUTC'][0])["year"],
                 'month' => date_parse($meta['_EventEndDateUTC'][0])["month"],
                 'day' => date_parse($meta['_EventEndDateUTC'][0])["day"],
                 'hour' => date_parse($meta['_EventEndDateUTC'][0])["hour"],
-                'minute' => date_parse($meta['_EventEndDateUTC'][0])["minute"]
+                'minute' => date_parse($meta['_EventEndDateUTC'][0])["minute"],
+                'UTC' => $meta['_EventEndDateUTC'][0]
             );
 
             $venueID = $meta['_EventVenueID'][0];
@@ -77,7 +93,6 @@
             // we're assuming no events that have time periods are going to start at midnight
             $all_day_condition = $start_date_arr[$hour] == 0;
             
-
             $featured = $meta['_tribe_featured'][0] == "1" ? true : false;
 
             $URL = $meta['_EventURL'] ? $meta['_EventURL'][0] : null;
@@ -98,9 +113,6 @@
             } else {
                 $tags_arr = null;
             };
-
-
-
 
             $formatted_event = array (
                 'ID' => $event_ID,
@@ -123,11 +135,10 @@
 
             $month_num = (int)$formatted_event['start_date']['month'];
 
-            array_push($sorted_events[$month_num], $formatted_event);
+            array_push($sorted_events[$months[$month_num - 1]], $formatted_event);
 
         }
 
-        // console_log($sorted_events);
         echo ('<script> var events = ' . json_encode($sorted_events) . ';</script>')
 
     ?>

@@ -78,7 +78,7 @@ window.addEventListener('load', () => {
 
                         months.forEach((month, index) => {
                             allEvents.forEach((e) => {
-                                if (parseInt(e.start_date_details.month) == index + 1) {
+                                if (parseInt(e.start_date.month) == index + 1) {
 
                                     // initialise month event array
                                     if (!sortedEvents[month]) {
@@ -128,11 +128,14 @@ window.addEventListener('load', () => {
 
                         monthKeys.forEach((month) => {
                             events[month].forEach((e) => {
-                                e.categories.forEach((category) => {
-                                    if (category.slug === "homepage") {
-                                        featuredArr.push(e);
-                                    }
-                                })
+                                if (e.tags !== null) {
+                                    e.tags.forEach((tag) => {
+                                        if (tag === "homepage") {
+                                            featuredArr.push(e);
+                                        }
+                                    })
+                                }
+
                             })
                         });
 
@@ -185,9 +188,9 @@ window.addEventListener('load', () => {
 
                             eventHtml: (event) => {
 
-                                    const startDateObj = new Date(event.start_date);
+                                    const startDateObj = new Date(event.start_date.UTC);
                                     const startWeekday = startDateObj.getDay();
-                                    const endDateObj = new Date(event.end_date);
+                                    const endDateObj = new Date(event.end_date.UTC);
                                     const endWeekday = endDateObj.getDay();
                                     const days = [
                                         "Sunday",
@@ -215,48 +218,48 @@ window.addEventListener('load', () => {
 
 
                                     let vals = {
-                                        type: mainType,
+                                        type: event.type,
 
-                                        finishDate: parseInt(event.end_date_details.day) > parseInt(event.start_date_details.day) ? {
-                                            day: event.end_date_details.day,
-                                            month: months[parseInt(event.end_date_details.month) - 1],
+                                        finishDate: !(event.end_date.month == event.start_date.month && event.end_date.day == event.start_date.day) ? {
+                                            day: event.end_date.day,
+                                            month: event.end_date.month,
                                             dayOfWeek: days[endWeekday]
                                         } : null,
 
                                         startDate: {
-                                            day: event.start_date_details.day,
-                                            month: months[parseInt(event.start_date_details.month) - 1],
+                                            day: event.start_date.day,
+                                            month: event.start_date.month,
                                             dayOfWeek: days[startWeekday]
                                         },
 
-                                        imgURL: event.image.url ? event.image.url : null,
+                                        imgURL: event.image ? event.image.large : null,
 
                                         title: event.title,
 
-                                        venue: event.venue.length > 0 ? event.venue.venue : null,
+                                        venue: event.venue ? event.venue.name : null,
 
-                                        time: !event.all_day ? `${event.start_date_details.hour}:${event.start_date_details.minutes} - ${event.end_date_details.hour}:${event.end_date_details.minutes}` : null,
+                                        time: !event.all_day ? `${event.start_date.hour}:${event.start_date.minute} - ${event.end_date.hour}:${event.end_date.minutes}` : null,
 
                                         description: event.description.length > 0 ? event.description : null
 
                                     };
 
-                                    return `<div class="event ${vals.type ? vals.type : 'minor'}"><div class="date"><table><tbody><tr><td class="ddmm">${vals.finishDate == null ? `${vals.startDate.day} ${vals.startDate.month.slice(0,3)}` : `${vals.startDate.day} ${vals.startDate.month.slice(0,3)} - ${vals.finishDate.day} ${vals.finishDate.month.slice(0,3)}`}</td></tr><tr><td class="day">${vals.finishDate == null ? `${vals.startDate.dayOfWeek}` : `${vals.startDate.dayOfWeek} - ${vals.finishDate.dayOfWeek}`}</td></tr></tbody></table></div><div class="details">${vals.imgURL !== null ? `<img class="event-image" data-src="${vals.imgURL}" alt="${vals.title}">` : ``}<div class="text"><div class="title">${vals.title}</div>${vals.venue !== null ? `<div class="venue"><i class="far fa-building"></i> ${vals.venue}</div>` : ``}${vals.time !== null ? `<div class="time"><i class="far fa-clock"></i> ${vals.time}</div>` : `` }${vals.description !== null ? `<div class="description">${vals.description}</div>` : `` }</div></div></div>`
+                                    return `<div class="event ${vals.type ? vals.type : 'minor'}"><div class="date"><table><tbody><tr><td class="ddmm">${vals.finishDate == null ? `${vals.startDate.day} ${months[vals.startDate.month - 1].slice(0,3)}` : `${vals.startDate.day} ${months[vals.startDate.month - 1].slice(0,3)} - ${vals.finishDate.day} ${months[vals.finishDate.month - 1].slice(0,3)}`}</td></tr><tr><td class="day">${vals.finishDate == null ? `${vals.startDate.dayOfWeek}` : `${vals.startDate.dayOfWeek} - ${vals.finishDate.dayOfWeek}`}</td></tr></tbody></table></div><div class="details">${vals.imgURL !== null ? `<img class="event-image" data-src="${vals.imgURL}" alt="${vals.title}">` : ``}<div class="text"><div class="title">${vals.title}</div>${vals.venue !== null ? `<div class="venue"><i class="far fa-building"></i> ${vals.venue}</div>` : ``}${vals.time !== null ? `<div class="time"><i class="far fa-clock"></i> ${vals.time}</div>` : `` }${vals.description !== null ? `<div class="description">${vals.description}</div>` : `` }</div></div></div>`
                     },
                 
                     heroArticleHtml: (event) => {
                 
-                        const finishDate = event.end_date_details.day !== event.start_date_details.day ? {
-                            day: event.end_date_details.day,
-                            month: months[parseInt(event.end_date_details.month) - 1]
+                        const finishDate = event.end_date.day !== event.start_date.day ? {
+                            day: event.end_date.day,
+                            month: months[event.end_date.month - 1]
                         } : null;
                 
                         const startDate = {
-                            day: event.start_date_details.day,
-                            month: months[parseInt(event.start_date_details.month) - 1]
+                            day: event.start_date.day,
+                            month: months[event.end_date.month - 1]
                         };
-                        return `<article class="swiper-slide">${event.image ? `<img class="swiper-image" data-src="${event.image.url}" alt="${event.title}">` : ``}<div class="hero-title">${event.title}</div><br><div class="date">${finishDate == null ? `${startDate.day} ${startDate.month}` : `${startDate.day} ${startDate.month} - ${finishDate.day} ${finishDate.month}`}</div></article>`;
-                
+
+                        return `<article class="swiper-slide">${event.image ? `<img class="swiper-image" data-src="${event.image.full}" alt="${event.title}">` : ``}<div class="hero-title">${event.title}</div><br><div class="date">${finishDate == null ? `${startDate.day} ${startDate.month}` : `${startDate.day} ${startDate.month} - ${finishDate.day} ${finishDate.month}`}</div></article>`;
                     },
     
                     empty: () => {
@@ -463,10 +466,7 @@ return {
 
         dataCtrl.state.monthsVisited = new Array();
 
-    
-        const allEvents = await dataCtrl.fetchEvents();
-
-        dataCtrl.state.events = dataCtrl.sortEvents(allEvents);
+        dataCtrl.state.events = __calEvents
 
         console.log(dataCtrl.state.events);
 
