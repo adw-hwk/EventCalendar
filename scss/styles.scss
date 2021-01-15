@@ -12,6 +12,75 @@ body {
     overflow: hidden;
 }
 
+.calendar-slide {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -5;
+    position: relative;
+}
+
+.calendar-slide:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.3;
+    z-index: -4;
+    top: 0;
+    left: 0;
+}
+
+// .calendar-page {
+//     backdrop-filter: brightness(0.7);
+// }
+// calendar bg images
+#february-slider {
+    background-image: url(../img/february.jpg);
+}
+
+#march-slider {
+    background-image: url(../img/march.jpeg);
+}
+
+#april-slider {
+    background-image: url(../img/april.jpeg);
+}
+
+#may-slider {
+    background-image: url(../img/may.jpeg);
+}
+
+#june-slider {
+    background-image: url(../img/june.jpeg);
+}
+
+#july-slider {
+    background-image: url(../img/july.jpg);
+}
+
+#august-slider {
+    background-image: url(../img/august.jpg);
+}
+
+#september-slider {
+    background-image: url(../img/september.jpeg);
+}
+
+#october-slider {
+    background-image: url(../img/october.jpg);
+}
+
+#november-slider {
+    background-image: url(../img/november.jpg);
+}
+
+#december-slider {
+    background-image: url(../img/december.jpg);
+}
+
 *,
 *::before,
 *::after {
@@ -327,11 +396,169 @@ header {
             height: 100%;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
             position: relative;
             transition: filter 250ms ease-in-out;
             &.blur {
                 filter: blur(5px);
+            }
+        }
+    }
+}
+
+// .calendar-slide:nth-child(odd) .calendar-page {
+//     background: #E0EAFC;
+//     /* fallback for old browsers */
+//     background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);
+//     /* Chrome 10-25, Safari 5.1-6 */
+//     background: linear-gradient(to right, #CFDEF3, #E0EAFC);
+//     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+// }
+// .calendar-slide:nth-child(even) .calendar-page {
+//     background: #E0EAFC;
+//     /* fallback for old browsers */
+//     background: -webkit-linear-gradient(to left, #CFDEF3, #E0EAFC);
+//     /* Chrome 10-25, Safari 5.1-6 */
+//     background: linear-gradient(to left, #CFDEF3, #E0EAFC);
+//     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+// }
+.calendar-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100vh - 5rem);
+    overflow-y: auto;
+    .top {
+        flex: 1 0 25vh;
+        position: relative;
+        color: white;
+        width: 100%;
+        .top-wrapper {
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            width: 110rem;
+            height: 100%;
+        }
+        .calendar-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 5;
+            filter: brightness(0.5);
+            display: none;
+        }
+        .text {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            .inner {
+                h2,
+                h4 {
+                    margin: 0;
+                }
+                h2 {
+                    font-size: 3.5rem;
+                    line-height: 3rem;
+                    font-weight: 700;
+                }
+                h4 {
+                    font-size: 1.8rem;
+                    opacity: 0.5;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                }
+            }
+        }
+        .event-summary {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            table {
+                max-width: 30rem;
+                td {
+                    vertical-align: top;
+                    font-size: 1.2rem;
+                    &.icon {
+                        width: 3rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.calendar-container {
+    flex: 3;
+    padding: 0.5rem;
+    max-width: 100%;
+    width: 110rem;
+    .calendar {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .weekdays {
+            display: none;
+        }
+        .grid {
+            flex: 1;
+            height: 100%;
+            .day-square {
+                backdrop-filter: blur(2px);
+                -webkit-backdrop-filter: blur(2px);
+                background: rgba(255, 255, 255, 0.7);
+                margin: 0.75rem 0;
+                border-radius: 1rem;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                padding: 0;
+                box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+                &.innactive {
+                    display: none;
+                    .banner {
+                        background-color: rgba(153, 153, 153, 0.7);
+                    }
+                }
+                &.no-events {
+                    .contents {
+                        display: none;
+                    }
+                    margin: 0.25rem 0;
+                    opacity: 0.75;
+                }
+                .banner {
+                    padding: 0.25rem 0.75rem;
+                    font-weight: bold;
+                    color: white;
+                    background: rgba(68, 68, 68, 0.7);
+                    display: flex;
+                    align-items: center;
+                    flex: 0 0 auto;
+                    .mbl-weekday-text {
+                        opacity: 0.6;
+                        font-weight: normal;
+                    }
+                    &.weekend {
+                        font-weight: bold;
+                        background-color: rgba(179, 33, 0, 0.7);
+                        // background-color: #222;
+                    }
+                }
+                .contents {
+                    flex: 1;
+                    padding: 1.5rem 0.75rem;
+                }
             }
         }
     }
@@ -790,6 +1017,91 @@ header {
             .details {
                 clip-path: polygon(0% 0%, 100% 0%, 81.82% 100%, 0% 100%);
                 padding-right: 10%;
+            }
+        }
+    }
+    .calendar-page {
+        .top {
+            .top-wrapper {
+                flex-direction: row;
+            }
+            .text {
+                .inner {
+                    h2 {
+                        font-size: 6rem;
+                        line-height: 5rem;
+                    }
+                    h4 {
+                        font-size: 2.2rem;
+                    }
+                }
+            }
+            .event-summary {
+                table {
+                    td {
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+        }
+    }
+    .calendar-container {
+        .calendar {
+            .weekdays {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 0.2rem;
+                flex: 0 0 auto;
+                margin: 0.2rem 0;
+                border-radius: 0.2rem;
+                div {
+                    padding: 0.25rem;
+                    border-radius: 0.2rem;
+                    background: #00366f;
+                    color: white;
+                    text-align: center;
+                    font-weight: 300;
+                    font-size: 1.2rem;
+                }
+            }
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 0.2rem;
+                .day-square {
+                    overflow-y: auto;
+                    max-height: 15rem;
+                    min-height: 9rem;
+                    margin: 0;
+                    border-radius: 0.2rem;
+                    // padding: 0.5rem;
+                    &.innactive {
+                        display: flex;
+                    }
+                    &.no-events {
+                        min-height: 10rem;
+                        max-height: 15rem;
+                        width: unset;
+                        height: unset;
+                        border-radius: 0.2rem;
+                        margin: 0;
+                        .contents {
+                            display: block;
+                            padding: 0.75rem;
+                        }
+                        opacity: 1;
+                    }
+                    .contents {
+                        max-height: 75%;
+                        overflow-y: auto;
+                        overflow-x: hidden;
+                    }
+                    .banner {
+                        .mbl-weekday-text {
+                            display: none;
+                        }
+                    }
+                }
             }
         }
     }

@@ -153,6 +153,16 @@ window.addEventListener('load', () => {
 
             const UIController = (() => {
 
+                        const days = [
+                            "Sunday",
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday",
+                            "Saturday"
+                        ];
+
                         const DOM = {
                             pageWrapper: document.querySelector('#page-wrapper'),
                             calendarSwiper: document.querySelector('.calendar-swiper'),
@@ -178,6 +188,8 @@ window.addEventListener('load', () => {
 
                             homeCTA: document.querySelector('a.home-cta'),
 
+                            calendarGrids: Array.prototype.slice.call(document.querySelectorAll('.calendar .grid')),
+
                         }
 
                         const DOMStrings = {
@@ -198,15 +210,7 @@ window.addEventListener('load', () => {
                                     const startWeekday = startDateObj.getDay();
                                     const endDateObj = new Date(event.end_date.UTC);
                                     const endWeekday = endDateObj.getDay();
-                                    const days = [
-                                        "Sunday",
-                                        "Monday",
-                                        "Tuesday",
-                                        "Wednesday",
-                                        "Thursday",
-                                        "Friday",
-                                        "Saturday"
-                                    ];
+
 
                                     const categories = event.categories ? event.categories : undefined;
 
@@ -251,377 +255,490 @@ window.addEventListener('load', () => {
                                     };
 
                                     return `<div class="event ${vals.type ? vals.type : 'minor'}"><div class="date"><table><tbody><tr><td class="ddmm">${vals.finishDate == null ? `${vals.startDate.day} ${months[vals.startDate.month - 1].slice(0,3)}` : `${vals.startDate.day} ${months[vals.startDate.month - 1].slice(0,3)} - ${vals.finishDate.day} ${months[vals.finishDate.month - 1].slice(0,3)}`}</td></tr><tr><td class="day">${vals.finishDate == null ? `${vals.startDate.dayOfWeek}` : `${vals.startDate.dayOfWeek} - ${vals.finishDate.dayOfWeek}`}</td></tr></tbody></table></div><div class="details">${vals.imgURL !== null ? `<img class="event-image" data-src="${vals.imgURL}" alt="${vals.title}">` : ``}<div class="text"><div class="title">${vals.title}</div>${vals.venue !== null ? `<div class="venue"><i class="far fa-building"></i> ${vals.venue}</div>` : ``}${vals.time !== null ? `<div class="time"><i class="far fa-clock"></i> ${vals.time}</div>` : `` }${vals.description !== null ? `<div class="description">${vals.description}</div>` : `` }</div></div></div>`
-                    },
-                
-                    heroArticleHtml: (event) => {
-                
-                        const finishDate = event.end_date.day !== event.start_date.day ? {
-                            day: event.end_date.day,
-                            month: months[event.end_date.month - 1]
-                        } : null;
-                
-                        const startDate = {
-                            day: event.start_date.day,
-                            month: months[event.end_date.month - 1]
-                        };
-
-                        return `<article class="swiper-slide">${event.image ? `<img class="swiper-image" data-src="${event.image.full}" alt="${event.title}">` : ``}<div class="hero-title">${event.title}</div><br><div class="date">${finishDate == null ? `${startDate.day} ${startDate.month}` : `${startDate.day} ${startDate.month} - ${finishDate.day} ${finishDate.month}`}</div></article>`;
-                    },
-    
-                    empty: () => {
-                        return`Such empty!`;
-                    },
-
-                    updateMonthText: (state, delay = 200) => {
-                        DOM.monthText.style.transition = `transform ${delay}ms ease-in-out`
-                        DOM.monthText.classList.add('spin');
-            
-                        setTimeout(() => {
-                            DOM.monthText.innerHTML = state.currentMonth == 0 ? `<strong>2021</strong> | Jan  <i class="fas fa-angle-down"></i>` : `${months[state.currentMonth]}  <i class="fas fa-angle-down"></i>`;
-                            DOM.monthText.classList.remove('spin');
-                        }, delay);
-                    },
-            
-                    toggleNavArrows: (currentMonth) => {
-            
-                        if (currentMonth == 0) {
-                            DOM.nextMonthBtn.style.opacity = "1";
-                            DOM.prevMonthBtn.style.opacity = "0";
-                        } else if (currentMonth == 11) {
-                            DOM.nextMonthBtn.style.opacity = "0";
-                            DOM.prevMonthBtn.style.opacity = "1";
-                        } else {
-                            DOM.nextMonthBtn.style.opacity = "1";
-                            DOM.prevMonthBtn.style.opacity = "1";
-                        }
-                    },
-            
-                    hideLoader: (fadeDelay = 250) => {
-
-                        DOM.loader.style.transition = `opacity ${fadeDelay}ms ease-in-out`;
-                        DOM.calendarSwiper.style.transition = `filter ${fadeDelay}ms ease-in-out`;
+            },
         
-                        DOM.loader.classList.add('fade');
-                        DOM.calendarSwiper.classList.remove('blur')
-                        setTimeout(() => {
-                            DOM.loader.classList.add('hidden');
-                        }, fadeDelay)
-            
-                    },
-            
-                    showDropdownMenu: () => {
-                        DOM.monthMenu.style.display = "grid";
-                        setTimeout(() => {
-                            DOM.monthMenu.classList.add('open');
-                        }, 25)
-                        DOM.monthSlides.forEach((slide) => {
-                            slide.classList.add('blur');
-                        });
-                    },
-            
-                    //delay set to 400ms in CSS
-                    hideDropdownMenu: () => {
-                        DOM.monthMenu.classList.remove('open');
-                        setTimeout(() => {
-                            DOM.monthMenu.style.display = "none";
-                        }, 400);
-                        DOM.monthSlides.forEach((slide) => {
-                            slide.classList.remove('blur');
-                        });
-                    },
+            heroArticleHtml: (event) => {
+        
+                const finishDate = event.end_date.day !== event.start_date.day ? {
+                    day: event.end_date.day,
+                    month: months[event.end_date.month - 1]
+                } : null;
+        
+                const startDate = {
+                    day: event.start_date.day,
+                    month: months[event.end_date.month - 1]
+                };
 
-                    getAllImages: () => {
-                        return Array.prototype.slice.call(document.images);
-                    },
+                return `<article class="swiper-slide">${event.image ? `<img class="swiper-image" data-src="${event.image.full}" alt="${event.title}">` : ``}<div class="hero-title">${event.title}</div><br><div class="date">${finishDate == null ? `${startDate.day} ${startDate.month}` : `${startDate.day} ${startDate.month} - ${finishDate.day} ${finishDate.month}`}</div></article>`;
+            },
 
-                    sortImages: (images) => {
-                        let sortedImages = {};
+            empty: () => {
+                return`Such empty!`;
+            },
 
-                        DOM.monthSlides.forEach((slide, i) => {
-                            images.forEach((image) => {
-                                if (image.closest('.calendar-slide') === slide) {
-                                    
-                                    // initialise month array
-                                    if (sortedImages[months[i]] === undefined) {
-                                        sortedImages[months[i]] = new Array();
-                                    }
+            updateMonthText: (state, delay = 200) => {
+                DOM.monthText.style.transition = `transform ${delay}ms ease-in-out`
+                DOM.monthText.classList.add('spin');
 
-                                    if (image.classList.contains('swiper-image')) {
+                setTimeout(() => {
+                    DOM.monthText.innerHTML = state.currentMonth == 0 ? `<strong>2021</strong> | Jan  <i class="fas fa-angle-down"></i>` : `${months[state.currentMonth]}  <i class="fas fa-angle-down"></i>`;
+                    DOM.monthText.classList.remove('spin');
+                }, delay);
+            },
 
-                                        if (sortedImages[months[i]].swiper === undefined) {
-                                            sortedImages[months[i]].swiper = new Array();
-                                        }
+            toggleNavArrows: (currentMonth) => {
 
-                                        sortedImages[months[i]].swiper.push(image)
+                if (currentMonth == 0) {
+                    DOM.nextMonthBtn.style.opacity = "1";
+                    DOM.prevMonthBtn.style.opacity = "0";
+                } else if (currentMonth == 11) {
+                    DOM.nextMonthBtn.style.opacity = "0";
+                    DOM.prevMonthBtn.style.opacity = "1";
+                } else {
+                    DOM.nextMonthBtn.style.opacity = "1";
+                    DOM.prevMonthBtn.style.opacity = "1";
+                }
+            },
 
-                                    } else if (image.classList.contains('hero-bg-image')) {
+            hideLoader: (fadeDelay = 250) => {
 
-                                        sortedImages[months[i]].heroBG = image;
+                DOM.loader.style.transition = `opacity ${fadeDelay}ms ease-in-out`;
+                DOM.calendarSwiper.style.transition = `filter ${fadeDelay}ms ease-in-out`;
 
-                                    } else {
+                DOM.loader.classList.add('fade');
+                DOM.calendarSwiper.classList.remove('blur')
+                setTimeout(() => {
+                    DOM.loader.classList.add('hidden');
+                }, fadeDelay)
 
-                                        if (sortedImages[months[i]].events === undefined) {
-                                            sortedImages[months[i]].events = new Array();
-                                        }
+            },
 
-                                        sortedImages[months[i]].events.push(image)
+            showDropdownMenu: () => {
+                DOM.monthMenu.style.display = "grid";
+                setTimeout(() => {
+                    DOM.monthMenu.classList.add('open');
+                }, 25)
+                DOM.monthSlides.forEach((slide) => {
+                    slide.classList.add('blur');
+                });
+            },
 
-                                    }
+            //delay set to 400ms in CSS
+            hideDropdownMenu: () => {
+                DOM.monthMenu.classList.remove('open');
+                setTimeout(() => {
+                    DOM.monthMenu.style.display = "none";
+                }, 400);
+                DOM.monthSlides.forEach((slide) => {
+                    slide.classList.remove('blur');
+                });
+            },
 
-                                }
-                            });
-                        });
+            getAllImages: () => {
+                return Array.prototype.slice.call(document.images);
+            },
 
-                        return sortedImages;
-                    },
+            sortImages: (images) => {
+                let sortedImages = {};
 
-                    setActiveMenuMonth: (currentMonth) => {
-                        DOM.dropdownMonthArr.forEach((month) => {
-                            if (month.classList.contains('active')) {
-                                month.classList.remove('active');
+                DOM.monthSlides.forEach((slide, i) => {
+                    images.forEach((image) => {
+                        if (image.closest('.calendar-slide') === slide) {
+                            
+                            // initialise month array
+                            if (sortedImages[months[i]] === undefined) {
+                                sortedImages[months[i]] = new Array();
                             }
-                        });
 
-                        DOM.dropdownMonthArr[currentMonth].classList.add('active');
+                            if (image.classList.contains('swiper-image')) {
+
+                                if (sortedImages[months[i]].swiper === undefined) {
+                                    sortedImages[months[i]].swiper = new Array();
+                                }
+
+                                sortedImages[months[i]].swiper.push(image)
+
+                            } else if (image.classList.contains('hero-bg-image')) {
+
+                                sortedImages[months[i]].heroBG = image;
+
+                            } else {
+
+                                if (sortedImages[months[i]].events === undefined) {
+                                    sortedImages[months[i]].events = new Array();
+                                }
+
+                                sortedImages[months[i]].events.push(image)
+
+                            }
+
+                        }
+                    });
+                });
+
+                return sortedImages;
+            },
+
+            setActiveMenuMonth: (currentMonth) => {
+                DOM.dropdownMonthArr.forEach((month) => {
+                    if (month.classList.contains('active')) {
+                        month.classList.remove('active');
+                    }
+                });
+
+                DOM.dropdownMonthArr[currentMonth].classList.add('active');
+            },
+
+            writeCalendarGrid: (month, events) => {
+
+                const getDaysInMonth = (monthNum, year) => {
+                    return new Date(year, monthNum, 0).getDate();
+                }
+
+                const writeDaysEvents = (day, events) => {
+                    let eventList = '';
+
+                    events.forEach((event) => {
+                        if (event.start_date.day == day || ((event.end_date.day >= day) && (event.start_date.day < day))) {
+                            eventList += `<div class="day-event ${event.type}">${event.title}</div>`
+                        }
+                    });
+
+                    return eventList;
+                }
+
+                const year = new Date().getFullYear();
+
+                const daysInMonth = getDaysInMonth(month, year);
+
+                const monthString = month < 10 ? `0${month}` : `${month}`;
+
+
+                const dayOne = new Date(`${year}-${monthString}-01`);
+                const dayOneIndex = dayOne.getDay();
+
+                let squares = 0;
+
+                let HTML = '';
+
+                const innactiveSquare = (curMonth, steps, placement = 'before') => { 
+
+                    const daysInPrevMonth = getDaysInMonth(curMonth - 1, year);
+
+                    let day;
+
+
+                    if (placement === 'after') {
+
+                        day = steps + 1;
+
+                    } else if (placement === 'before') {
+
+                        day = daysInPrevMonth + steps - dayOneIndex + 1;
+
+                    } else { day = ''; }
+
+
+                    return `<div class="day-square innactive"><div class="banner">${day}</div><div class="contents"></div></div>`;
+                };
+
+                const daySquare = (day, eventList) => {
+                    return `<div class="day-square${eventList.length > 0 ? '' : ' no-events'}" data-day="${day}"><div class="banner${[0,6].includes(squares % 7) ? ' weekend' : ''}">${day}<span class="mbl-weekday-text"> | ${days[squares % 7].slice(0,3)}</span></div><div class="contents">${eventList}</div></div>`
+                };
+
+                for (let i = 0; i < dayOneIndex; i++) {
+
+                    HTML += innactiveSquare(month, i, 'before');
+                    squares++;
+
+                }
+
+                for (let i = 0; i < daysInMonth; i++) {
+
+                    HTML += daySquare(i + 1, writeDaysEvents(i +1, events));
+                    squares++;
+
+                }
+
+                let nextMonthSquare = 0;
+
+                while (squares % 7 !== 0) {
+
+                    HTML += innactiveSquare(month, nextMonthSquare, 'after');
+                    nextMonthSquare++;
+                    squares++;
+                }
+
+                DOM.calendarGrids[month - 2].style.gridTemplateRows = `repeat(${squares / 7}, 1fr)`
+
+                return HTML;
+
+            },
+
+            writeEventSummary: (events) => {
+                let summaryHTML = {
+                    major: '',
+                    training: '',
+                    seasonal: ''
+                };
+
+                events.forEach((event) => {
+
+                    if (event.type === 'major') {
+                        summaryHTML.major += `${summaryHTML.major.length == 0 ? '' : ', '}${event.featured ? '<strong>' : ''}${event.title}${event.featured ? '</strong>' : ''}`;
+                    } else if (event.type === 'training') {
+                        summaryHTML.training += `${summaryHTML.training.length == 0 ? '' : ', '}${event.title}`;
+                    } else if (event.type === 'seasonal') {
+                        summaryHTML.seasonal += `${summaryHTML.seasonal.length == 0 ? '' : ', '}${event.title}`;
                     }
 
+                });
 
-}
-
-})();
-
-
-const controller = ((dataCtrl, UICtrl) => {
+                return `<table><tbody>${summaryHTML.major.length > 0 ? `<tr><td class="icon"><i class="fas fa-globe"></i></td><td class="list">${summaryHTML.major}</td></tr>` : ``}${summaryHTML.training.length > 0 ? `<tr><td class="icon"><i class="fas fa-chalkboard-teacher"></i></td><td class="list">${summaryHTML.training}</td></tr>` : ``}${summaryHTML.seasonal.length > 0 ? `<tr><td class="icon"><i class="far fa-snowflake"></i></td><td class="list">${summaryHTML.seasonal}</td></tr>` : ``}</tbody></table>`
+            }
 
 
-const setImgSrc = (image) => {
-    if (!image.src && image.dataset.src.length > 0) {
-        image.src = image.dataset.src;
     }
-}
 
-const setupEventListeners = () => {
-
+    })();
 
 
-    window.addEventListener('click', (e) => {
-
-        if (UICtrl.DOM.monthMenu.classList.contains('open') && e.target.closest('a') !== UICtrl.DOM.calendarButton) {
-            UICtrl.hideDropdownMenu();
-        }
-    });
-
-    window.addEventListener('click', (e) => {
-        if(e.target.closest('div.scroll-prompt')) {
-            UICtrl.DOM.monthSlides[dataCtrl.state.currentMonth].querySelector('.event-wrapper').scrollIntoView();
-        }
-    })
-
-    const monthMenuArr = Array.prototype.slice.call(document.querySelectorAll('.months-dropdown-menu .month'));
+    const controller = ((dataCtrl, UICtrl) => {
 
 
-    UICtrl.DOM.monthMenu.addEventListener('click', (e) => {
-
-        if (monthMenuArr.includes(e.target.closest('div.month'))) {
-            dataCtrl.state.calendarSwiper.slideTo(monthMenuArr.indexOf(e.target.closest('div.month')), 0);
+        const setImgSrc = (image) => {
+            if (!image.src && image.dataset.src.length > 0) {
+                image.src = image.dataset.src;
+            }
         }
 
+        const setupEventListeners = () => {
 
-    });
 
-    UICtrl.DOM.calendarButton.addEventListener('click', () => {
-        if (UICtrl.DOM.monthMenu.classList.contains('open')) {
-            UICtrl.hideDropdownMenu();
-        } else {
-            UICtrl.showDropdownMenu();
-        }
-    });
 
-    UICtrl.DOM.homeCTA.addEventListener('click', () => {
-        dataCtrl.state.calendarSwiper.slideNext();
-    });
+            window.addEventListener('click', (e) => {
 
-    UICtrl.DOM.monthSlides.forEach((slide) => {
-        const prompt = slide.querySelector('.scroll-prompt');
-        const hero = slide.querySelector('.hero-wrapper');
-        slide.addEventListener('scroll', () => {
+                if (UICtrl.DOM.monthMenu.classList.contains('open') && e.target.closest('a') !== UICtrl.DOM.calendarButton) {
+                    UICtrl.hideDropdownMenu();
+                }
+            });
 
-            // with header height set to 5rem in CSS, the top value when fully scrolled to the top of the container is 80
-            const heroRect = hero.getBoundingClientRect();
+            window.addEventListener('click', (e) => {
+                if(e.target.closest('div.scroll-prompt')) {
+                    UICtrl.DOM.monthSlides[dataCtrl.state.currentMonth].querySelector('.event-wrapper').scrollIntoView();
+                }
+            })
 
-            const heroTop = heroRect.top;
-            const heroHeight = heroRect.height;
+            const monthMenuArr = Array.prototype.slice.call(document.querySelectorAll('.months-dropdown-menu .month'));
 
-            // what the below does is set the opacity to 0 as you scroll
-            // the assignment directly below sets opacity to 0 by the time you
-            // get to 1/10 way down the hero section (heroHeight / 10)
-            let opacity = 1 - ((80 - heroTop) / (heroHeight / 10));
 
-            opacity = opacity >= 0 ? opacity : 0 ;
+            UICtrl.DOM.monthMenu.addEventListener('click', (e) => {
 
-            prompt.style.opacity = opacity.toString();
-
-        })
-    })
-}
-
-return {
-    init: async() => {
-
-        dataCtrl.state.currentMonth = 0;
-
-        dataCtrl.state.monthsVisited = new Array();
-
-        // __calEvents is the global JS object of events from the WP database that is
-        // added to the HTML page when it's rendered
-
-        dataCtrl.state.events = __calEvents;
-
-        const homepageEvents = dataCtrl.getHomepageFeatured(dataCtrl.state.events)
-
-        // writing the DOM
-        UICtrl.DOM.monthSlides.forEach((slide, i) => {
-
-            const heroSliderContainer = slide.querySelector('.hero-swiper-container');
-            const heroSliderWrapper = slide.querySelector('.hero-article-wrapper');
-            const eventContainer = slide.querySelector('.event-wrapper');
-
-            if (i == 0) { //homepage
-
-                homepageEvents.forEach((event) => {
-                    heroSliderWrapper.innerHTML += UICtrl.heroArticleHtml(event);
-                });
-
-                new Swiper(heroSliderContainer, {
-                    autoplay: {
-                        delay: 2000,
-                    },
-                    speed: 750,
-                    effect: 'fade',
-                    fadeEffect: {
-                        crossFade: true
-                    },
-                });
-
-            } else { //calendar pages
-
-                const monthEvents = dataCtrl.state.events[months[i]];
-
-                if (monthEvents !== undefined) {
-                    const monthFeatured = dataCtrl.getMonthFeatured(monthEvents);
-
-                    monthFeatured.forEach((event) => {
-                        heroSliderWrapper.innerHTML += UICtrl.heroArticleHtml(event);
-                    });
-
-                    new Swiper(heroSliderContainer, {
-                        autoplay: {
-                            delay: 2000,
-                        },
-                        speed: 750,
-                        effect: 'fade',
-                        fadeEffect: {
-                            crossFade: true
-                        },
-                    });
-
-                    monthEvents.forEach((event) => {
-                        eventContainer.innerHTML += UICtrl.eventHtml(event);
-                    });
-                } else {
-                    eventContainer.innerHTML = UICtrl.empty();
+                if (monthMenuArr.includes(e.target.closest('div.month'))) {
+                    dataCtrl.state.calendarSwiper.slideTo(monthMenuArr.indexOf(e.target.closest('div.month')), 0);
                 }
 
 
+            });
 
-                
-            }
+            UICtrl.DOM.calendarButton.addEventListener('click', () => {
+                if (UICtrl.DOM.monthMenu.classList.contains('open')) {
+                    UICtrl.hideDropdownMenu();
+                } else {
+                    UICtrl.showDropdownMenu();
+                }
+            });
 
-        });
+            UICtrl.DOM.homeCTA.addEventListener('click', () => {
+                dataCtrl.state.calendarSwiper.slideNext();
+            });
 
-        dataCtrl.state.images = UICtrl.sortImages(UICtrl.getAllImages());
+            UICtrl.DOM.monthSlides.forEach((slide) => {
+                const prompt = slide.querySelector('.scroll-prompt');
+                const hero = slide.querySelector('.hero-wrapper');
+                slide.addEventListener('scroll', () => {
 
-        const monthTextSwiper = new Swiper(document.querySelector('.month-text-container'), {
-            slidesPerView: 1,
-            freeMode: false,
-            watchSlidesVisibility: true,
-            watchSlidesProgress: true,
-            allowTouchMove: false,
-            speed: 400,
-        });
+                    // with header height set to 5rem in CSS, the top value when fully scrolled to the top of the container is 80
+                    const heroRect = hero.getBoundingClientRect();
 
-        dataCtrl.state.monthTextSwiper = monthTextSwiper;
+                    const heroTop = heroRect.top;
+                    const heroHeight = heroRect.height;
 
-        const calendarSwiper = new Swiper(document.querySelector('.calendar-swiper'), {
-            navigation: {
-                nextEl: document.querySelector(UICtrl.DOMStrings.monthNavs.next),
-                prevEl: document.querySelector(UICtrl.DOMStrings.monthNavs.prev),
-              },
-              thumbs: {
-                swiper: monthTextSwiper
-              },
-              speed: 400,
-              on: {
-                  init: function() {
+                    // what the below does is set the opacity to 0 as you scroll
+                    // the assignment directly below sets opacity to 0 by the time you
+                    // get to 1/10 way down the hero section (heroHeight / 10)
+                    let opacity = 1 - ((80 - heroTop) / (heroHeight / 10));
 
-                    const slide = UICtrl.DOM.monthSlides[this.activeIndex];
+                    opacity = opacity >= 0 ? opacity : 0 ;
 
-                    Array.prototype.slice.call(slide.querySelectorAll('img')).forEach((image) => {
+                    prompt.style.opacity = opacity.toString();
 
-                        setImgSrc(image);
+                })
+            })
+        }
 
-                    });
+        return {
+            init: async() => {
 
-                    UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
-                    
-                    UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
+                dataCtrl.state.currentMonth = 0;
 
-                    dataCtrl.state.monthsVisited.push(this.activeIndex);
+                dataCtrl.state.monthsVisited = new Array();
 
+                // __calEvents is the global JS object of events from the WP database that is
+                // added to the HTML page when it's rendered
 
+                dataCtrl.state.events = __calEvents;
 
+                const homepageEvents = dataCtrl.getHomepageFeatured(dataCtrl.state.events)
 
-                  },
-                  slideChange: function() {
+                // writing the DOM
+                UICtrl.DOM.monthSlides.forEach((slide, i) => {
 
 
-                      if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
+                    const eventContainer = slide.querySelector('.event-wrapper');
 
-                        const slide = UICtrl.DOM.monthSlides[this.activeIndex];
+                    if (i == 0) { //homepage
 
-                        Array.prototype.slice.call(slide.querySelectorAll('img')).forEach((image) => {
+                        const heroSliderContainer = slide.querySelector('.hero-swiper-container');
+                        const heroSliderWrapper = slide.querySelector('.hero-article-wrapper');
 
-                            setImgSrc(image);
+                        homepageEvents.forEach((event) => {
+                            heroSliderWrapper.innerHTML += UICtrl.heroArticleHtml(event);
+                        });
 
-                        })
+                        new Swiper(heroSliderContainer, {
+                            autoplay: {
+                                delay: 2000,
+                            },
+                            speed: 750,
+                            effect: 'fade',
+                            fadeEffect: {
+                                crossFade: true
+                            },
+                        });
+
+                    } else { //calendar pages
+
+                        const monthEvents = dataCtrl.state.events[months[i]];
+
+                        const calendar = slide.querySelector('.calendar .grid');
+
+                        const eventSummary = slide.querySelector('.event-summary');
+
+                        calendar.innerHTML = UICtrl.writeCalendarGrid(i + 1, monthEvents);
+
+                        eventSummary.innerHTML = UICtrl.writeEventSummary(monthEvents);
+
+                        if (monthEvents !== undefined) {
+                            const monthFeatured = dataCtrl.getMonthFeatured(monthEvents);
+
+                            // monthFeatured.forEach((event) => {
+                            //     heroSliderWrapper.innerHTML += UICtrl.heroArticleHtml(event);
+                            // });
+
+                            // new Swiper(heroSliderContainer, {
+                            //     autoplay: {
+                            //         delay: 2000,
+                            //     },
+                            //     speed: 750,
+                            //     effect: 'fade',
+                            //     fadeEffect: {
+                            //         crossFade: true
+                            //     },
+                            // });
+
+                            // monthEvents.forEach((event) => {
+                            //     eventContainer.innerHTML += UICtrl.eventHtml(event);
+                            // });
+                        } 
                         
+                    }
 
-                        dataCtrl.state.monthsVisited.push(this.activeIndex);
+                });
 
-                      }
-                      dataCtrl.state.currentMonth = this.activeIndex;
+                dataCtrl.state.images = UICtrl.sortImages(UICtrl.getAllImages());
 
-                      UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
+                const monthTextSwiper = new Swiper(document.querySelector('.month-text-container'), {
+                    slidesPerView: 1,
+                    freeMode: false,
+                    watchSlidesVisibility: true,
+                    watchSlidesProgress: true,
+                    allowTouchMove: false,
+                    speed: 400,
+                });
 
-                      UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
+                dataCtrl.state.monthTextSwiper = monthTextSwiper;
 
-                  },
-                  
-              }
-        });
+                const calendarSwiper = new Swiper(document.querySelector('.calendar-swiper'), {
+                    navigation: {
+                        nextEl: document.querySelector(UICtrl.DOMStrings.monthNavs.next),
+                        prevEl: document.querySelector(UICtrl.DOMStrings.monthNavs.prev),
+                    },
+                    thumbs: {
+                        swiper: monthTextSwiper
+                    },
+                    speed: 400,
+                    on: {
+                        init: function() {
 
-        dataCtrl.state.calendarSwiper = calendarSwiper;
+                            const slide = UICtrl.DOM.monthSlides[this.activeIndex];
+
+                            Array.prototype.slice.call(slide.querySelectorAll('img')).forEach((image) => {
+
+                                setImgSrc(image);
+
+                            });
+
+                            UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
+                            
+                            UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
+
+                            dataCtrl.state.monthsVisited.push(this.activeIndex);
 
 
-        setupEventListeners();
 
-        UICtrl.hideLoader();
 
-    }
-}
+                        },
+                        slideChange: function() {
 
-})(dataController, UIController);
 
-controller.init();
+                            if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
+
+                                const slide = UICtrl.DOM.monthSlides[this.activeIndex];
+
+                                Array.prototype.slice.call(slide.querySelectorAll('img')).forEach((image) => {
+
+                                    setImgSrc(image);
+
+                                })
+                                
+
+                                dataCtrl.state.monthsVisited.push(this.activeIndex);
+
+                            }
+                            dataCtrl.state.currentMonth = this.activeIndex;
+
+                            UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
+
+                            UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
+
+                        },
+                        
+                    }
+                });
+
+                dataCtrl.state.calendarSwiper = calendarSwiper;
+
+
+                setupEventListeners();
+
+                UICtrl.hideLoader();
+
+            }
+        }
+
+    })(dataController, UIController);
+
+    controller.init();
 
 })
