@@ -469,7 +469,7 @@ window.addEventListener('load', () => {
                     squares++;
                 }
 
-                DOM.calendarGrids[month - 2].style.gridTemplateRows = `repeat(${squares / 7}, 1fr)`
+                // DOM.calendarGrids[month - 2].style.gridTemplateRows = `repeat(${squares / 7}, 1fr)`
 
                 return HTML;
 
@@ -677,7 +677,12 @@ window.addEventListener('load', () => {
                     thumbs: {
                         swiper: monthTextSwiper
                     },
-                    speed: 400,
+                    speed: 250,
+                    breakpoints: {
+                        768: {
+                            speed: 900,
+                        }
+                    },
                     on: {
                         init: function() {
 
