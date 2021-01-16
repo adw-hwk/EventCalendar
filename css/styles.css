@@ -396,8 +396,8 @@ header {
       flex: 1;
       height: 100%; }
       .calendar-container .calendar .grid .day-square {
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
         background: rgba(255, 255, 255, 0.15);
         margin: 0.75rem 0;
         border-radius: 1rem;
@@ -405,12 +405,12 @@ header {
         flex-direction: column;
         overflow: hidden;
         padding: 0;
-        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2); }
+        border: 2px solid transparent; }
         .calendar-container .calendar .grid .day-square.innactive {
           display: none;
           background: rgba(255, 255, 255, 0.05); }
           .calendar-container .calendar .grid .day-square.innactive .banner {
-            background-color: transparent;
+            background-color: rgba(153, 153, 153, 0.1);
             opacity: 0.7; }
         .calendar-container .calendar .grid .day-square.no-events {
           display: none;
@@ -431,7 +431,7 @@ header {
             font-weight: normal; }
           .calendar-container .calendar .grid .day-square .banner.weekend {
             font-weight: bold;
-            background-color: rgba(179, 33, 0, 0.75); }
+            background-color: rgba(100, 100, 100, 0.85); }
         .calendar-container .calendar .grid .day-square .contents {
           flex: 1;
           display: flex;
@@ -444,11 +444,16 @@ header {
             color: white;
             border-radius: 1rem;
             overflow: hidden; }
+            .calendar-container .calendar .grid .day-square .contents .day-event:hover {
+              cursor: pointer; }
           .calendar-container .calendar .grid .day-square .contents .major {
             background-color: rgba(0, 86, 157, 0.95);
             padding: 2.2rem 1rem; }
           .calendar-container .calendar .grid .day-square .contents .minor {
             background-color: rgba(68, 68, 68, 0.85);
+            padding: 0.5rem 1rem; }
+          .calendar-container .calendar .grid .day-square .contents .training {
+            background-color: rgba(6, 126, 106, 0.85);
             padding: 0.5rem 1rem; }
           .calendar-container .calendar .grid .day-square .contents .seasonal {
             background-color: rgba(194, 70, 34, 0.85);
@@ -757,58 +762,66 @@ header {
     font-size: 2.2rem; }
   .calendar-page .top .event-summary table td {
     font-size: 1.2rem; }
-  .calendar-container .calendar .weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.2rem;
-    flex: 0 0 auto;
-    margin: 0.2rem 0;
-    border-radius: 0.2rem; }
-    .calendar-container .calendar .weekdays div {
-      padding: 0.25rem;
+  .calendar-container .calendar {
+    border-radius: 0.2rem;
+    overflow: hidden; }
+    .calendar-container .calendar .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.1rem;
+      flex: 0 0 auto;
+      margin: 0.3rem 0; }
+      .calendar-container .calendar .weekdays div {
+        padding: 0.25rem;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        text-align: center;
+        font-weight: 300;
+        font-size: 1.1rem;
+        border-top-right-radius: 0.2rem;
+        border-top-left-radius: 0.2rem;
+        overflow: hidden; }
+    .calendar-container .calendar .grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 0.1rem;
       border-radius: 0.2rem;
-      background: #00366f;
-      color: white;
-      text-align: center;
-      font-weight: 300;
-      font-size: 1.2rem; }
-  .calendar-container .calendar .grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-auto-rows: 1fr;
-    gap: 0.2rem; }
-    .calendar-container .calendar .grid .day-square {
-      overflow-y: auto;
-      margin: 0;
-      border-radius: 0.2rem; }
-      .calendar-container .calendar .grid .day-square.innactive {
-        display: flex; }
-      .calendar-container .calendar .grid .day-square.no-events {
-        display: flex;
-        width: unset;
-        height: unset;
-        border-radius: 0.2rem;
-        margin: 0;
-        opacity: 1; }
-        .calendar-container .calendar .grid .day-square.no-events .contents {
-          display: block;
-          padding: 0.75rem; }
-      .calendar-container .calendar .grid .day-square .contents {
+      overflow: hidden; }
+      .calendar-container .calendar .grid .day-square {
         overflow-y: auto;
-        overflow-x: hidden; }
-        .calendar-container .calendar .grid .day-square .contents .day-event {
-          border-radius: 0.2rem; }
-        .calendar-container .calendar .grid .day-square .contents .major {
-          flex: 1;
-          padding: 1.8rem 0.5rem; }
-        .calendar-container .calendar .grid .day-square .contents .minor {
-          flex: 0 0 auto;
-          padding: 0.25rem 0.5rem; }
-        .calendar-container .calendar .grid .day-square .contents .seasonal {
-          flex: 0 1 auto;
-          padding: 0.25rem 0.5rem; }
-      .calendar-container .calendar .grid .day-square .banner .mbl-weekday-text {
-        display: none; } }
+        margin: 0;
+        border-radius: 0; }
+        .calendar-container .calendar .grid .day-square.innactive {
+          display: flex; }
+        .calendar-container .calendar .grid .day-square.no-events {
+          display: flex;
+          width: unset;
+          height: unset;
+          margin: 0;
+          opacity: 1; }
+          .calendar-container .calendar .grid .day-square.no-events .contents {
+            display: block;
+            padding: 0.75rem; }
+        .calendar-container .calendar .grid .day-square .contents {
+          overflow-y: auto;
+          overflow-x: hidden; }
+          .calendar-container .calendar .grid .day-square .contents .day-event {
+            border-radius: 0.2rem; }
+            .calendar-container .calendar .grid .day-square .contents .day-event:hover {
+              box-shadow: 0px 0px 10px white; }
+          .calendar-container .calendar .grid .day-square .contents .major {
+            flex: 1;
+            padding: 1.8rem 0.5rem; }
+          .calendar-container .calendar .grid .day-square .contents .minor,
+          .calendar-container .calendar .grid .day-square .contents .training {
+            flex: 0 0 auto;
+            padding: 0.25rem 0.5rem; }
+          .calendar-container .calendar .grid .day-square .contents .seasonal {
+            flex: 0 1 auto;
+            padding: 0.25rem 0.5rem; }
+        .calendar-container .calendar .grid .day-square .banner .mbl-weekday-text {
+          display: none; } }
 
 @media (min-width: 992px) {
   .header-logo {

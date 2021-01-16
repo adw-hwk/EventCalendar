@@ -330,7 +330,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                         <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/february.jpg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -366,7 +366,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/march.jpeg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -401,7 +401,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/april.jpeg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -436,7 +436,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/may.jpeg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -471,7 +471,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/june.jpeg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -506,7 +506,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/july.jpg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -541,7 +541,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/august.jpg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -576,7 +576,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/september.jpeg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -611,7 +611,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/october.jpg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -646,7 +646,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/november.jpg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 
@@ -681,7 +681,7 @@ function console_log($output, $with_script_tags = true) {
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
-                        <img src="<?php echo get_template_directory_uri() . '/img/december.jpg'; ?>" alt="" class="calendar-bg-image">
+
                         <div class="text">
                             <div class="inner">
                                 

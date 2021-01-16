@@ -443,7 +443,7 @@ window.addEventListener('load', () => {
                 };
 
                 const daySquare = (day, eventList) => {
-                    return `<div class="day-square${eventList.length > 0 ? '' : ' no-events'}" data-day="${day}"><div class="banner${[0,6].includes(squares % 7) ? ' weekend' : ''}">${day}<span class="mbl-weekday-text"> | ${days[squares % 7].slice(0,3)}</span></div><div class="contents">${eventList}</div></div>`
+                    return `<div class="day-square${eventList.length > 0 ? '' : ' no-events'}" data-day="${day}"><div class="banner${[0,6].includes(squares % 7) ? ' weekend' : ''}">${day}<span class="mbl-weekday-text">&nbsp;|&nbsp;${days[squares % 7].slice(0,3)}</span></div><div class="contents">${eventList}</div></div>`
                 };
 
                 for (let i = 0; i < dayOneIndex; i++) {
@@ -632,24 +632,6 @@ window.addEventListener('load', () => {
                         if (monthEvents !== undefined) {
                             const monthFeatured = dataCtrl.getMonthFeatured(monthEvents);
 
-                            // monthFeatured.forEach((event) => {
-                            //     heroSliderWrapper.innerHTML += UICtrl.heroArticleHtml(event);
-                            // });
-
-                            // new Swiper(heroSliderContainer, {
-                            //     autoplay: {
-                            //         delay: 2000,
-                            //     },
-                            //     speed: 750,
-                            //     effect: 'fade',
-                            //     fadeEffect: {
-                            //         crossFade: true
-                            //     },
-                            // });
-
-                            // monthEvents.forEach((event) => {
-                            //     eventContainer.innerHTML += UICtrl.eventHtml(event);
-                            // });
                         } 
                         
                     }
