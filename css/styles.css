@@ -396,8 +396,6 @@ header {
       flex: 1;
       height: 100%; }
       .calendar-container .calendar .grid .day-square {
-        backdrop-filter: blur(3px);
-        -webkit-backdrop-filter: blur(3px);
         background: rgba(255, 255, 255, 0.15);
         margin: 0.75rem 0;
         border-radius: 1rem;
@@ -405,7 +403,7 @@ header {
         flex-direction: column;
         overflow: hidden;
         padding: 0;
-        border: 2px solid transparent; }
+        border: 1px solid transparent; }
         .calendar-container .calendar .grid .day-square.innactive {
           display: none;
           background: rgba(255, 255, 255, 0.05); }
@@ -635,93 +633,6 @@ header {
       width: 100%;
       background-color: inherit; }
 
-.event-wrapper {
-  padding: 0;
-  margin: 0; }
-
-.event {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: hidden; }
-  .event.minor {
-    background-color: #444; }
-    .event.minor .details {
-      padding: 2rem 0;
-      background-color: #888; }
-      .event.minor .details .text {
-        background-color: transparent;
-        color: white; }
-  .event.major {
-    background-color: #00569d; }
-    .event.major .details {
-      padding: 8rem 0; }
-  .event.seasonal {
-    background-color: #c24622; }
-    .event.seasonal .details {
-      padding: 4rem 0; }
-  .event .details {
-    flex: 1;
-    flex-basis: 55%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    background-color: #fff; }
-    .event .details .text {
-      padding: 2rem;
-      background-color: rgba(255, 255, 255, 0.85);
-      border-radius: 8px;
-      margin: 0 auto;
-      max-width: 650px;
-      z-index: 5; }
-    .event .details img {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 2; }
-    .event .details i {
-      font-size: 1.5rem !important;
-      width: 3rem; }
-    .event .details .title {
-      font-weight: 600;
-      font-size: 2.2rem; }
-    .event .details .venue {
-      font-size: 1.6rem; }
-  .event .date {
-    flex: 1;
-    flex-basis: 45%;
-    z-index: 1;
-    position: relative;
-    overflow: hidden;
-    color: white;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    padding: 0.5rem; }
-    .event .date img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 2; }
-    .event .date table {
-      /* background-color: rgba(255, 255, 255, 0.8); */
-      border-radius: 10px; }
-      .event .date table td {
-        padding: 0.25rem;
-        line-height: 1; }
-      .event .date table .ddmm {
-        font-weight: bold;
-        font-size: 2rem; }
-      .event .date table .day {
-        font-size: 1.2rem; }
-
 @media (min-width: 768px) {
   header .months-dropdown-menu {
     grid-template-columns: repeat(3, 1fr);
@@ -732,27 +643,6 @@ header {
       display: flex; }
   .hero-wrapper .hero-swiper-container {
     display: block; }
-  .event {
-    flex-direction: row; }
-    .event .date {
-      text-align: center; }
-      .event .date table {
-        margin: auto; }
-        .event .date table td {
-          padding: 0.5rem; }
-        .event .date table .ddmm {
-          font-size: 2.9rem; }
-        .event .date table .day {
-          font-size: 2rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.5); }
-    .event:nth-of-type(odd) .details {
-      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 18.18% 100%);
-      padding-left: 10%; }
-    .event:nth-of-type(even) {
-      flex-direction: row-reverse; }
-      .event:nth-of-type(even) .details {
-        clip-path: polygon(0% 0%, 100% 0%, 81.82% 100%, 0% 100%);
-        padding-right: 10%; }
   .calendar-page .top .top-wrapper {
     flex-direction: row; }
   .calendar-page .top .text .inner h2 {

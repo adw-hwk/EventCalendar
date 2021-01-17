@@ -190,19 +190,29 @@ window.addEventListener('load', () => {
 
                             calendarGrids: Array.prototype.slice.call(document.querySelectorAll('.calendar .grid')),
 
+
+
+
+
                         }
 
                         const DOMStrings = {
                             monthNavs: {
                                 next: '#next-month-nav',
                                 prev: '#prev-month-nav'
-                            }
+                            },
+
+                            fadeEls: '.fade-in',
                         }
 
                         return {
                             DOM: DOM,
 
                             DOMStrings: DOMStrings,
+
+                            getWindowWidth: () => {
+                                return document.body.getBoundingClientRect().width;
+                            },
 
                             eventHtml: (event) => {
 
@@ -495,6 +505,28 @@ window.addEventListener('load', () => {
                 });
 
                 return `<table><tbody>${summaryHTML.major.length > 0 ? `<tr><td class="icon"><i class="fas fa-globe"></i></td><td class="list">${summaryHTML.major}</td></tr>` : ``}${summaryHTML.training.length > 0 ? `<tr><td class="icon"><i class="fas fa-chalkboard-teacher"></i></td><td class="list">${summaryHTML.training}</td></tr>` : ``}${summaryHTML.seasonal.length > 0 ? `<tr><td class="icon"><i class="far fa-snowflake"></i></td><td class="list">${summaryHTML.seasonal}</td></tr>` : ``}</tbody></table>`
+            },
+
+            getFadeElements: () => {
+                return document.querySelectorAll(DOMStrings.fadeEls);
+            },
+
+            calendarFade: (activeMonth, speed) => {
+                Array.prototype.slice.call(document.querySelectorAll(DOMStrings.fadeEls)).forEach((el) => {
+                    el.classList.remove('shown');
+                });
+
+                const currentEls = DOM.monthSlides[activeMonth].querySelectorAll(DOMStrings.fadeEls);
+
+                setTimeout(() => {
+
+                    currentEls.forEach((el) => {
+                        el.classList.add('shown');
+                    });
+
+                }, speed);
+
+
             }
 
 
@@ -708,6 +740,10 @@ window.addEventListener('load', () => {
                             UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
 
                             UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
+
+                            const speed = UICtrl.getWindowWidth() < 768 ? 100 : 750;
+
+                            UICtrl.calendarFade(this.activeIndex, speed);
 
                         },
                         
