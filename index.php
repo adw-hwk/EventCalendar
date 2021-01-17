@@ -283,6 +283,23 @@ function console_log($output, $with_script_tags = true) {
         </div>
     </header>
 
+    <div class="event-modal-wrapper">
+    
+        <div class="event-modal">
+
+            <div class="close-btn">X</div>
+
+            <div class="inner">
+
+
+
+            </div>
+
+        
+        </div>
+    
+    </div>
+
     <div class="calendar-swiper swiper-container">
         <div class="swiper-wrapper">
             <div class="calendar-slide swiper-slide" id="january-slider">

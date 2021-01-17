@@ -190,7 +190,11 @@ window.addEventListener('load', () => {
 
                             calendarGrids: Array.prototype.slice.call(document.querySelectorAll('.calendar .grid')),
 
+                            eventModalWrapper: document.querySelector('.event-modal-wrapper'),
 
+                            eventModalContents: document.querySelector('.event-modal .inner'),
+
+                            eventModalClose: document.querySelector('.event-modal .close-btn')
 
 
 
@@ -410,7 +414,7 @@ window.addEventListener('load', () => {
 
                     events.forEach((event) => {
                         if (event.start_date.day == day || ((event.end_date.day >= day) && (event.start_date.day < day))) {
-                            eventList += `<div class="day-event ${event.type}">${event.title}</div>`
+                            eventList += `<div class="day-event ${event.type}" data-event-id="${event.ID}">${event.title}</div>`
                         }
                     });
 
@@ -527,6 +531,45 @@ window.addEventListener('load', () => {
                 }, speed);
 
 
+            },
+
+            openEventModal: (event) => {
+
+                const modalContents = DOM.eventModalContents,
+                modalWrapper = DOM.eventModalWrapper;
+
+                modalWrapper.style.zIndex = "5000";
+
+
+                let HTML = '';
+
+                if (event.image) {
+                    modalContents.style.backgroundColor = "transparent";
+                    HTML += `<img src="${event.image.large}" alt="${event.title}">`
+                } else {
+                    modalContents.style.backgroundColor = "orange";
+                }
+
+                HTML += `<div class="banner"><span class="date">${event.end_date.day === event.start_date.day ? `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]}` : `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]} - ${days[new Date(event.end_date.UTC).getDay()]} ${event.end_date.day} ${months[event.end_date.month - 1]}`}</span></div>`;
+
+                HTML += `<div class="contents">${event.title.length > 0 ? `<div class="title">${event.title}</div>` : ``}${event.venue !== null ? `${event.venue.name !== undefined ? `<div class="venue">${event.venue.name}</div>` : ``}${event.venue.city !== undefined ? `<div class="city">${event.venue.city}</div>` : ``}` : ``}<div class="divider"></div>${event.description.length > 0 ? `<div class="description">${event.description}</div>` : ``}</div>`;
+
+                modalContents.innerHTML = HTML;
+
+                modalWrapper.classList.add('shown');
+
+            },
+
+            hideEventModal: (delay = 250) => {
+
+                DOM.eventModalWrapper.classList.remove('shown');
+
+                setTimeout(() => {
+
+                    DOM.eventModalWrapper.style.zIndex = "-5000";
+
+                }, delay);
+
             }
 
 
@@ -548,18 +591,33 @@ window.addEventListener('load', () => {
 
 
 
+            // window listeners
             window.addEventListener('click', (e) => {
 
                 if (UICtrl.DOM.monthMenu.classList.contains('open') && e.target.closest('a') !== UICtrl.DOM.calendarButton) {
                     UICtrl.hideDropdownMenu();
-                }
-            });
-
-            window.addEventListener('click', (e) => {
+                };
                 if(e.target.closest('div.scroll-prompt')) {
                     UICtrl.DOM.monthSlides[dataCtrl.state.currentMonth].querySelector('.event-wrapper').scrollIntoView();
+                };
+
+                if (e.target.closest('div.day-event') !== null) {
+                    const ID = parseInt(e.target.closest('div.day-event').dataset.eventId);
+
+                    const monthEvents = dataCtrl.state.events[months[dataCtrl.state.currentMonth]];
+
+                    monthEvents.forEach((event) => {
+                        if (event.ID === ID) {
+                            UICtrl.openEventModal(event);
+                        }
+                    })
                 }
-            })
+
+            });
+
+            UICtrl.DOM.eventModalClose.addEventListener('click', () => {
+                UICtrl.hideEventModal();
+            });
 
             const monthMenuArr = Array.prototype.slice.call(document.querySelectorAll('.months-dropdown-menu .month'));
 
