@@ -146,7 +146,27 @@ window.addEventListener('load', () => {
                         });
 
                         return featuredArr;
-                    }
+                    },
+
+                    getFeatured: (events) => {
+                        let featuredArr = [];
+                        monthKeys = Object.keys(events);
+
+                        monthKeys.forEach((month) => {
+                            events[month].forEach((e) => {
+                                if (e.featured) {
+                                    featuredArr.push(e);
+                                };
+                            });
+                        });
+
+                        return featuredArr;
+                    },
+
+
+
+
+
                 }
 
             })();
@@ -194,7 +214,8 @@ window.addEventListener('load', () => {
 
                             eventModalContents: document.querySelector('.event-modal .inner'),
 
-                            eventModalClose: document.querySelector('.event-modal .close-btn')
+                            eventModalClose: document.querySelector('.event-modal .close-btn'),
+
 
 
 
@@ -290,15 +311,6 @@ window.addEventListener('load', () => {
                 return`Such empty!`;
             },
 
-            updateMonthText: (state, delay = 200) => {
-                DOM.monthText.style.transition = `transform ${delay}ms ease-in-out`
-                DOM.monthText.classList.add('spin');
-
-                setTimeout(() => {
-                    DOM.monthText.innerHTML = state.currentMonth == 0 ? `<strong>2021</strong> | Jan  <i class="fas fa-angle-down"></i>` : `${months[state.currentMonth]}  <i class="fas fa-angle-down"></i>`;
-                    DOM.monthText.classList.remove('spin');
-                }, delay);
-            },
 
             toggleNavArrows: (currentMonth) => {
 
@@ -499,7 +511,7 @@ window.addEventListener('load', () => {
                 events.forEach((event) => {
 
                     if (event.type === 'major') {
-                        summaryHTML.major += `${summaryHTML.major.length == 0 ? '' : ', '}${event.featured ? '<strong>' : ''}${event.title}${event.featured ? '</strong>' : ''}`;
+                        summaryHTML.major += `${summaryHTML.major.length == 0 ? '' : ', '}${event.title}`;
                     } else if (event.type === 'training') {
                         summaryHTML.training += `${summaryHTML.training.length == 0 ? '' : ', '}${event.title}`;
                     } else if (event.type === 'seasonal') {
@@ -508,7 +520,7 @@ window.addEventListener('load', () => {
 
                 });
 
-                return `<table><tbody>${summaryHTML.major.length > 0 ? `<tr><td class="icon"><i class="fas fa-globe"></i></td><td class="list">${summaryHTML.major}</td></tr>` : ``}${summaryHTML.training.length > 0 ? `<tr><td class="icon"><i class="fas fa-chalkboard-teacher"></i></td><td class="list">${summaryHTML.training}</td></tr>` : ``}${summaryHTML.seasonal.length > 0 ? `<tr><td class="icon"><i class="far fa-snowflake"></i></td><td class="list">${summaryHTML.seasonal}</td></tr>` : ``}</tbody></table>`
+                return `<table><tbody>${summaryHTML.major.length > 0 ? `<tr class="major"><td class="icon"><i class="fas fa-globe"></i></td><td class="list">${summaryHTML.major}</td></tr>` : ``}${summaryHTML.training.length > 0 ? `<tr class="training"><td class="icon"><i class="fas fa-chalkboard-teacher"></i></td><td class="list">${summaryHTML.training}</td></tr>` : ``}${summaryHTML.seasonal.length > 0 ? `<tr class="seasonal"><td class="icon"><i class="far fa-snowflake"></i></td><td class="list">${summaryHTML.seasonal}</td></tr>` : ``}</tbody></table>`
             },
 
             getFadeElements: () => {
@@ -533,10 +545,11 @@ window.addEventListener('load', () => {
 
             },
 
-            openEventModal: (event) => {
+            openEventModal: (event, ics) => {
 
                 const modalContents = DOM.eventModalContents,
                 modalWrapper = DOM.eventModalWrapper;
+                
 
                 modalWrapper.style.zIndex = "5000";
 
@@ -544,15 +557,17 @@ window.addEventListener('load', () => {
                 let HTML = '';
 
                 if (event.image) {
-                    modalContents.style.backgroundColor = "transparent";
+                    // modalContents.style.backgroundColor = "transparent";
                     HTML += `<img src="${event.image.large}" alt="${event.title}">`
-                } else {
-                    modalContents.style.backgroundColor = "orange";
-                }
+                } 
 
-                HTML += `<div class="banner"><span class="date">${event.end_date.day === event.start_date.day ? `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]}` : `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]} - ${days[new Date(event.end_date.UTC).getDay()]} ${event.end_date.day} ${months[event.end_date.month - 1]}`}</span></div>`;
+                HTML += `<div class="banner ${event.type}"><span class="date">${event.end_date.day === event.start_date.day ? `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]}` : `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]} - ${days[new Date(event.end_date.UTC).getDay()]} ${event.end_date.day} ${months[event.end_date.month - 1]}`}</span></div>`;
 
-                HTML += `<div class="contents">${event.title.length > 0 ? `<div class="title">${event.title}</div>` : ``}${event.venue !== null ? `${event.venue.name !== undefined ? `<div class="venue">${event.venue.name}</div>` : ``}${event.venue.city !== undefined ? `<div class="city">${event.venue.city}</div>` : ``}` : ``}<div class="divider"></div>${event.description.length > 0 ? `<div class="description">${event.description}</div>` : ``}</div>`;
+                HTML += `<div class="contents">${event.title.length > 0 ? `<div class="title">${event.title}</div>` : ``}${event.venue !== null ? `${event.venue.name !== undefined ? `<div class="venue">${event.venue.name}</div>` : ``}${event.venue.city !== undefined ? `<div class="city">${event.venue.city}</div>` : ``}` : ``}${event.description.length > 0 ? `<div class="description"><div class="divider"></div>${event.description}</div>` : ``}</div>`;
+
+
+                HTML += `<div class="cta-links"><a class="add-to-calendar" target="_blank">Add to calendar</a>${event.URL == null ? `` : `<a class="info" href="${event.URL}" target="_blank">More info</a>`}${event.reg_link == null ? `` : `<a class="register" href="${event.reg_link}" target="_blank">Register</a>`}</div>`
+            
 
                 modalContents.innerHTML = HTML;
 
@@ -608,6 +623,8 @@ window.addEventListener('load', () => {
 
                     monthEvents.forEach((event) => {
                         if (event.ID === ID) {
+                            dataCtrl.ics = ics();
+                            dataCtrl.ics.addEvent(event.title, event.description, `${event.venue ? event.venue.city : ``}, ${event.venue ? event.venue.state : ``}`,event.start_date.UTC, event.end_date.UTC);
                             UICtrl.openEventModal(event);
                         }
                     })
@@ -617,6 +634,12 @@ window.addEventListener('load', () => {
 
             UICtrl.DOM.eventModalClose.addEventListener('click', () => {
                 UICtrl.hideEventModal();
+            });
+
+            UICtrl.DOM.eventModalContents.addEventListener('click', (e) => {
+                if (e.target.closest('a') == document.querySelector('.event-modal .add-to-calendar')) {
+                    dataCtrl.ics.download();
+                }
             });
 
             const monthMenuArr = Array.prototype.slice.call(document.querySelectorAll('.months-dropdown-menu .month'));
@@ -679,13 +702,13 @@ window.addEventListener('load', () => {
 
                 dataCtrl.state.events = __calEvents;
 
-                const homepageEvents = dataCtrl.getHomepageFeatured(dataCtrl.state.events)
+                // randomise the homepage featured events array
+                let homepageEvents = dataCtrl.getFeatured(dataCtrl.state.events).sort(() => Math.random() - 0.5);
+
+                console.log(homepageEvents);
 
                 // writing the DOM
                 UICtrl.DOM.monthSlides.forEach((slide, i) => {
-
-
-                    const eventContainer = slide.querySelector('.event-wrapper');
 
                     if (i == 0) { //homepage
 
@@ -798,10 +821,6 @@ window.addEventListener('load', () => {
                             UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
 
                             UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
-
-                            const speed = UICtrl.getWindowWidth() < 768 ? 100 : 750;
-
-                            UICtrl.calendarFade(this.activeIndex, speed);
 
                         },
                         

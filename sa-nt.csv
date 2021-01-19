@@ -1,0 +1,9 @@
+Event Name,date,start_time,end_time,all_day
+PM Training,2021-02-12,09:00,10:30,false
+Sales Training,2021-02-12,11:00,13:00,false
+Members Meeting,2021-02-12,14:00,15:00,false
+Principal's Business Circle,2021-03-25,10:00,12:00,false
+Sales Training,2021-05-07,09:00,13:00,false
+Property Management Forum,2021-06-16,10:00,12:00,false
+Sales Training ,2021-07-22,09:00,13:00,false
+Property Management Training,2021-08-10,,,true

@@ -1,0 +1,10 @@
+Event Name,start_time,end_time,all_day,start_date,end_date
+Sales & Leadership Training,08:00,10:00,false,2021-02-17,
+CPD Training,08:00,15:00,false,2021-03-19,
+Property Management Round Table,09:00,15:00,false,2021-04-21,
+Sales Office Visits,,,TRUE,2021-06-16,2021-06-18
+Benchmarking / Understand & Growing Profitability in RE Business,,,TRUE,2021-08-10,2021-08-12
+Sales / Digital Training,,,true,2021-09-01,2021-09-03
+Property Management Training,08:30,15:00,false,2021-09-21,
+Property Management Day,,,true,2021-10-13,
+,,,,,

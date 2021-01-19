@@ -1,0 +1,20 @@
+start_date,end_date,Event Name,start_time,end_time,all_day
+2021-03-29,2021-03-30,Principals / Sales Keynote,,,TRUE
+2021-02-16,2021-02-16,Property Management Training,09:30,13:30,FALSE
+2021-02-23,2021-02-23,Property Management Training,09:30,13:30,FALSE
+2021-02-24,2021-02-24,Property Management Training,09:30,13:30,FALSE
+2021-02-25,2021-02-25,Property Management Training,09:30,13:30,FALSE
+2021-03-16,2021-03-16,Sales Training,09:30,13:30,FALSE
+2021-03-23,2021-03-23,Property Management Training,09:30,13:30,FALSE
+2021-06-09,2021-06-09,Principals / Leadership Training,10:00,15:00,FALSE
+2021-06-22,2021-06-22,Property Management Training,09:30,13:30,FALSE
+2021-07-06,2021-07-06,Digital Training,09:30,13:30,FALSE
+2021-08-10,2021-08-10,Property Management Training,09:30,13:30,FALSE
+2021-08-12,2021-08-12,Property Management Training,09:30,13:30,FALSE
+2021-08-17,2021-08-17,Property Management Training,09:30,13:30,FALSE
+2021-08-19,2021-08-19,Property Management Training,09:30,13:30,FALSE
+2021-08-24,2021-08-24,Sales Training,09:30,13:30,FALSE
+2021-09-07,2021-09-07,BDM/PM Training,09:30,13:30,FALSE
+2021-09-21,2021-09-21,Sales  Training,09:30,13:30,FALSE
+2021-09-28,2021-09-28,Sales Training,09:30,13:30,FALSE
+2021-10-13,2021-10-13,Principal's / Sales Keynote,10:00,15:00,FALSE

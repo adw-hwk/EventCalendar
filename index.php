@@ -15,6 +15,7 @@ function console_log($output, $with_script_tags = true) {
         'end_date' => date('Y').  '-12-31 23:59:59',
     ));
 
+    $fn_events = 0;
 
     $posts = array();
 
@@ -60,6 +61,10 @@ function console_log($output, $with_script_tags = true) {
 
         $category = count(tribe_get_event_cat_slugs($event_ID)) > 0 ? tribe_get_event_cat_slugs($event_ID)[0] : null;
 
+        if ($category !== 'seasonal') {
+            $fn_events++;
+        }
+
         $start_date_arr = array (
             'year' => date_parse($meta['_EventStartDateUTC'][0])["year"],
             'month' => date_parse($meta['_EventStartDateUTC'][0])["month"],
@@ -89,7 +94,7 @@ function console_log($output, $with_script_tags = true) {
         
         $featured = $meta['_tribe_featured'][0] == "1" ? true : false;
 
-        $URL = $meta['_EventURL'] ? $meta['_EventURL'][0] : null;
+        $URL = strlen($meta['_EventURL'][0]) > 0 ? $meta['_EventURL'][0] : null;
 
         $image = !get_the_post_thumbnail_url($event_ID) ? false : array(
             'full' => get_the_post_thumbnail_url($event_ID, 'full'),
@@ -99,6 +104,8 @@ function console_log($output, $with_script_tags = true) {
         $tags_arr = array();
 
         $post_tags = get_the_tags($event_ID);
+
+        $reg_link = $meta['RegistrationLink'] ? $meta['RegistrationLink'][0] : null;
 
         if ($post_tags) {
             foreach($post_tags as $tag) {
@@ -124,7 +131,8 @@ function console_log($output, $with_script_tags = true) {
             'tags' => $tags_arr,
             'featured' => $featured,
             'URL' => $URL,
-            'image' => $image
+            'image' => $image,
+            'reg_link' => $reg_link
         );
 
         $month_num = (int)$formatted_event['start_date']['month'];
@@ -323,7 +331,7 @@ function console_log($output, $with_script_tags = true) {
                         <div class="lower">
                             <div class="text">
                                 <div class="counter">
-                                    <?php echo count($events); ?>
+                                    <?php echo $fn_events; ?>
                                 </div>
                                 <div class="hero-blurb">
                                     <div>

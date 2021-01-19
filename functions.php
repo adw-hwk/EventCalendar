@@ -20,10 +20,10 @@ function load_js() {
     wp_register_script('swiper', get_template_directory_uri() . '/js/swiper-bundle.min.js', false, false, true);
     wp_enqueue_script('swiper');
 
-    wp_register_script('templates', get_template_directory_uri() . '/js/templates.js', 'jquery', false, true);
-    wp_enqueue_script('templates');
+    wp_register_script('ics', get_template_directory_uri() . '/js/ics.js', false, false, true);
+    wp_enqueue_script('ics');
 
-    wp_register_script('main', get_template_directory_uri() . '/js/main.js', 'jquery', false, true);
+    wp_register_script('main', get_template_directory_uri() . '/js/main.js', false, false, true);
     wp_enqueue_script('main');
 
 };
