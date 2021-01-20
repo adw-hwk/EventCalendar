@@ -1,3 +1,4 @@
+@import 'hamburger';
 $cl-training: rgb(59, 160, 32);
 $cl-seasonal: rgb(221, 92, 15);
 $cl-fnblue: #00467f;
@@ -6,8 +7,7 @@ $cl-offblack: rgb(26, 26, 26);
 $cl-bodygrey: #444444;
 $cl-whitegrey: #eeeeee;
 $cl-feature-purple: rgb(94, 19, 148);
-$cl-gunmetal: #333344;
-$cl-headerbg: #333344;
+$cl-headerbg: #dfdfdf;
 @media all and (-ms-high-contrast: none),
 (-ms-high-contrast: active) {
     #page-wrapper {
@@ -39,13 +39,6 @@ body {
     overflow: hidden;
 }
 
-// .fade-in {
-//     opacity: 0 !important;
-//     transition: opacity 600ms ease-in-out;
-//     &.shown {
-//         opacity: 1 !important;
-//     }
-// }
 .calendar-slide {
     background-position: center;
     background-repeat: no-repeat;
@@ -262,7 +255,7 @@ body {
     position: fixed;
     height: 100%;
     width: 100%;
-    top: 5rem;
+    top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: -5000;
@@ -286,20 +279,23 @@ body {
         transform: scale(0);
         .close-btn {
             position: absolute;
-            top: -1rem;
-            right: -1rem;
-            height: 2rem;
-            width: 2rem;
+            top: -0.55rem;
+            right: -0.55rem;
+            height: 2.2rem;
+            width: 2.2rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: $cl-bodygrey;
-            color: #fff;
+            background: white;
+            color: $cl-bodygrey;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
             border-radius: 50%;
-            overflow: hidden;
             z-index: 10;
+            transition: transform 150ms linear;
             &:hover {
                 cursor: pointer;
+                transform: scale(1.15);
             }
         }
         .inner {
@@ -411,8 +407,16 @@ body {
     }
 }
 
-.header-logo {
-    display: none !important;
+@keyframes nav-prompt {
+    0% {
+        transform: translateX(0rem);
+    }
+    50% {
+        transform: translateX(1rem);
+    }
+    100% {
+        transform: translateX(0rem);
+    }
 }
 
 header {
@@ -421,27 +425,21 @@ header {
         content: "";
         display: block;
         height: 3rem;
-        width: 17rem;
+        width: 3rem;
         border-left: 2px solid $cl-headerbg;
         border-top: 2px solid $cl-headerbg;
-        transform: skewX(-25deg);
+        transform: skewX(-30deg);
         border-top-left-radius: 10px;
-        position: relative;
+        position: absolute;
         top: 0px;
         left: -1.4rem;
         background-color: $cl-headerbg;
+        z-index: -1;
     }
     &:after {
-        transform: rotateY(180deg) skewX(-25deg);
+        transform: rotateY(180deg) skewX(-30deg);
         left: unset;
-        top: 0;
         right: -1.4rem;
-        width: 17rem;
-    }
-    .header-logo {
-        position: absolute;
-        left: 1rem;
-        height: 2.5rem;
     }
     margin: 0;
     display: flex;
@@ -452,7 +450,7 @@ header {
     height: 3rem;
     // background: linear-gradient(to right, #4d4d4f, #00467f, #4d4d4f);
     background: $cl-headerbg;
-    color: white;
+    color: $cl-bodygrey;
     // height: 5rem;
     padding: 0.4rem 0;
     position: fixed;
@@ -471,6 +469,7 @@ header {
         justify-content: center;
         align-items: center;
         transition: opacity 250ms ease-in-out;
+        font-size: 1.25rem;
         &:hover {
             cursor: pointer;
         }
@@ -483,7 +482,7 @@ header {
         overflow: hidden;
         margin: 0;
         padding: 0;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         width: 11rem;
         max-width: 100%;
         font-weight: 600;
@@ -503,89 +502,49 @@ header {
     }
     .show-months-btn {
         position: absolute;
-        right: -3rem;
-        top: 0;
-        width: 3rem;
-        height: 100%;
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: center;
-        align-items: center;
-        color: inherit;
-        font-size: 1.5rem;
-        display: none;
-        i {
-            margin: 0.2rem;
-            transition: opacity 120ms ease-in-out;
-        }
-        i.arrow {
-            opacity: 0;
-        }
-        i.calendar {
-            opacity: 0.75;
-        }
-        &:hover {
-            opacity: 1;
-            i.arrow,
-            i.calendar {
-                opacity: 1;
-            }
+        left: -2.4rem;
+        bottom: calc(50% - 12px);
+        padding: 0;
+        transform: scale(0.7);
+        &:focus {
+            outline: none;
         }
     }
     .months-dropdown-menu {
-        font-size: 2rem;
-        position: absolute;
-        width: 100%;
+        font-size: 1.4rem;
+        position: fixed;
+        width: 100vw;
         left: 0;
-        top: 5rem;
-        height: calc(100vh - 5rem);
+        bottom: 3rem;
+        height: calc(100% - 3rem);
         opacity: 0;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(12, 1fr);
+        grid-auto-rows: 1fr;
         gap: 0.25rem;
-        overflow: hidden;
-        transition: opacity 400ms ease-out;
+        transition: opacity 200ms ease-out;
         display: none;
         padding: 0.25rem;
+        overflow-y: auto;
         &.open {
             opacity: 1;
         }
         .month {
             display: flex;
-            flex-direction: column;
-            // border: 1px solid rgba(0, 0, 0, 0.05);
-            // border: 5px solid transparent;
-            .banner {
-                padding: 0 0.5rem;
-                background: rgba($cl-fnblue, 0.9);
-                color: white;
-                font-weight: 600;
-                border: 2px solid rgba(255, 255, 255, 0.85);
-                display: flex;
-                align-items: center;
-                span {
-                    font-weight: 300;
-                }
-            }
-            .body {
-                flex: 1;
-                justify-content: center;
-                align-items: center;
-                background-color: rgba($cl-whitegrey, 0.9);
-                color: $cl-bodygrey;
-                font-size: 1.8rem;
-                font-weight: 600;
-                border: 1px solid rgba($cl-whitegrey, 0.95);
-                display: none;
-            }
+            justify-content: center;
+            align-items: center;
+            padding: 0.2rem;
+            background-color: rgba(0, 0, 0, 0.05);
+            color: white;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0.1rem;
             &.active {
-                .banner {
-                    background: rgba($cl-fnblue-darkened, 0.9);
-                }
-                .body {
-                    background-color: rgba($cl-bodygrey, 0.9) !important;
-                    color: #fff;
-                }
+                background-color: rgba($cl-fnblue, 0.6);
+                border: 2px solid rgba(255, 255, 255, 0.75);
+                box-shadow: 0px 0px 3px rgba(255, 255, 255, 0.7);
+            }
+            &:hover {
+                cursor: pointer;
             }
         }
     }
@@ -609,36 +568,135 @@ header {
             display: flex;
             flex-direction: column;
             position: relative;
-            transition: filter 250ms ease-in-out;
+            transition: filter 300ms ease-in-out;
             &.blur {
-                filter: blur(5px);
+                filter: blur(6px) brightness(0.6);
             }
         }
     }
 }
 
-// .calendar-slide:nth-child(odd) .calendar-page {
-//     background: #E0EAFC;
-//     /* fallback for old browsers */
-//     background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);
-//     /* Chrome 10-25, Safari 5.1-6 */
-//     background: linear-gradient(to right, #CFDEF3, #E0EAFC);
-//     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-// }
-// .calendar-slide:nth-child(even) .calendar-page {
-//     background: #E0EAFC;
-//     /* fallback for old browsers */
-//     background: -webkit-linear-gradient(to left, #CFDEF3, #E0EAFC);
-//     /* Chrome 10-25, Safari 5.1-6 */
-//     background: linear-gradient(to left, #CFDEF3, #E0EAFC);
-//     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-// }
+.hero-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    color: white;
+    .top,
+    .bottom {
+        flex: 1;
+    }
+    .top {
+        z-index: 2;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 0% 100%);
+        .hero-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .text {
+            z-index: 1;
+            padding: 1rem;
+            border-radius: 0.2rem;
+            background: rgba(0, 0, 0, 0.12);
+            backdrop-filter: blur(0.25rem);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            max-width: 30rem;
+            margin: 0.75rem;
+            h1 {
+                font-size: 6.5rem;
+                line-height: 5.5rem;
+                font-weight: 700;
+                margin: 0;
+            }
+            h4 {
+                font-size: 1.4rem;
+                text-transform: uppercase;
+                margin: 0;
+                opacity: 0.7;
+            }
+        }
+    }
+    .bottom {
+        z-index: 1;
+        background: $cl-fnblue;
+        // &:before {
+        //     content: '';
+        //     position: absolute;
+        //     height: 100%;
+        //     width: 100%;
+        //     bottom: 50%;
+        //     left: 0;
+        //     background: $cl-fnblue;
+        // }
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        padding-bottom: 3.5rem;
+        .counter-container {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 1rem 0;
+            align-items: flex-end;
+            max-width: 24rem;
+            .counter {
+                font-size: 5rem;
+                font-weight: 700;
+                opacity: 0.75;
+                line-height: 0.8;
+            }
+            p {
+                font-size: 1.5rem;
+                font-weight: 200;
+                margin: 0 0 0 0.75rem;
+                padding: 0 0 0 0.5rem;
+                line-height: 1.25;
+                border-left: 2px solid rgba(255, 255, 255, 0.5);
+            }
+        }
+        .prompt-container {
+            width: 20rem;
+            display: flex;
+            margin-bottom: 3.5rem;
+            bottom: 0;
+            p {
+                flex: 1;
+                margin: 0;
+                margin-right: -120px;
+                font-size: 2.2rem;
+                font-weight: 500;
+                letter-spacing: 1px;
+                text-align: center;
+            }
+            img {
+                width: 120px;
+                height: 150px;
+                transform: rotate(-55deg) translateY(40px) translateX(-40px);
+                display: block;
+                margin-left: auto;
+                flex: 0 0 auto;
+            }
+        }
+    }
+}
+
 .calendar-page {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
     overflow-y: auto;
+    padding: 0.5rem;
     .top {
         flex: 1 0 25vh;
         position: relative;
@@ -677,16 +735,15 @@ header {
                     margin: 0;
                 }
                 h2 {
-                    font-size: 3.5rem;
-                    line-height: 3rem;
+                    font-size: 2.7rem;
                     font-weight: 700;
                     text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6);
-                }
-                h4 {
-                    font-size: 1.8rem;
-                    opacity: 0.5;
-                    font-weight: 500;
-                    text-transform: uppercase;
+                    padding: 1.1rem 2.5rem;
+                    border-radius: 0.15rem;
+                    background: rgba(0, 0, 0, 0.12);
+                    backdrop-filter: blur(0.75rem);
+                    border: 1px solid rgba(255, 255, 255, 0.5);
+                    box-shadow: -2px 4px 5px rgba(0, 0, 0, 0.2);
                 }
             }
         }
@@ -982,206 +1039,19 @@ header {
     }
 }
 
-.hero-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    .hero-swiper-container {
-        flex: 1;
-        overflow: hidden;
-        background-color: #eee;
-        display: none;
-        .hero-article-wrapper {
-            article {
-                position: relative;
-                width: 100%;
-                height: 100%;
-                display: block;
-                img {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    object-fit: cover;
-                    width: 100%;
-                    height: 100%;
-                    display: block;
-                    z-index: -1;
-                }
-                .hero-title {
-                    margin: 1rem 1rem 0;
-                    padding: 0.5rem 1rem;
-                    padding-top: 1rem;
-                    background: salmon;
-                    color: white;
-                    z-index: 2;
-                    display: inline-block;
-                    font-size: 3rem;
-                    font-weight: 200;
-                    border-radius: 5px;
-                    opacity: 0.85;
-                    display: inline-block;
-                    width: auto;
-                }
-                .date {
-                    margin: 1rem 1rem 0;
-                    padding: 0.5rem 1rem;
-                    padding-top: 1rem;
-                    background: white;
-                    z-index: 2;
-                    display: inline-block;
-                    font-weight: 600;
-                    border-radius: 5px;
-                    opacity: 0.85;
-                    display: inline-block;
-                    width: auto;
-                }
-            }
-        }
-    }
-    .hero-text-wrapper {
-        display: flex;
-        flex-direction: column;
-        flex: 2;
-        .upper,
-        .lower {
-            flex: 1;
-            position: relative;
-            padding: 1rem;
-        }
-        .upper {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            .hero-logo {
-                position: absolute;
-                top: 1.7rem;
-                width: 10rem;
-                object-fit: cover;
-                left: calc(50% - 5rem);
-                z-index: 10;
-                filter: none;
-            }
+@media (min-width: 576px) {
+    .calendar-page {
+        .top {
             .text {
-                color: white;
-                text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
-                position: relative;
-                text-align: center;
-                margin-bottom: 20vh;
-                &.homepage-text {
-                    margin-bottom: 0;
-                }
-                h1 {
-                    font-size: 4rem;
-                    line-height: 3.6rem;
-                    margin: 0;
-                    font-weight: 600;
-                }
-                h2 {
-                    font-size: 3rem;
-                    line-height: 2.6rem;
-                    margin: 0;
-                    font-weight: 600;
-                }
-                h4 {
-                    font-size: 1.2rem;
-                    margin: 0;
-                    font-weight: 500;
-                    text-transform: uppercase;
-                    line-height: 1;
-                    opacity: 0.75;
-                }
-                .scroll-prompt {
-                    position: absolute;
-                    top: 30vh;
-                    left: 1rem;
-                    display: inline-block;
-                    text-align: center;
-                    margin-top: 2rem;
-                    background-color: rgba(0, 0, 0, 0.6);
-                    color: white;
-                    z-index: 10;
-                    padding: 0.75rem;
-                    border-radius: 10px;
-                    font-size: 1.5rem;
-                    span {
-                        font-weight: 300;
-                        text-transform: uppercase;
-                        margin-bottom: 0.75rem;
-                    }
-                    i {
-                        line-height: 0.5;
-                        animation: bounce 0.6s;
-                        animation-direction: alternate;
-                        animation-iteration-count: infinite;
-                    }
-                    &:hover {
-                        cursor: pointer;
+                .inner {
+                    h2 {
+                        font-size: 3.5rem;
                     }
                 }
             }
-            .hero-bg-image {
-                position: absolute;
-                height: 125%;
-                width: 100%;
-                bottom: 0;
-                right: 0;
-                object-fit: cover;
-                filter: brightness(0.5);
-                z-index: -1;
-            }
-        }
-        .lower {
-            background-color: #00467f;
-            color: white;
-            display: flex;
-            align-items: center;
-            font-size: 1.2rem;
-            font-weight: 300;
-            .text {
-                display: flex;
-                flex-direction: column;
-            }
-            .counter {
-                font-size: 3rem;
-                line-height: 3rem;
-                font-weight: 600;
-                display: inline-block;
-                flex: 0 0 auto;
-                padding-top: 2rem;
-            }
-            .hero-blurb {
-                flex: 1;
-            }
-            .home-cta {
-                padding: 0.75rem 1rem;
-                background-color: salmon;
-                color: white;
-                border-radius: 3px;
-                margin-top: 2.5rem;
-                display: inline-block;
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-        }
-        .lower:before {
-            position: absolute;
-            top: 0;
-            right: 100%;
-            content: "";
-            display: block;
-            height: 100%;
-            width: 100%;
-            background-color: inherit;
         }
     }
 }
-
-@media (min-width: 576px) {}
 
 @media (min-width: 768px) {
     header {
@@ -1189,20 +1059,10 @@ header {
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(4, 1fr);
             .month {
-                .banner {
-                    span {
-                        display: none;
-                    }
-                }
                 .body {
                     display: flex;
                 }
             }
-        }
-    }
-    .hero-wrapper {
-        .hero-swiper-container {
-            display: block;
         }
     }
     .calendar-page {
@@ -1210,8 +1070,8 @@ header {
             .text {
                 .inner {
                     h2 {
-                        font-size: 6rem;
-                        line-height: 5rem;
+                        font-size: 5rem;
+                        padding: 2.2rem 3rem;
                     }
                     h4 {
                         font-size: 2.2rem;
@@ -1328,16 +1188,7 @@ header {
 }
 
 @media (min-width: 992px) {
-    .header-logo {
-        display: block;
-    }
-    .hero-logo {
-        display: none;
-    }
     header {
-        .show-months-btn {
-            right: -5rem;
-        }
         .months-dropdown-menu {
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(3, 1fr);
@@ -1346,68 +1197,12 @@ header {
 }
 
 @media (min-width: 1200px) {
-    .hero-wrapper {
-        flex-direction: row;
-        .hero-swiper-container {
-            flex-basis: 55%;
-            clip-path: polygon(0% 0%, 100% 0%, 81.82% 100%, 0% 100%);
-            .hero-article-wrapper {
-                article {
-                    img {}
-                    .hero-title {}
-                    .date {}
-                }
-            }
-        }
-        .hero-text-wrapper {
-            flex: 1;
-            flex-basis: 45%;
-            .upper,
-            .lower {
-                padding: 1rem 1rem 1rem 2rem;
-            }
-            .upper {
-                align-items: flex-start;
-                .text {
-                    text-align: left;
-                    margin-bottom: 0;
-                    h1 {
-                        font-size: 12rem;
-                        line-height: 10rem;
-                    }
-                    h2 {
-                        font-size: 8rem;
-                        line-height: 7.5rem;
-                    }
-                    h4 {
-                        font-size: 2.2rem;
-                    }
-                    .scroll-prompt {
-                        top: 100%;
-                    }
-                }
-                .hero-bg-image {
-                    height: 100%;
-                    width: 125%;
-                    top: 0;
-                    bottom: unset;
-                }
-            }
-            .lower {
-                font-size: 1.6rem;
-                .text {
-                    flex-direction: row;
-                }
-                .counter {
-                    font-size: 6rem;
-                    line-height: 6rem;
-                }
-                .hero-blurb {
-                    border-left: 2px solid white;
-                    padding-left: 1rem;
-                    padding-top: 2rem;
-                    padding-bottom: 2rem;
-                    margin-left: 1rem;
+    header {
+        .months-dropdown-menu {
+            .month {
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(78, 78, 78, 0.15);
                 }
             }
         }
@@ -1416,6 +1211,27 @@ header {
         .top {
             .top-wrapper {
                 flex-direction: row;
+            }
+        }
+        .text {
+            .inner {
+                h2 {
+                    font-size: 6rem;
+                    padding: 3rem 3.8rem;
+                }
+            }
+        }
+    }
+    .hero-container {
+        .bottom {
+            .counter-container {
+                max-width: 33rem;
+                .counter {
+                    font-size: 7rem;
+                }
+                p {
+                    font-size: 2.2rem;
+                }
             }
         }
     }

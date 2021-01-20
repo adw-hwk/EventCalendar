@@ -160,7 +160,6 @@ function console_log($output, $with_script_tags = true) {
     </div>
 
     <header>
-        <img src="<?php echo get_template_directory_uri() . '/img/logo-white.png' ?>" alt="" class="header-logo" />
 
         <div class="navigation">
             <a id="prev-month-nav" class="month-navigation"><i class="fas fa-angle-double-left"></i
@@ -222,66 +221,54 @@ function console_log($output, $with_script_tags = true) {
 
             <a id="next-month-nav" class="month-navigation"><i class="fas fa-angle-double-right"></i
       ></a>
+      <button class="show-months-btn hamburger hamburger--collapse" type="button">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
 
-            <a class="show-months-btn">
+            <!-- <a class="show-months-btn">
                 <i class="fas fa-angle-down arrow"></i>
                 <i class="far fa-calendar-alt calendar"></i>
-            </a>
+            </a> -->
         </div>
 
         <div class="months-dropdown-menu">
             <div class="month">
-                <div class="banner">
-                    01
-                    <span>
-            | <strong><?php echo date('Y'); ?></strong> | January</span
-          >
-        </div>
-        <div class="body">January</div>
-      </div>
-      <div class="month">
-        <div class="banner">02 <span> | February</span></div>
-                <div class="body">February</div>
+                <span><?php echo date('Y'); ?> | January</span>
             </div>
             <div class="month">
-                <div class="banner">03 <span> | March</span></div>
-                <div class="body">March</div>
+                <span>February</span>
             </div>
             <div class="month">
-                <div class="banner">04 <span> | April</span></div>
-                <div class="body">April</div>
+                <span>March</span>
             </div>
             <div class="month">
-                <div class="banner">05 <span> | May</span></div>
-                <div class="body">May</div>
+                <span>April</span>
             </div>
             <div class="month">
-                <div class="banner">06 <span> | June</span></div>
-                <div class="body">June</div>
+                <span>May</span>
             </div>
             <div class="month">
-                <div class="banner">07 <span> | July</span></div>
-                <div class="body">July</div>
+                <span>June</span>
             </div>
             <div class="month">
-                <div class="banner">08 <span> | August</span></div>
-                <div class="body">August</div>
+                <span>July</span>
             </div>
             <div class="month">
-                <div class="banner">09 <span> | September</span></div>
-                <div class="body">September</div>
+                <span>August</span>
             </div>
             <div class="month">
-                <div class="banner">10 <span> | October</span></div>
-                <div class="body">October</div>
+                <span>September</span>
             </div>
             <div class="month">
-                <div class="banner">11 <span> | November</span></div>
-                <div class="body">November</div>
+                <span>October</span>
             </div>
             <div class="month">
-                <div class="banner">12 <span> | December</span></div>
-                <div class="body">December</div>
+                <span>November</span>
+            </div>
+            <div class="month">
+                <span>December</span>
             </div>
         </div>
     </header>
@@ -290,7 +277,7 @@ function console_log($output, $with_script_tags = true) {
     
         <div class="event-modal">
 
-            <div class="close-btn">X</div>
+            <div class="close-btn"><i class="fas fa-times"></i></div>
 
             <div class="inner">
 
@@ -306,32 +293,89 @@ function console_log($output, $with_script_tags = true) {
     <div class="calendar-swiper swiper-container">
         <div class="swiper-wrapper">
             <div class="calendar-slide swiper-slide" id="january-slider">
-                <div class="hero-wrapper">
+
+                <div class="hero-container">
+
+                    <div class="top">
+
+                        <img class="hero-bg-img" src="<?php echo get_template_directory_uri() . '/img/january.jpg' ?>" alt="Fireworks">
+
+                        <div class="text">
+
+                            <h4>What's on for your</h4>
+                            <h1><?php echo date('Y'); ?></h1>
+
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, cum commodi nihil nostrum ab deleniti! Aspernatur repellat nobis blanditiis quia asperiores adipisci maiores et saepe.</p>
+
+
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="bottom">
+
+                        <div class="counter-container">
+
+                            <div class="counter"><?php echo $fn_events; ?></div>
+
+                            <p>First National events scheduled for <?php echo date('Y'); ?>.</p>
+
+
+
+                        </div>
+
+                        <div class="prompt-container">
+
+                            <p>See what's on.</p>
+                            
+                            <img src="<?php echo get_template_directory_uri() . '/img/arrow.svg' ?>" alt="Arrow">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- <div class="hero-wrapper">
                     <div class="swiper-container hero-swiper-container">
                         <div class="hero-article-wrapper swiper-wrapper"></div>
                     </div>
                     <div class="hero-text-wrapper">
                         <div class="upper">
-                            <img src="<?php echo get_template_directory_uri() . '/img/logo-white.png' ?>" alt="" class="hero-logo" />
+                            <img src="" alt="" class="hero-logo" />
 
                             <div class="text homepage-text">
                             <h4>What's on for your</h4>   
                                 <h1>
-                                    <?php echo date('Y'); ?>
+                                    <?php //echo date('Y'); ?>
                                 </h1>
                             </div>
-                            <img class="hero-bg-image" src="<?php echo get_template_directory_uri() . '/img/january.jpg' ?>" alt="" />
+                            <img class="hero-bg-image" src="<?php //echo get_template_directory_uri() . '/img/january.jpg' ?>" alt="" />
                         </div>
 
                         <div class="lower">
                             <div class="text">
                                 <div class="counter">
-                                    <?php echo $fn_events; ?>
+                                    <?php //echo $fn_events; ?>
                                 </div>
                                 <div class="hero-blurb">
                                     <div>
                                         First National events scheduled for
-                                        <?php echo date('Y'); ?>.
+                                        <?php //echo date('Y'); ?>.
                                     </div>
 
                                     <div style="font-weight: 600">See you there.</div>
@@ -343,8 +387,7 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="event-wrapper"></div>
+                </div> -->
             </div>
             <div class="calendar-slide swiper-slide" id="february-slider">
                 <div class="calendar-page">

@@ -128,8 +128,6 @@ window.addEventListener('load', () => {
 
                             calendarButton: document.querySelector('.show-months-btn'),
 
-                            homeCTA: document.querySelector('a.home-cta'),
-
                             calendarGrids: Array.prototype.slice.call(document.querySelectorAll('.calendar .grid')),
 
                             eventModalWrapper: document.querySelector('.event-modal-wrapper'),
@@ -137,8 +135,6 @@ window.addEventListener('load', () => {
                             eventModalContents: document.querySelector('.event-modal .inner'),
 
                             eventModalClose: document.querySelector('.event-modal .close-btn'),
-
-
 
 
                         }
@@ -263,6 +259,7 @@ window.addEventListener('load', () => {
 
             showDropdownMenu: () => {
                 DOM.monthMenu.style.display = "grid";
+                DOM.calendarButton.classList.add('is-active');
                 setTimeout(() => {
                     DOM.monthMenu.classList.add('open');
                 }, 25)
@@ -273,6 +270,7 @@ window.addEventListener('load', () => {
 
             //delay set to 400ms in CSS
             hideDropdownMenu: () => {
+                DOM.calendarButton.classList.remove('is-active');
                 DOM.monthMenu.classList.remove('open');
                 setTimeout(() => {
                     DOM.monthMenu.style.display = "none";
@@ -589,7 +587,14 @@ window.addEventListener('load', () => {
 
                 }, delay);
 
-            }
+            },
+
+            setNavArrowAnimation: () => {
+                DOM.nextMonthBtn.style.animation = "nav-prompt 900ms infinite";
+            },
+            unsetNavArrowAnimation: () => {
+                DOM.nextMonthBtn.style.animation = "none";
+            },
 
 
     }
@@ -666,10 +671,6 @@ window.addEventListener('load', () => {
                 }
             });
 
-            UICtrl.DOM.homeCTA.addEventListener('click', () => {
-                dataCtrl.state.calendarSwiper.slideNext();
-            });
-
             UICtrl.DOM.monthSlides.forEach((slide) => {
                 const prompt = slide.querySelector('.scroll-prompt');
                 const hero = slide.querySelector('.hero-wrapper');
@@ -714,23 +715,7 @@ window.addEventListener('load', () => {
 
                     if (i == 0) { //homepage
 
-                        const heroSliderContainer = slide.querySelector('.hero-swiper-container');
-                        const heroSliderWrapper = slide.querySelector('.hero-article-wrapper');
-
-                        homepageEvents.forEach((event) => {
-                            heroSliderWrapper.innerHTML += UICtrl.heroArticleHtml(event);
-                        });
-
-                        new Swiper(heroSliderContainer, {
-                            autoplay: {
-                                delay: 2000,
-                            },
-                            speed: 750,
-                            effect: 'fade',
-                            fadeEffect: {
-                                crossFade: true
-                            },
-                        });
+                        console.log('homepage');
 
                     } else { //calendar pages
 
@@ -780,6 +765,7 @@ window.addEventListener('load', () => {
                             speed: 900,
                         }
                     },
+                    simulateTouch: false,
                     on: {
                         init: function() {
 
@@ -796,6 +782,8 @@ window.addEventListener('load', () => {
                             UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
 
                             dataCtrl.state.monthsVisited.push(this.activeIndex);
+
+                            dataCtrl.state.slideHasBeenChanged = false;
 
 
 
@@ -824,6 +812,11 @@ window.addEventListener('load', () => {
 
                             UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
 
+                            if (!dataCtrl.state.slideHasBeenChanged) {
+                                UICtrl.unsetNavArrowAnimation();
+                                dataCtrl.state.slideHasBeenChanged = true;
+                            }
+
                         },
                         
                     }
@@ -835,6 +828,8 @@ window.addEventListener('load', () => {
                 setupEventListeners();
 
                 UICtrl.hideLoader();
+
+                UICtrl.setNavArrowAnimation();
 
             }
         }
