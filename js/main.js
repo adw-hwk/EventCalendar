@@ -17,88 +17,10 @@ window.addEventListener('load', () => {
 
             const dataController = (() => {
 
-                const siteURL = window.location.href;
-                const endpoint = 'wp-json/tribe/events/v1/events';
-                const query = '?page=1&per_page=100&start_date=2021-01-01 00:00:00&end_date=2022-01-01 00:00:00';
-
                 let state = {};
 
                 return {
                     state: state,
-
-                    // these functions were used when the events were fetched via the WP REST API
-                    // this became slow so the events are now fetched on the backend and added to the
-                    // page as a JavaScript object making these functions obsolete
-                    // should they ever be used again then the code will need to be changed in this file
-                    // a bit since these methods return the data structured differently
-
-                    // fetchEvents: async() => {
-
-                    //     let eventsArr;
-
-                    //     const timeStart = new Date().getTime();
-
-                    //     await fetch(siteURL + endpoint + query)
-                    //         .then(async(response) => {
-                    //             const initialReq = await response.json();
-
-                    //             eventsArr = initialReq.events;
-
-                    //             let nextURL = initialReq.next_rest_url;
-
-
-                    //             while (nextURL !== undefined) {
-
-                    //                 await fetch(nextURL)
-                    //                     .then((response) => {
-                    //                         return response.json();
-                    //                     })
-                    //                     .then((response) => {
-                    //                         nextURL = response.next_rest_url;
-                    //                         response.events.forEach((event) => {
-                    //                             eventsArr.push(event);
-                    //                         })
-                    //                     }).catch(() => {
-                    //                         alert('Error fetching calendar, try refreshing the page.');
-                    //                     })
-                    //             }
-
-                    //         })
-                    //         .catch(() => {
-                    //             alert('Error fetching calendar, try refreshing the page.');
-                    //         });
-
-                    //     const timeEnd = new Date().getTime();
-
-                    //     console.log(`Fetch took ${(timeEnd - timeStart)}ms.`);
-
-                    //     console.log(`Events: ${eventsArr.length}`);
-
-                    //     return eventsArr;
-
-                    // },
-
-                    // sortEvents: (allEvents) => {
-
-                    //     let sortedEvents = {};
-
-                    //     months.forEach((month, index) => {
-                    //         allEvents.forEach((e) => {
-                    //             if (parseInt(e.start_date.month) == index + 1) {
-
-                    //                 // initialise month event array
-                    //                 if (!sortedEvents[month]) {
-                    //                     sortedEvents[month] = new Array();
-                    //                 }
-
-                    //                 sortedEvents[month].push(e);
-
-                    //             }
-                    //         })
-                    //     });
-
-                    //     return sortedEvents;
-                    // },
 
                     getAllFeatured: (events) => {
                         let featuredArr = [];
@@ -424,9 +346,15 @@ window.addEventListener('load', () => {
                 const writeDaysEvents = (day, events) => {
                     let eventList = '';
 
+
+
+
                     events.forEach((event) => {
+
+                        const isConvention = event.tags !== null && event.tags.includes('convention') ? true : false;
+
                         if (event.start_date.day == day || ((event.end_date.day >= day) && (event.start_date.day < day))) {
-                            eventList += `<div class="day-event ${event.type}" data-event-id="${event.ID}">${event.title}</div>`
+                            eventList += `<div class="day-event ${isConvention ? `convention` : event.type}" data-event-id="${event.ID}">${event.type === 'seasonal' ? `` : `<div class="color-bar"></div>`}<span>${event.title}</span></div>`
                         }
                     });
 
@@ -508,19 +436,96 @@ window.addEventListener('load', () => {
                     seasonal: ''
                 };
 
+                let trainingDisplayed = [];
+                let trainingType = 'general';
+                let conventionEvent;
+                let conventionOn = false;
+
                 events.forEach((event) => {
 
+                    let isConvention = false;
+
+                    const tags = event.tags;
+
+                    let classStr = '';
+
+                    let trainingSkip = false;
+
+                    const trainingText = {
+                        "pm": "PM Training",
+                        "sales": "Sales Training",
+                        "commercial": "Commercial Training",
+                        "general": event.title
+                    }
+
+                    if (tags !== null && tags.length > 0) {
+                        tags.forEach(tag => {
+                            classStr += `${tag} `;
+
+                            if (['pm', 'sales', 'commercial', 'general'].includes(tag)) {
+                                trainingType = tag;
+                            };
+
+                            if (tag === 'convention') {
+                                isConvention = true;
+                                conventionOn = true;
+
+                                conventionEvent = event;
+
+
+                            }
+
+                            if (trainingDisplayed.includes(tag) && tag !== "general") {
+                                trainingSkip = true;
+                            } else {
+                                trainingDisplayed.push(tag);
+                            };
+                        });
+                    }
+
+
                     if (event.type === 'major') {
-                        summaryHTML.major += `${summaryHTML.major.length == 0 ? '' : ', '}${event.title}`;
-                    } else if (event.type === 'training') {
-                        summaryHTML.training += `${summaryHTML.training.length == 0 ? '' : ', '}${event.title}`;
+                        if (!summaryHTML.major.toUpperCase().includes('YOUNG ACHIEVER') && event.title.toUpperCase().includes('YOUNG ACHIEVER')) {
+                            summaryHTML.major += `<div class="list-event ${classStr}">Young Achiever Awards</div>`;
+                        } else if (!event.title.toUpperCase().includes('YOUNG ACHIEVER') && !classStr.includes('convention')) {
+                            summaryHTML.major += `<div class="list-event ${classStr}">${event.title}</div>`;
+                        }
+                    } else if (event.type === 'training' && !trainingSkip) {
+                        summaryHTML.training += `<div class="list-event ${classStr}">${trainingText[trainingType]}</div>`;
                     } else if (event.type === 'seasonal') {
-                        summaryHTML.seasonal += `${summaryHTML.seasonal.length == 0 ? '' : ', '}${event.title}`;
+                        summaryHTML.seasonal += `<div class="list-event ${classStr}">${event.title}</div>`;
                     }
 
                 });
 
-                return `<table><tbody>${summaryHTML.major.length > 0 ? `<tr class="major"><td class="icon"><i class="fas fa-globe"></i></td><td class="list">${summaryHTML.major}</td></tr>` : ``}${summaryHTML.training.length > 0 ? `<tr class="training"><td class="icon"><i class="fas fa-chalkboard-teacher"></i></td><td class="list">${summaryHTML.training}</td></tr>` : ``}${summaryHTML.seasonal.length > 0 ? `<tr class="seasonal"><td class="icon"><i class="far fa-snowflake"></i></td><td class="list">${summaryHTML.seasonal}</td></tr>` : ``}</tbody></table>`
+
+                let conventionDates;
+
+                if (conventionEvent !== undefined) {
+                    console.log(conventionEvent);
+                    if (conventionEvent.start_date.day === conventionEvent.end_date.day && conventionEvent.start_date.month === conventionEvent.end_date.month) {
+                        conventionDates = `${conventionEvent.start_date.day} ${months[conventionEvent.start_date.month - 1]}`;
+                    } else if (conventionEvent.start_date.day !== conventionEvent.end_date.day && conventionEvent.start_date.month === conventionEvent.end_date.month) {
+                        conventionDates = `${conventionEvent.start_date.day} - ${conventionEvent.end_date.day} ${months[conventionEvent.start_date.month - 1]}`;
+                    } else {
+                        conventionDates = `${conventionEvent.start_date.day} ${conventionEvent.start_date.month} - ${conventionEvent.end_date.day} ${conventionEvent.end_date.month}`;
+                    }
+                }
+
+
+
+
+                
+
+                return `${conventionOn ? `<div class="convention-feature"><i class="fas fa-circle"></i><div class="text"><div class="title">National Convention</div><div class="details">${conventionDates.length > 0 ? `<div class="date">${conventionDates}</div>` : ``}${conventionEvent.venue !== null && conventionEvent.venue.city.length > 0 ? `<div class="city">${conventionEvent.venue.city}</div>` : ``}</div></div><i class="fas fa-circle"></i></div>` : ``}<div class="summary-columns">
+                ${summaryHTML.major.length > 0 ? `<div class="major"><div class="banner"><i class="fas fa-star"></i></div><div class="contents">${summaryHTML.major}</div></div>` : ``}
+                ${summaryHTML.training.length > 0 ? `<div class="training"><div class="banner"><i class="fas fa-graduation-cap"></i></div><div class="contents">${summaryHTML.training}</div></div>` : ``}
+                ${summaryHTML.seasonal.length > 0 ? `<div class="seasonal"><div class="banner"><i class="far fa-snowflake"></i></div><div class="contents">${summaryHTML.seasonal}</div></div>` : ``}
+                </div>`
+
+
+
+                // `<table><tbody>${summaryHTML.major.length > 0 ? `<tr class="major"><td class="icon"><i class="fas fa-globe"></i></td><td class="list">${summaryHTML.major}</td></tr>` : ``}${summaryHTML.training.length > 0 ? `<tr class="training"><td class="icon"><i class="fas fa-chalkboard-teacher"></i></td><td class="list">${summaryHTML.training}</td></tr>` : ``}${summaryHTML.seasonal.length > 0 ? `<tr class="seasonal"><td class="icon"><i class="far fa-snowflake"></i></td><td class="list">${summaryHTML.seasonal}</td></tr>` : ``}</tbody></table>`
             },
 
             getFadeElements: () => {
@@ -545,7 +550,7 @@ window.addEventListener('load', () => {
 
             },
 
-            openEventModal: (event, ics) => {
+            openEventModal: (event) => {
 
                 const modalContents = DOM.eventModalContents,
                 modalWrapper = DOM.eventModalWrapper;
@@ -557,11 +562,10 @@ window.addEventListener('load', () => {
                 let HTML = '';
 
                 if (event.image) {
-                    // modalContents.style.backgroundColor = "transparent";
                     HTML += `<img src="${event.image.large}" alt="${event.title}">`
                 } 
 
-                HTML += `<div class="banner ${event.type}"><span class="date">${event.end_date.day === event.start_date.day ? `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]}` : `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]} - ${days[new Date(event.end_date.UTC).getDay()]} ${event.end_date.day} ${months[event.end_date.month - 1]}`}</span></div>`;
+                HTML += `<div class="banner ${event.tags !== null && event.tags.includes('convention') ? `convention` : event.type}"><span class="date">${event.end_date.day === event.start_date.day ? `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]}` : `${days[new Date(event.start_date.UTC).getDay()]} ${event.start_date.day} ${months[event.start_date.month - 1]} - ${days[new Date(event.end_date.UTC).getDay()]} ${event.end_date.day} ${months[event.end_date.month - 1]}`}</span></div>`;
 
                 HTML += `<div class="contents">${event.title.length > 0 ? `<div class="title">${event.title}</div>` : ``}${event.venue !== null ? `${event.venue.name !== undefined ? `<div class="venue">${event.venue.name}</div>` : ``}${event.venue.city !== undefined ? `<div class="city">${event.venue.city}</div>` : ``}` : ``}${event.description.length > 0 ? `<div class="description"><div class="divider"></div>${event.description}</div>` : ``}</div>`;
 
@@ -704,8 +708,6 @@ window.addEventListener('load', () => {
 
                 // randomise the homepage featured events array
                 let homepageEvents = dataCtrl.getFeatured(dataCtrl.state.events).sort(() => Math.random() - 0.5);
-
-                console.log(homepageEvents);
 
                 // writing the DOM
                 UICtrl.DOM.monthSlides.forEach((slide, i) => {

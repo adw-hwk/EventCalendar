@@ -141,8 +141,6 @@ function console_log($output, $with_script_tags = true) {
 
     }
     
-    console_log($sorted_events);
-
 
     echo ('<script> var __calEvents = ' . json_encode($sorted_events) . ';</script>')
 
@@ -171,56 +169,53 @@ function console_log($output, $with_script_tags = true) {
             <div class="swiper-container month-text-container">
                 <div class="swiper-wrapper">
                     <div class="month-text-slide swiper-slide" id="january-month-text">
-                        <span><strong
-                ><?php echo date('Y'); ?>
-                |</strong
-              >
-              January</span
+                        <span><strong><?php echo date('Y'); ?></strong
+              ></span
             >
           </div>
 
           <div class="month-text-slide swiper-slide" id="february-month-text">
-            <span><strong>02 |</strong> February</span>
+            <span>February</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="march-month-text">
-                        <span><strong>03 |</strong> March</span>
+                        <span>March</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="april-month-text">
-                        <span><strong>04 |</strong> April</span>
+                        <span>April</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="may-month-text">
-                        <span><strong>05 |</strong> May</span>
+                        <span>May</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="june-month-text">
-                        <span><strong>06 |</strong> June</span>
+                        <span>June</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="july-month-text">
-                        <span><strong>07 |</strong> July</span>
+                        <span>July</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="august-month-text">
-                        <span><strong>08 |</strong> August</span>
+                        <span>August</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="september-month-text">
-                        <span><strong>09 |</strong> September</span>
+                        <span>September</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="october-month-text">
-                        <span><strong>10 |</strong> October</span>
+                        <span>October</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="november-month-text">
-                        <span><strong>11 |</strong> November</span>
+                        <span>November</span>
                     </div>
 
                     <div class="month-text-slide swiper-slide" id="december-month-text">
-                        <span><strong>12 |</strong> December</span>
+                        <span>December</span>
                     </div>
                 </div>
             </div>
