@@ -609,7 +609,7 @@ header {
     z-index: 1;
     background: #00467f;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     flex-direction: column; }
     .hero-container .bottom .counter-container {
@@ -632,24 +632,16 @@ header {
         border-left: 2px solid rgba(255, 255, 255, 0.5); }
     .hero-container .bottom .prompt-container {
       width: 20rem;
-      display: flex;
       margin-bottom: 7rem;
       bottom: 0; }
       .hero-container .bottom .prompt-container p {
-        flex: 1;
         margin: 0;
-        margin-right: -120px;
         font-size: 2.2rem;
         font-weight: 500;
         letter-spacing: 1px;
         text-align: center; }
       .hero-container .bottom .prompt-container img {
-        width: 120px;
-        height: 150px;
-        transform: rotate(-55deg) translateY(40px) translateX(-40px);
-        display: block;
-        margin-left: auto;
-        flex: 0 0 auto; }
+        display: none; }
 
 .calendar-page {
   display: flex;
@@ -659,7 +651,7 @@ header {
   overflow-y: auto;
   padding: 0.5rem; }
   .calendar-page .top {
-    flex: 1 0 25vh;
+    flex: 1 0 25rem;
     position: relative;
     color: white;
     width: 100%; }
@@ -920,8 +912,25 @@ header {
     font-size: 16px; }
   .calendar-page .top .text .inner h2 {
     font-size: 3.5rem; }
-  .hero-container .bottom .counter-container .text {
-    font-size: 1.5rem; } }
+  .hero-container .bottom {
+    justify-content: space-between; }
+    .hero-container .bottom .counter-container .text {
+      font-size: 1.5rem; }
+    .hero-container .bottom .prompt-container {
+      width: 20rem;
+      display: flex;
+      margin-bottom: 7rem;
+      bottom: 0; }
+      .hero-container .bottom .prompt-container p {
+        flex: 1;
+        margin-right: -120px; }
+      .hero-container .bottom .prompt-container img {
+        width: 120px;
+        height: 150px;
+        transform: rotate(-55deg) translateY(40px) translateX(-40px);
+        display: block;
+        margin-left: auto;
+        flex: 0 0 auto; } }
 
 @media (min-width: 768px) {
   header .months-dropdown-menu {

@@ -325,7 +325,7 @@ function console_log($output, $with_script_tags = true) {
 
                             <div class="counter"><?php echo $fn_events; ?></div>
 
-                            <div class="text">First National events scheduled for <?php echo date('Y'); ?>.</div>
+                            <div class="text">First National events<br>scheduled for <?php echo date('Y'); ?>.</div>
 
 
 

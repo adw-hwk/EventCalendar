@@ -673,7 +673,7 @@ header {
         //     background: $cl-fnblue;
         // }
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
         flex-direction: column;
         .counter-container {
@@ -699,25 +699,17 @@ header {
         }
         .prompt-container {
             width: 20rem;
-            display: flex;
             margin-bottom: 7rem;
             bottom: 0;
             p {
-                flex: 1;
                 margin: 0;
-                margin-right: -120px;
                 font-size: 2.2rem;
                 font-weight: 500;
                 letter-spacing: 1px;
                 text-align: center;
             }
             img {
-                width: 120px;
-                height: 150px;
-                transform: rotate(-55deg) translateY(40px) translateX(-40px);
-                display: block;
-                margin-left: auto;
-                flex: 0 0 auto;
+                display: none;
             }
         }
     }
@@ -731,7 +723,7 @@ header {
     overflow-y: auto;
     padding: 0.5rem;
     .top {
-        flex: 1 0 25vh;
+        flex: 1 0 25rem;
         position: relative;
         color: white;
         width: 100%;
@@ -1090,9 +1082,28 @@ header {
     }
     .hero-container {
         .bottom {
+            justify-content: space-between;
             .counter-container {
                 .text {
                     font-size: 1.5rem;
+                }
+            }
+            .prompt-container {
+                width: 20rem;
+                display: flex;
+                margin-bottom: 7rem;
+                bottom: 0;
+                p {
+                    flex: 1;
+                    margin-right: -120px;
+                }
+                img {
+                    width: 120px;
+                    height: 150px;
+                    transform: rotate(-55deg) translateY(40px) translateX(-40px);
+                    display: block;
+                    margin-left: auto;
+                    flex: 0 0 auto;
                 }
             }
         }
