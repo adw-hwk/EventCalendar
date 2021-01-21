@@ -107,7 +107,8 @@ body {
   width: 100%;
   height: 100%;
   font-family: "Jost";
-  color: #444444; }
+  color: #444444;
+  font-size: 14px; }
 
 body {
   overflow: hidden; }
@@ -275,26 +276,23 @@ body {
 .event-modal-wrapper {
   position: fixed;
   height: 100%;
-  width: 100%;
+  min-height: 100vh;
+  width: 100vw;
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: -5000;
-  display: flex;
   opacity: 0;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 250ms ease-in-out; }
+  transition: opacity 250ms ease-in-out;
+  padding: 0.75rem 0.75rem 3.75rem;
+  overflow-y: auto; }
   .event-modal-wrapper .event-modal {
     position: relative;
-    width: 35rem;
-    max-width: 100%;
-    max-height: 100%;
-    margin: 1rem;
-    height: auto;
+    max-width: 40rem;
+    margin: 5rem auto 0;
     background: #fff;
     z-index: 1000;
-    border-radius: 1rem;
+    border-radius: 0.75rem;
     transition: transform 250ms ease-in-out;
     transform: scale(0); }
     .event-modal-wrapper .event-modal .close-btn {
@@ -316,84 +314,90 @@ body {
       .event-modal-wrapper .event-modal .close-btn:hover {
         cursor: pointer;
         transform: scale(1.15); }
-    .event-modal-wrapper .event-modal .inner {
-      position: relative;
-      border-radius: 1rem;
-      overflow: hidden;
-      height: 100%;
-      width: 100%;
+    .event-modal-wrapper .event-modal > .inner {
+      border-radius: 0.5rem;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
-      max-height: 75vh; }
-      .event-modal-wrapper .event-modal .inner img {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        filter: brightness(0.7); }
-      .event-modal-wrapper .event-modal .inner .banner {
+      position: relative;
+      overflow: hidden; }
+      .event-modal-wrapper .event-modal > .inner .banner {
         background-color: rgba(68, 68, 68, 0.85);
         color: white;
         padding: 0.5rem 1rem;
-        flex: 0 0 auto;
         font-weight: 500;
-        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5); }
-        .event-modal-wrapper .event-modal .inner .banner.major {
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+        border-top-left-radius: 0.55rem;
+        border-top-right-radius: 0.55rem;
+        z-index: 1;
+        flex: 0 0 auto; }
+        .event-modal-wrapper .event-modal > .inner .banner.major {
           background-color: #00467f; }
-        .event-modal-wrapper .event-modal .inner .banner.minor {
+        .event-modal-wrapper .event-modal > .inner .banner.minor {
           color: #00467f;
           background-color: #eee; }
-        .event-modal-wrapper .event-modal .inner .banner.seasonal {
+        .event-modal-wrapper .event-modal > .inner .banner.seasonal {
           background-color: #dd5c0f; }
-        .event-modal-wrapper .event-modal .inner .banner.training {
+        .event-modal-wrapper .event-modal > .inner .banner.training {
           background-color: #3ba020; }
-        .event-modal-wrapper .event-modal .inner .banner.convention {
+        .event-modal-wrapper .event-modal > .inner .banner.convention {
           background-color: #5e1394; }
-      .event-modal-wrapper .event-modal .inner .contents {
-        margin: 2rem;
-        padding: 1rem;
-        border-radius: 0.2rem;
-        overflow-y: auto;
+      .event-modal-wrapper .event-modal > .inner .image {
+        flex: 1; }
+        .event-modal-wrapper .event-modal > .inner .image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block; }
+      .event-modal-wrapper .event-modal > .inner .details {
         flex: 1;
-        background: rgba(255, 255, 255, 0.85); }
-        .event-modal-wrapper .event-modal .inner .contents .title {
-          font-size: 1.4rem;
-          font-weight: 700; }
-        .event-modal-wrapper .event-modal .inner .contents .venue,
-        .event-modal-wrapper .event-modal .inner .contents .city {
-          font-size: 1.2rem;
-          font-weight: 400;
-          opacity: 0.8; }
-        .event-modal-wrapper .event-modal .inner .contents .divider {
-          border-top: 1px solid rgba(0, 0, 0, 0.5);
-          margin: 1rem 0; }
-      .event-modal-wrapper .event-modal .inner .cta-links {
-        flex: 0 0 auto;
-        margin: 1rem 2rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem; }
-        .event-modal-wrapper .event-modal .inner .cta-links a {
-          text-decoration: none;
-          padding: 0.75rem 1.25rem;
-          border-radius: 0.25rem;
-          color: white;
-          font-weight: 500;
-          letter-spacing: 1px; }
-          .event-modal-wrapper .event-modal .inner .cta-links a:hover {
-            cursor: pointer; }
-          .event-modal-wrapper .event-modal .inner .cta-links a.info {
-            background-color: #067e6a; }
-          .event-modal-wrapper .event-modal .inner .cta-links a.register {
-            background-color: #c24622; }
-          .event-modal-wrapper .event-modal .inner .cta-links a.add-to-calendar {
-            background-color: #eeeeee;
-            color: #444444; }
+        background: rgba(255, 255, 255, 0.85);
+        padding: 0.75rem; }
+        .event-modal-wrapper .event-modal > .inner .details .columns {
+          display: flex;
+          flex-direction: column; }
+          .event-modal-wrapper .event-modal > .inner .details .columns .text {
+            flex: 1; }
+            .event-modal-wrapper .event-modal > .inner .details .columns .text .title {
+              font-size: 1.6rem;
+              font-weight: 700; }
+            .event-modal-wrapper .event-modal > .inner .details .columns .text .venue,
+            .event-modal-wrapper .event-modal > .inner .details .columns .text .city {
+              font-size: 1.2rem;
+              font-weight: 400;
+              opacity: 0.8; }
+              .event-modal-wrapper .event-modal > .inner .details .columns .text .venue i,
+              .event-modal-wrapper .event-modal > .inner .details .columns .text .city i {
+                margin-right: 0.75rem; }
+          .event-modal-wrapper .event-modal > .inner .details .columns .links {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 0.75rem 0 0.25rem; }
+            .event-modal-wrapper .event-modal > .inner .details .columns .links a {
+              text-decoration: none;
+              padding: 0.3rem 0.65rem;
+              border-radius: 0.22rem;
+              color: white;
+              font-weight: 500;
+              font-size: 0.9rem;
+              height: 2.2rem;
+              display: flex;
+              justify-content: center;
+              align-items: center; }
+              .event-modal-wrapper .event-modal > .inner .details .columns .links a:hover {
+                cursor: pointer; }
+              .event-modal-wrapper .event-modal > .inner .details .columns .links a.info {
+                background-color: #067e6a; }
+              .event-modal-wrapper .event-modal > .inner .details .columns .links a.register {
+                background-color: #c24622; }
+              .event-modal-wrapper .event-modal > .inner .details .columns .links a.add-to-calendar {
+                background-color: #eeeeee;
+                color: #444444; }
+        .event-modal-wrapper .event-modal > .inner .details .description {
+          height: 100%; }
   .event-modal-wrapper.shown {
     opacity: 1; }
     .event-modal-wrapper.shown .event-modal {
@@ -403,7 +407,7 @@ body {
   0% {
     transform: translateX(0rem); }
   50% {
-    transform: translateX(1rem); }
+    transform: translateX(0.8rem); }
   100% {
     transform: translateX(0rem); } }
 
@@ -475,7 +479,11 @@ header {
         height: 100%;
         display: flex;
         justify-content: center;
-        align-items: center; }
+        align-items: center;
+        opacity: 0;
+        transition: opacity 200ms linear; }
+        header .month-text-container .swiper-wrapper .swiper-slide.swiper-slide-active {
+          opacity: 1; }
   header .show-months-btn {
     position: absolute;
     left: -2.4rem;
@@ -485,7 +493,6 @@ header {
     header .show-months-btn:focus {
       outline: none; }
   header .months-dropdown-menu {
-    font-size: 1.4rem;
     position: fixed;
     width: 100vw;
     left: 0;
@@ -508,9 +515,14 @@ header {
       padding: 0.2rem;
       background-color: rgba(0, 0, 0, 0.05);
       color: white;
-      font-weight: 600;
+      font-weight: 500;
+      font-size: 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 0.1rem; }
+      border-radius: 0.13rem;
+      text-shadow: -2px 3px 4px rgba(0, 0, 0, 0.4); }
+      header .months-dropdown-menu .month .year {
+        font-size: 3.4rem;
+        font-weight: 700; }
       header .months-dropdown-menu .month.active {
         background-color: rgba(0, 70, 127, 0.6);
         border: 2px solid rgba(255, 255, 255, 0.75);
@@ -536,7 +548,8 @@ header {
       display: flex;
       flex-direction: column;
       position: relative;
-      transition: filter 300ms ease-in-out; }
+      transition: filter 300ms ease-in-out;
+      overflow-x: hidden; }
       .calendar-swiper .swiper-wrapper .swiper-slide.blur {
         filter: blur(6px) brightness(0.6); }
 
@@ -546,6 +559,7 @@ header {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
   color: white; }
   .hero-container .top,
   .hero-container .bottom {
@@ -566,44 +580,51 @@ header {
       z-index: 1; }
     .hero-container .top .text {
       z-index: 1;
-      padding: 1rem;
-      border-radius: 0.2rem;
+      border-radius: 0.22rem;
       background: rgba(0, 0, 0, 0.12);
       backdrop-filter: blur(0.25rem);
       border: 1px solid rgba(255, 255, 255, 0.5);
       max-width: 30rem;
-      margin: 0.75rem; }
+      margin: 0.75rem;
+      text-align: center; }
       .hero-container .top .text h1 {
         font-size: 6.5rem;
         line-height: 5.5rem;
         font-weight: 700;
-        margin: 0; }
+        margin: 0;
+        padding: 0 1rem; }
       .hero-container .top .text h4 {
         font-size: 1.4rem;
         text-transform: uppercase;
         margin: 0;
-        opacity: 0.7; }
+        opacity: 0.7;
+        padding: 1rem 1rem 0; }
+      .hero-container .top .text div {
+        padding: 1rem;
+        margin-top: 1rem;
+        border-top: 3px solid rgba(255, 255, 255, 0.5);
+        background: rgba(0, 0, 0, 0.65);
+        font-size: 1.1rem; }
   .hero-container .bottom {
     z-index: 1;
     background: #00467f;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-    padding-bottom: 3.5rem; }
+    flex-direction: column; }
     .hero-container .bottom .counter-container {
       display: flex;
       justify-content: center;
       margin: 3rem 1rem 0;
-      align-items: flex-end;
+      align-items: center;
       max-width: 24rem; }
       .hero-container .bottom .counter-container .counter {
         font-size: 5rem;
         font-weight: 700;
-        opacity: 0.75;
+        opacity: 0.65;
         line-height: 0.8; }
-      .hero-container .bottom .counter-container p {
-        font-size: 1.5rem;
+      .hero-container .bottom .counter-container .text {
+        font-size: 1.15rem;
         font-weight: 200;
         margin: 0 0 0 0.75rem;
         padding: 0 0 0 0.5rem;
@@ -612,7 +633,7 @@ header {
     .hero-container .bottom .prompt-container {
       width: 20rem;
       display: flex;
-      margin-bottom: 3.5rem;
+      margin-bottom: 7rem;
       bottom: 0; }
       .hero-container .bottom .prompt-container p {
         flex: 1;
@@ -675,7 +696,7 @@ header {
         font-weight: 700;
         text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6);
         padding: 1.1rem 2.5rem;
-        border-radius: 0.15rem;
+        border-radius: 0.13rem;
         background: rgba(0, 0, 0, 0.12);
         backdrop-filter: blur(0.75rem);
         border: 1px solid rgba(255, 255, 255, 0.5);
@@ -703,7 +724,7 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 0.1rem;
+        border-radius: 0.13rem;
         overflow: hidden;
         box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.5); }
         .calendar-page .top .event-summary .convention-feature i {
@@ -894,8 +915,13 @@ header {
     transform: translateY(1rem); } }
 
 @media (min-width: 576px) {
+  html,
+  body {
+    font-size: 16px; }
   .calendar-page .top .text .inner h2 {
-    font-size: 3.5rem; } }
+    font-size: 3.5rem; }
+  .hero-container .bottom .counter-container .text {
+    font-size: 1.5rem; } }
 
 @media (min-width: 768px) {
   header .months-dropdown-menu {
@@ -913,7 +939,7 @@ header {
     .calendar-page .top .event-summary .summary-columns {
       display: flex; }
   .calendar-container .calendar {
-    border-radius: 0.2rem;
+    border-radius: 0.22rem;
     overflow: hidden; }
     .calendar-container .calendar .weekdays {
       display: grid;
@@ -958,7 +984,7 @@ header {
           overflow-y: auto;
           overflow-x: hidden; }
           .calendar-container .calendar .grid .day-square .contents .day-event {
-            border-radius: 0.1rem; }
+            border-radius: 0.13rem; }
             .calendar-container .calendar .grid .day-square .contents .day-event:hover {
               box-shadow: 0px 0px 10px white; }
             .calendar-container .calendar .grid .day-square .contents .day-event span {
@@ -982,7 +1008,17 @@ header {
               display: inline-block;
               padding: 0.02rem 0.5rem; }
         .calendar-container .calendar .grid .day-square .banner .mbl-weekday-text {
-          display: none; } }
+          display: none; }
+  .hero-container .top .text h1 {
+    font-size: 10rem;
+    line-height: 7.7rem; }
+  .hero-container .top .text h4 {
+    font-size: 2.1rem; }
+  .event-modal-wrapper .event-modal > .inner .details .columns {
+    flex-direction: row;
+    align-items: center; }
+    .event-modal-wrapper .event-modal > .inner .details .columns .links {
+      margin: 0; } }
 
 @media (min-width: 992px) {
   header .months-dropdown-menu {
@@ -999,8 +1035,8 @@ header {
     font-size: 6rem;
     padding: 3rem 3.8rem; }
   .hero-container .bottom .counter-container {
-    max-width: 33rem; }
+    max-width: 34rem; }
     .hero-container .bottom .counter-container .counter {
       font-size: 7rem; }
-    .hero-container .bottom .counter-container p {
+    .hero-container .bottom .counter-container .text {
       font-size: 2.2rem; } }

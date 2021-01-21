@@ -115,6 +115,8 @@ function console_log($output, $with_script_tags = true) {
             $tags_arr = null;
         };
 
+        $gcal = tribe_get_gcal_link($event_ID);
+
         $formatted_event = array (
             'ID' => $event_ID,
             'title' => $post->post_title,
@@ -132,7 +134,8 @@ function console_log($output, $with_script_tags = true) {
             'featured' => $featured,
             'URL' => $URL,
             'image' => $image,
-            'reg_link' => $reg_link
+            'reg_link' => $reg_link,
+            'gcal_link' => $gcal,
         );
 
         $month_num = (int)$formatted_event['start_date']['month'];
@@ -140,6 +143,8 @@ function console_log($output, $with_script_tags = true) {
         array_push($sorted_events[$months[$month_num - 1]], $formatted_event);
 
     }
+
+    console_log($sorted_events);
     
 
     echo ('<script> var __calEvents = ' . json_encode($sorted_events) . ';</script>')
@@ -235,7 +240,7 @@ function console_log($output, $with_script_tags = true) {
 
         <div class="months-dropdown-menu">
             <div class="month">
-                <span><?php echo date('Y'); ?> | January</span>
+                <span class="year"><?php echo date('Y'); ?></span>
             </div>
             <div class="month">
                 <span>February</span>
@@ -282,7 +287,6 @@ function console_log($output, $with_script_tags = true) {
             <div class="inner">
 
 
-
             </div>
 
         
@@ -305,7 +309,8 @@ function console_log($output, $with_script_tags = true) {
                             <h4>What's on for your</h4>
                             <h1><?php echo date('Y'); ?></h1>
 
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, cum commodi nihil nostrum ab deleniti! Aspernatur repellat nobis blanditiis quia asperiores adipisci maiores et saepe.</p>
+                            <div><p>Your guide to First National's scheduled events for the year.</p><p>Find out about training, conferences, convention, awards and other events scheduled for this year.</p></div>
+
 
 
 
@@ -320,7 +325,7 @@ function console_log($output, $with_script_tags = true) {
 
                             <div class="counter"><?php echo $fn_events; ?></div>
 
-                            <p>First National events scheduled for <?php echo date('Y'); ?>.</p>
+                            <div class="text">First National events scheduled for <?php echo date('Y'); ?>.</div>
 
 
 

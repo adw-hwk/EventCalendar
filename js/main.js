@@ -178,15 +178,13 @@ window.addEventListener("load", () => {
                                         type: event.type,
 
                                         finishDate: !(
-                                                event.end_date.month == event.start_date.month &&
-                                                event.end_date.day == event.start_date.day
-                                            ) ?
-                                            {
-                                                day: event.end_date.day,
-                                                month: event.end_date.month,
-                                                dayOfWeek: days[endWeekday],
-                                            } :
-                                            null,
+                                            event.end_date.month == event.start_date.month &&
+                                            event.end_date.day == event.start_date.day
+                                        ) ? {
+                                            day: event.end_date.day,
+                                            month: event.end_date.month,
+                                            dayOfWeek: days[endWeekday],
+                                        } : null,
 
                                         startDate: {
                                             day: event.start_date.day,
@@ -201,8 +199,7 @@ window.addEventListener("load", () => {
                                         venue: event.venue ? event.venue.name : null,
 
                                         time: !event.all_day ?
-                                            `${event.start_date.hour}:${event.start_date.minute} - ${event.end_date.hour}:${event.end_date.minutes}` :
-                                            null,
+                                            `${event.start_date.hour}:${event.start_date.minute} - ${event.end_date.hour}:${event.end_date.minutes}` : null,
 
                                         description: event.description.length > 0 ? event.description : null,
                                     };
@@ -614,9 +611,7 @@ window.addEventListener("load", () => {
 
         let HTML = "";
 
-        if (event.image) {
-          HTML += `<img src="${event.image.large}" alt="${event.title}">`;
-        }
+
 
         HTML += `<div class="banner ${
           event.tags !== null && event.tags.includes("convention")
@@ -634,7 +629,13 @@ window.addEventListener("load", () => {
               } ${event.end_date.day} ${months[event.end_date.month - 1]}`
         }</span></div>`;
 
-        HTML += `<div class="contents">${
+        if (event.image) {
+            HTML += `<div class="image"><img src="${event.image.large}" alt="${event.title}"></div>`;
+          }
+
+          HTML += '<div class="details"><div class="columns">';
+
+        HTML += `<div class="text">${
           event.title.length > 0
             ? `<div class="title">${event.title}</div>`
             : ``
@@ -642,29 +643,36 @@ window.addEventListener("load", () => {
           event.venue !== null
             ? `${
                 event.venue.name !== undefined
-                  ? `<div class="venue">${event.venue.name}</div>`
+                  ? `<div class="venue"><i class="fas fa-building"></i>${event.venue.name}</div>`
                   : ``
               }${
                 event.venue.city !== undefined
-                  ? `<div class="city">${event.venue.city}</div>`
+                  ? `<div class="city"><i class="fas fa-map-marked-alt"></i>${event.venue.city}</div>`
                   : ``
               }`
             : ``
-        }${
-          event.description.length > 0
-            ? `<div class="description"><div class="divider"></div>${event.description}</div>`
-            : ``
         }</div>`;
 
-        HTML += `<div class="cta-links"><a class="add-to-calendar" target="_blank">Add to calendar</a>${
-          event.URL == null
-            ? ``
-            : `<a class="info" href="${event.URL}" target="_blank">More info</a>`
-        }${
-          event.reg_link == null
-            ? ``
-            : `<a class="register" href="${event.reg_link}" target="_blank">Register</a>`
-        }</div>`;
+        HTML += `<div class="links"><a class="add-to-calendar" target="_blank">Add to calendar</a>${
+            event.URL == null
+              ? ``
+              : `<a class="info" href="${event.URL}" target="_blank">More info</a>`
+          }${
+            event.reg_link == null
+              ? ``
+              : `<a class="register" href="${event.reg_link}" target="_blank">Register</a>`
+          }`;
+
+        HTML += `</div>`;
+
+        HTML += '</div>';
+
+        HTML += `<div class="description"><div class="inner">${event.description}</div></div>`;
+
+        HTML += '</div>';
+
+
+
 
         modalContents.innerHTML = HTML;
 
@@ -730,6 +738,8 @@ window.addEventListener("load", () => {
                 event.start_date.UTC,
                 event.end_date.UTC
               );
+              dataCtrl.state.currentEvent = event;
+
               UICtrl.openEventModal(event);
             }
           });
@@ -741,11 +751,12 @@ window.addEventListener("load", () => {
       });
 
       UICtrl.DOM.eventModalContents.addEventListener("click", (e) => {
+          console.log(e);
         if (
           e.target.closest("a") ==
           document.querySelector(".event-modal .add-to-calendar")
         ) {
-          dataCtrl.ics.download();
+          dataCtrl.ics.download(`${dataCtrl.state.currentEvent.title.replace(' ', '').replace('\'', '').replace('/', '')}`);
         }
       });
 
@@ -768,27 +779,6 @@ window.addEventListener("load", () => {
         } else {
           UICtrl.showDropdownMenu();
         }
-      });
-
-      UICtrl.DOM.monthSlides.forEach((slide) => {
-        const prompt = slide.querySelector(".scroll-prompt");
-        const hero = slide.querySelector(".hero-wrapper");
-        slide.addEventListener("scroll", () => {
-          // with header height set to 5rem in CSS, the top value when fully scrolled to the top of the container is 80
-          const heroRect = hero.getBoundingClientRect();
-
-          const heroTop = heroRect.top;
-          const heroHeight = heroRect.height;
-
-          // what the below does is set the opacity to 0 as you scroll
-          // the assignment directly below sets opacity to 0 by the time you
-          // get to 1/10 way down the hero section (heroHeight / 10)
-          let opacity = 1 - (80 - heroTop) / (heroHeight / 10);
-
-          opacity = opacity >= 0 ? opacity : 0;
-
-          prompt.style.opacity = opacity.toString();
-        });
       });
     };
 
@@ -866,6 +856,7 @@ window.addEventListener("load", () => {
               },
             },
             simulateTouch: false,
+            spaceBetween: 0,
             on: {
               init: function () {
                 const slide = UICtrl.DOM.monthSlides[this.activeIndex];

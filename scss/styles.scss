@@ -8,6 +8,11 @@ $cl-bodygrey: #444444;
 $cl-whitegrey: #eeeeee;
 $cl-feature-purple: rgb(94, 19, 148);
 $cl-headerbg: #dfdfdf;
+$br-sm: 0.13rem;
+$br-md: 0.22rem;
+$br-lg: 0.5rem;
+$br-xl: 0.75rem;
+$br-xxl: 1rem;
 @media all and (-ms-high-contrast: none),
 (-ms-high-contrast: active) {
     #page-wrapper {
@@ -33,6 +38,7 @@ body {
     height: 100%;
     font-family: "Jost";
     color: $cl-bodygrey;
+    font-size: 14px;
 }
 
 body {
@@ -254,27 +260,25 @@ body {
 .event-modal-wrapper {
     position: fixed;
     height: 100%;
-    width: 100%;
+    min-height: 100vh;
+    width: 100vw;
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: -5000;
-    display: flex;
     opacity: 0;
-    justify-content: center;
-    align-items: center;
     transition: opacity 250ms ease-in-out;
+    padding: 0.75rem 0.75rem 3.75rem;
+    overflow-y: auto;
     .event-modal {
         position: relative;
-        // overflow: hidden;
-        width: 35rem;
-        max-width: 100%;
-        max-height: 100%;
-        margin: 1rem;
-        height: auto;
+        // width: 100%;
+        // height: 100%;
+        max-width: 40rem;
+        margin: 5rem auto 0;
         background: #fff;
         z-index: 1000;
-        border-radius: 1rem;
+        border-radius: $br-xl;
         transition: transform 250ms ease-in-out;
         transform: scale(0);
         .close-btn {
@@ -298,34 +302,24 @@ body {
                 transform: scale(1.15);
             }
         }
-        .inner {
-            position: relative;
-            border-radius: 1rem;
-            overflow: hidden;
-            height: 100%;
-            width: 100%;
+        &>.inner {
+            border-radius: $br-lg;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            max-height: 75vh;
-            img {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                filter: brightness(0.7);
-            }
+            position: relative;
+            overflow: hidden;
             .banner {
                 background-color: rgba($cl-bodygrey, 0.85);
                 color: white;
                 padding: 0.5rem 1rem;
-                flex: 0 0 auto;
                 font-weight: 500;
                 box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+                border-top-left-radius: 0.55rem;
+                border-top-right-radius: 0.55rem;
+                z-index: 1;
+                flex: 0 0 auto;
                 &.major {
                     background-color: $cl-fnblue;
                 }
@@ -343,58 +337,77 @@ body {
                     background-color: $cl-feature-purple;
                 }
             }
-            .contents {
-                margin: 2rem;
-                padding: 1rem;
-                border-radius: 0.2rem;
-                // background: rgba(68, 68, 68, 0.85);
-                overflow-y: auto;
-                // backdrop-filter: blur(5px);
+            .image {
                 flex: 1;
-                background: rgba(255, 255, 255, 0.85);
-                .title {
-                    font-size: 1.4rem;
-                    font-weight: 700;
-                }
-                .venue,
-                .city {
-                    font-size: 1.2rem;
-                    font-weight: 400;
-                    opacity: 0.8;
-                }
-                .divider {
-                    border-top: 1px solid rgba(0, 0, 0, 0.5);
-                    margin: 1rem 0;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
                 }
             }
-            .cta-links {
-                flex: 0 0 auto;
-                margin: 1rem 2rem;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1rem;
-                a {
-                    text-decoration: none;
-                    padding: 0.75rem 1.25rem;
-                    border-radius: 0.25rem;
-                    color: white;
-                    font-weight: 500;
-                    letter-spacing: 1px;
-                    // margin-right: 0.5rem;
-                    // margin-bottom: 0.5rem;
-                    &:hover {
-                        cursor: pointer;
+            .details {
+                flex: 1;
+                // background: rgba(68, 68, 68, 0.85);
+                // backdrop-filter: blur(5px);
+                background: rgba(255, 255, 255, 0.85);
+                padding: 0.75rem;
+                .columns {
+                    display: flex;
+                    flex-direction: column;
+                    .text {
+                        flex: 1;
+                        .title {
+                            font-size: 1.6rem;
+                            font-weight: 700;
+                        }
+                        .venue,
+                        .city {
+                            font-size: 1.2rem;
+                            font-weight: 400;
+                            opacity: 0.8;
+                            i {
+                                margin-right: 0.75rem;
+                            }
+                        }
                     }
-                    &.info {
-                        background-color: rgba(6, 126, 106, 1);
+                    .links {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        margin: 0.75rem 0 0.25rem;
+                        a {
+                            text-decoration: none;
+                            padding: 0.3rem 0.65rem;
+                            border-radius: $br-md;
+                            color: white;
+                            font-weight: 500;
+                            font-size: 0.9rem;
+                            // margin-right: 0.5rem;
+                            // margin-bottom: 0.5rem;
+                            height: 2.2rem;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            &:hover {
+                                cursor: pointer;
+                            }
+                            &.info {
+                                background-color: rgba(6, 126, 106, 1);
+                            }
+                            &.register {
+                                background-color: rgba(194, 70, 34, 1);
+                            }
+                            &.add-to-calendar {
+                                background-color: $cl-whitegrey;
+                                color: $cl-bodygrey;
+                            }
+                        }
                     }
-                    &.register {
-                        background-color: rgba(194, 70, 34, 1);
-                    }
-                    &.add-to-calendar {
-                        background-color: $cl-whitegrey;
-                        color: $cl-bodygrey;
-                    }
+                }
+                .description {
+                    height: 100%;
                 }
             }
         }
@@ -412,7 +425,7 @@ body {
         transform: translateX(0rem);
     }
     50% {
-        transform: translateX(1rem);
+        transform: translateX(0.8rem);
     }
     100% {
         transform: translateX(0rem);
@@ -497,6 +510,11 @@ header {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                opacity: 0;
+                transition: opacity 200ms linear;
+                &.swiper-slide-active {
+                    opacity: 1;
+                }
             }
         }
     }
@@ -511,7 +529,6 @@ header {
         }
     }
     .months-dropdown-menu {
-        font-size: 1.4rem;
         position: fixed;
         width: 100vw;
         left: 0;
@@ -535,9 +552,15 @@ header {
             padding: 0.2rem;
             background-color: rgba(0, 0, 0, 0.05);
             color: white;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 0.1rem;
+            border-radius: $br-sm;
+            text-shadow: -2px 3px 4px rgba(0, 0, 0, 0.4);
+            .year {
+                font-size: 3.4rem;
+                font-weight: 700;
+            }
             &.active {
                 background-color: rgba($cl-fnblue, 0.6);
                 border: 2px solid rgba(255, 255, 255, 0.75);
@@ -569,6 +592,7 @@ header {
             flex-direction: column;
             position: relative;
             transition: filter 300ms ease-in-out;
+            overflow-x: hidden;
             &.blur {
                 filter: blur(6px) brightness(0.6);
             }
@@ -582,6 +606,7 @@ header {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     color: white;
     .top,
     .bottom {
@@ -605,24 +630,33 @@ header {
         }
         .text {
             z-index: 1;
-            padding: 1rem;
-            border-radius: 0.2rem;
+            border-radius: $br-md;
             background: rgba(0, 0, 0, 0.12);
             backdrop-filter: blur(0.25rem);
             border: 1px solid rgba(255, 255, 255, 0.5);
             max-width: 30rem;
             margin: 0.75rem;
+            text-align: center;
             h1 {
                 font-size: 6.5rem;
                 line-height: 5.5rem;
                 font-weight: 700;
                 margin: 0;
+                padding: 0 1rem;
             }
             h4 {
                 font-size: 1.4rem;
                 text-transform: uppercase;
                 margin: 0;
                 opacity: 0.7;
+                padding: 1rem 1rem 0;
+            }
+            div {
+                padding: 1rem;
+                margin-top: 1rem;
+                border-top: 3px solid rgba(255, 255, 255, 0.5);
+                background: rgba(0, 0, 0, 0.65);
+                font-size: 1.1rem;
             }
         }
     }
@@ -642,21 +676,20 @@ header {
         justify-content: space-between;
         align-items: center;
         flex-direction: column;
-        padding-bottom: 3.5rem;
         .counter-container {
             display: flex;
             justify-content: center;
             margin: 3rem 1rem 0;
-            align-items: flex-end;
+            align-items: center;
             max-width: 24rem;
             .counter {
                 font-size: 5rem;
                 font-weight: 700;
-                opacity: 0.75;
+                opacity: 0.65;
                 line-height: 0.8;
             }
-            p {
-                font-size: 1.5rem;
+            .text {
+                font-size: 1.15rem;
                 font-weight: 200;
                 margin: 0 0 0 0.75rem;
                 padding: 0 0 0 0.5rem;
@@ -667,7 +700,7 @@ header {
         .prompt-container {
             width: 20rem;
             display: flex;
-            margin-bottom: 3.5rem;
+            margin-bottom: 7rem;
             bottom: 0;
             p {
                 flex: 1;
@@ -739,7 +772,7 @@ header {
                     font-weight: 700;
                     text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6);
                     padding: 1.1rem 2.5rem;
-                    border-radius: 0.15rem;
+                    border-radius: $br-sm;
                     background: rgba(0, 0, 0, 0.12);
                     backdrop-filter: blur(0.75rem);
                     border: 1px solid rgba(255, 255, 255, 0.5);
@@ -773,7 +806,7 @@ header {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border-radius: 0.1rem;
+                border-radius: $br-sm;
                 overflow: hidden;
                 box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.5);
                 i {
@@ -815,7 +848,7 @@ header {
                 &>div {
                     display: flex;
                     flex-direction: column;
-                    border-radius: 0.13rem;
+                    border-radius: $br-sm;
                     overflow: hidden;
                     flex: 0 1 20rem;
                     .banner {
@@ -896,7 +929,7 @@ header {
                 // -webkit-backdrop-filter: blur(3px);
                 background: rgba(255, 255, 255, 0.15);
                 margin: 0.75rem 0;
-                border-radius: 1rem;
+                border-radius: $br-xxl;
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
@@ -945,7 +978,7 @@ header {
                         // justify-content: center;
                         align-items: stretch;
                         color: white;
-                        border-radius: 0.75rem;
+                        border-radius: $br-xl;
                         overflow: hidden;
                         font-weight: 500;
                         &:hover {
@@ -1040,6 +1073,10 @@ header {
 }
 
 @media (min-width: 576px) {
+    html,
+    body {
+        font-size: 16px;
+    }
     .calendar-page {
         .top {
             .text {
@@ -1047,6 +1084,15 @@ header {
                     h2 {
                         font-size: 3.5rem;
                     }
+                }
+            }
+        }
+    }
+    .hero-container {
+        .bottom {
+            .counter-container {
+                .text {
+                    font-size: 1.5rem;
                 }
             }
         }
@@ -1088,7 +1134,7 @@ header {
     }
     .calendar-container {
         .calendar {
-            border-radius: 0.2rem;
+            border-radius: $br-md;
             overflow: hidden;
             .weekdays {
                 display: grid;
@@ -1143,7 +1189,7 @@ header {
                         overflow-y: auto;
                         overflow-x: hidden;
                         .day-event {
-                            border-radius: 0.1rem;
+                            border-radius: $br-sm;
                             &:hover {
                                 box-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
                             }
@@ -1179,6 +1225,35 @@ header {
                     .banner {
                         .mbl-weekday-text {
                             display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .hero-container {
+        .top {
+            .text {
+                // text-align: left;
+                h1 {
+                    font-size: 10rem;
+                    line-height: 7.7rem;
+                }
+                h4 {
+                    font-size: 2.1rem;
+                }
+            }
+        }
+    }
+    .event-modal-wrapper {
+        .event-modal {
+            &>.inner {
+                .details {
+                    .columns {
+                        flex-direction: row;
+                        align-items: center;
+                        .links {
+                            margin: 0;
                         }
                     }
                 }
@@ -1225,11 +1300,11 @@ header {
     .hero-container {
         .bottom {
             .counter-container {
-                max-width: 33rem;
+                max-width: 34rem;
                 .counter {
                     font-size: 7rem;
                 }
-                p {
+                .text {
                     font-size: 2.2rem;
                 }
             }
