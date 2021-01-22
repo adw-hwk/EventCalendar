@@ -367,13 +367,16 @@ body {
               font-size: 1.6rem;
               font-weight: 700; }
             .event-modal-wrapper .event-modal > .inner .details .columns .text .venue,
-            .event-modal-wrapper .event-modal > .inner .details .columns .text .city {
+            .event-modal-wrapper .event-modal > .inner .details .columns .text .city,
+            .event-modal-wrapper .event-modal > .inner .details .columns .text .time {
               font-size: 1.2rem;
               font-weight: 400;
               opacity: 0.8; }
               .event-modal-wrapper .event-modal > .inner .details .columns .text .venue i,
-              .event-modal-wrapper .event-modal > .inner .details .columns .text .city i {
-                margin-right: 0.75rem; }
+              .event-modal-wrapper .event-modal > .inner .details .columns .text .city i,
+              .event-modal-wrapper .event-modal > .inner .details .columns .text .time i {
+                display: inline-block;
+                width: 2rem; }
           .event-modal-wrapper .event-modal > .inner .details .columns .links {
             display: flex;
             flex-direction: row;

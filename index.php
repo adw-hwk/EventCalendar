@@ -51,9 +51,12 @@ function console_log($output, $with_script_tags = true) {
 
     $homepage_events = array();
 
+
     foreach($events as $event) {
 
         $post = get_post($event);
+
+
 
         $event_ID = $post->ID;
 
@@ -89,8 +92,7 @@ function console_log($output, $with_script_tags = true) {
 
         $venue_obj = $venueID !== null ? tribe_get_venue_object($venueID) : null;
 
-        // we're assuming no events that have time periods are going to start at midnight
-        $all_day_condition = $start_date_arr[$hour] == 0;
+        $all_day = $meta['_EventAllDay'][0] == "yes" ? true : false;
         
         $featured = $meta['_tribe_featured'][0] == "1" ? true : false;
 
@@ -122,7 +124,7 @@ function console_log($output, $with_script_tags = true) {
             'title' => $post->post_title,
             'start_date' => $start_date_arr,
             'end_date' => $end_date_arr,
-            'all_day' => $all_day_condition ? true : false,
+            'all_day' => $all_day,
             'venue' => $venue_obj == null ? null : array(
                 'name' => $venue_obj -> post_title,
                 'city' => $venue_obj -> city,
@@ -142,10 +144,9 @@ function console_log($output, $with_script_tags = true) {
 
         array_push($sorted_events[$months[$month_num - 1]], $formatted_event);
 
-    }
-
-    console_log($sorted_events);
+    }   
     
+    console_log($sorted_events);
 
     echo ('<script> var __calEvents = ' . json_encode($sorted_events) . ';</script>')
 
