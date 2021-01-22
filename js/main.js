@@ -147,6 +147,23 @@ window.addEventListener("load", () => {
                             fadeEls: ".fade-in",
                         };
 
+                        const getEventClass = (event) => {
+                            const isConvention = event.tags !== null && event.tags.includes("convention") ? true : false;
+                            const isCommercial = event.tags !== null && event.tags.includes("commercial") ? true : false;
+
+                            let eventClass;
+
+                            if (isCommercial) {
+                                eventClass = 'commercial';
+                            } else if (isConvention) {
+                                eventClass = 'convention';
+                            } else {
+                                eventClass = event.type;
+                            }
+
+                            return eventClass;
+                        };
+
                         return {
                             DOM: DOM,
 
@@ -364,6 +381,8 @@ window.addEventListener("load", () => {
         DOM.dropdownMonthArr[currentMonth].classList.add("active");
       },
 
+
+
       writeCalendarGrid: (month, events) => {
         const getDaysInMonth = (monthNum, year) => {
           return new Date(year, monthNum, 0).getDate();
@@ -373,18 +392,14 @@ window.addEventListener("load", () => {
           let eventList = "";
 
           events.forEach((event) => {
-            const isConvention =
-              event.tags !== null && event.tags.includes("convention")
-                ? true
-                : false;
+
+            const eventClass = getEventClass(event);
 
             if (
               event.start_date.day == day ||
               (event.end_date.day >= day && event.start_date.day < day)
             ) {
-              eventList += `<div class="day-event ${
-                isConvention ? `convention` : event.type
-              }" data-event-id="${event.ID}">${
+              eventList += `<div class="day-event ${eventClass}" data-event-id="${event.ID}">${
                 event.type === "seasonal" ? `` : `<div class="color-bar"></div>`
               }<span>${event.title}</span></div>`;
             }
@@ -611,13 +626,16 @@ window.addEventListener("load", () => {
 
         let HTML = "";
 
+        let enquiryEmail = {
+          'major': 'events@firstnational.com.au',
+          'minor': 'events@firstnational.com.au',
+          'training': 'training@firstnational.com.au',
+          'seasonal': null
+        };
 
+        const eventClass = getEventClass(event);
 
-        HTML += `<div class="banner ${
-          event.tags !== null && event.tags.includes("convention")
-            ? `convention`
-            : event.type
-        }"><span class="date">${
+        HTML += `<div class="banner ${eventClass}"><span class="date">${
           event.end_date.day === event.start_date.day
             ? `${days[new Date(event.start_date.UTC).getDay()]} ${
                 event.start_date.day
@@ -633,7 +651,7 @@ window.addEventListener("load", () => {
             HTML += `<div class="image"><img src="${event.image.large}" alt="${event.title}"></div>`;
           }
 
-          HTML += '<div class="details"><div class="columns">';
+          HTML += `<div class="details"><div class="columns ${eventClass}">`;
 
         HTML += `<div class="text">${
           event.title.length > 0
@@ -653,7 +671,7 @@ window.addEventListener("load", () => {
             : ``
         }</div>`;
 
-        HTML += `<div class="links"><a class="add-to-calendar" target="_blank">Add to calendar</a>${
+        HTML += `<div class="links"><a class="add-to-calendar" target="_blank">Add to calendar</a>${enquiryEmail[event.type] !== null ? `<a href="mailto:${enquiryEmail[event.type]}?subject=Enquiry%20about%20${event.title.replace(' ', '%20')}&body=Hi%20FN%20${event.type == 'training' ? 'Training' : 'Events'}%20team%2C%0D%0A%0D%0A" class="enquiry">Enquire</a>` : ``}${
             event.URL == null
               ? ``
               : `<a class="info" href="${event.URL}" target="_blank">More info</a>`
@@ -667,7 +685,7 @@ window.addEventListener("load", () => {
 
         HTML += '</div>';
 
-        HTML += `<div class="description"><div class="inner">${event.description}</div></div>`;
+        HTML += event.description.length > 0 ? `<div class="description"><div class="inner">${event.description}</div></div>` : '';
 
         HTML += '</div>';
 

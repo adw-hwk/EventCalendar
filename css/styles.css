@@ -336,11 +336,13 @@ body {
           background-color: #00467f; }
         .event-modal-wrapper .event-modal > .inner .banner.minor {
           color: #00467f;
-          background-color: #eee; }
+          background-color: #fff; }
         .event-modal-wrapper .event-modal > .inner .banner.seasonal {
           background-color: #dd5c0f; }
         .event-modal-wrapper .event-modal > .inner .banner.training {
-          background-color: #3ba020; }
+          background-color: #1e8e00; }
+        .event-modal-wrapper .event-modal > .inner .banner.commercial {
+          background-color: #D2000F; }
         .event-modal-wrapper .event-modal > .inner .banner.convention {
           background-color: #5e1394; }
       .event-modal-wrapper .event-modal > .inner .image {
@@ -352,11 +354,13 @@ body {
           display: block; }
       .event-modal-wrapper .event-modal > .inner .details {
         flex: 1;
-        background: rgba(255, 255, 255, 0.85);
-        padding: 0.75rem; }
+        background: #eeeeee; }
         .event-modal-wrapper .event-modal > .inner .details .columns {
           display: flex;
-          flex-direction: column; }
+          flex-direction: column;
+          padding: 1.25rem;
+          background-color: #444;
+          color: white; }
           .event-modal-wrapper .event-modal > .inner .details .columns .text {
             flex: 1; }
             .event-modal-wrapper .event-modal > .inner .details .columns .text .title {
@@ -375,10 +379,12 @@ body {
             flex-direction: row;
             flex-wrap: wrap;
             align-items: center;
-            margin: 0.75rem 0 0.25rem; }
+            margin: 0.75rem 0 0.25rem;
+            gap: 0.4rem;
+            flex: 0 0 auto; }
             .event-modal-wrapper .event-modal > .inner .details .columns .links a {
               text-decoration: none;
-              padding: 0.3rem 0.65rem;
+              padding: 0.15rem 0.5rem;
               border-radius: 0.22rem;
               color: white;
               font-weight: 500;
@@ -396,8 +402,26 @@ body {
               .event-modal-wrapper .event-modal > .inner .details .columns .links a.add-to-calendar {
                 background-color: #eeeeee;
                 color: #444444; }
+              .event-modal-wrapper .event-modal > .inner .details .columns .links a.enquiry {
+                background-color: #444444;
+                color: #eeeeee; }
+          .event-modal-wrapper .event-modal > .inner .details .columns.major {
+            background-color: rgba(0, 70, 127, 0.85); }
+          .event-modal-wrapper .event-modal > .inner .details .columns.minor {
+            background-color: rgba(68, 68, 68, 0.7); }
+          .event-modal-wrapper .event-modal > .inner .details .columns.seasonal {
+            background-color: rgba(221, 92, 15, 0.7); }
+          .event-modal-wrapper .event-modal > .inner .details .columns.convention {
+            background-color: rgba(94, 19, 148, 0.85); }
+          .event-modal-wrapper .event-modal > .inner .details .columns.training {
+            background-color: rgba(30, 142, 0, 0.7); }
+          .event-modal-wrapper .event-modal > .inner .details .columns.commercial {
+            background-color: rgba(210, 0, 15, 0.7); }
         .event-modal-wrapper .event-modal > .inner .details .description {
-          height: 100%; }
+          height: 100%;
+          background-color: #eeeeee; }
+          .event-modal-wrapper .event-modal > .inner .details .description .inner {
+            padding: 1.25rem; }
   .event-modal-wrapper.shown {
     opacity: 1; }
     .event-modal-wrapper.shown .event-modal {
@@ -561,15 +585,13 @@ header {
   overflow-y: auto;
   overflow-x: hidden;
   color: white; }
-  .hero-container .top,
-  .hero-container .bottom {
-    flex: 1; }
   .hero-container .top {
     z-index: 2;
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    flex: 1; }
     .hero-container .top .hero-bg-img {
       position: absolute;
       top: 0;
@@ -611,11 +633,12 @@ header {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-direction: column; }
+    flex-direction: column;
+    flex: 0 0 auto; }
     .hero-container .bottom .counter-container {
       display: flex;
       justify-content: center;
-      margin: 3rem 1rem 0;
+      margin: 3rem 1rem 1.5rem;
       align-items: center;
       max-width: 24rem; }
       .hero-container .bottom .counter-container .counter {
@@ -632,7 +655,7 @@ header {
         border-left: 2px solid rgba(255, 255, 255, 0.5); }
     .hero-container .bottom .prompt-container {
       width: 20rem;
-      margin-bottom: 7rem;
+      margin-bottom: 4.5rem;
       bottom: 0; }
       .hero-container .bottom .prompt-container p {
         margin: 0;
@@ -709,9 +732,6 @@ header {
         text-align: center;
         border: 2px solid rgba(255, 255, 255, 0.6);
         background: rgba(94, 19, 148, 0.5);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
         text-transform: uppercase;
         display: flex;
         justify-content: center;
@@ -746,7 +766,9 @@ header {
         gap: 0.13rem;
         width: 45rem;
         max-width: 100%;
-        margin: 1rem; }
+        margin: 1rem;
+        font-size: 1.1rem;
+        font-weight: 500; }
         .calendar-page .top .event-summary .summary-columns > div {
           display: flex;
           flex-direction: column;
@@ -765,18 +787,17 @@ header {
             flex: 1; }
             .calendar-page .top .event-summary .summary-columns > div .contents .list-event {
               padding-left: 0.5rem;
-              margin: 0.3rem 0;
+              margin: 0.4rem 0;
               border-left: 3px solid;
               line-height: 1.1; }
         .calendar-page .top .event-summary .summary-columns .major .banner {
           background: rgba(0, 70, 127, 0.85); }
         .calendar-page .top .event-summary .summary-columns .major .contents .list-event {
-          border-color: rgba(0, 70, 127, 0.85);
-          font-weight: 500; }
+          border-color: rgba(0, 70, 127, 0.85); }
         .calendar-page .top .event-summary .summary-columns .training .banner {
-          background: rgba(59, 160, 32, 0.85); }
+          background: rgba(30, 142, 0, 0.85); }
         .calendar-page .top .event-summary .summary-columns .training .contents .list-event {
-          border-color: rgba(59, 160, 32, 0.85); }
+          border-color: rgba(30, 142, 0, 0.85); }
         .calendar-page .top .event-summary .summary-columns .seasonal .banner {
           background: rgba(221, 92, 15, 0.85); }
         .calendar-page .top .event-summary .summary-columns .seasonal .contents .list-event {
@@ -834,7 +855,7 @@ header {
           flex: 1;
           display: flex;
           flex-direction: column;
-          padding: 0.25rem;
+          padding: 0.2rem;
           gap: 0.25rem; }
           .calendar-container .calendar .grid .day-square .contents .day-event {
             display: flex;
@@ -842,7 +863,9 @@ header {
             color: white;
             border-radius: 0.75rem;
             overflow: hidden;
-            font-weight: 500; }
+            font-weight: 500;
+            font-size: 0.9rem;
+            line-height: 1.2; }
             .calendar-container .calendar .grid .day-square .contents .day-event:hover {
               cursor: pointer; }
             .calendar-container .calendar .grid .day-square .contents .day-event .color-bar {
@@ -854,16 +877,18 @@ header {
               align-items: center; }
           .calendar-container .calendar .grid .day-square .contents .major {
             order: 3;
-            background-color: rgba(0, 70, 127, 0.9);
+            background-color: rgba(0, 70, 127, 0.95);
             color: white;
-            font-size: 1.1rem; }
+            font-size: 1.1rem;
+            flex: 1; }
             .calendar-container .calendar .grid .day-square .contents .major .color-bar {
               background-color: #eeeeee; }
             .calendar-container .calendar .grid .day-square .contents .major span {
-              padding: 2.2rem 1rem; }
+              padding: 2rem 1rem; }
           .calendar-container .calendar .grid .day-square .contents .convention {
+            flex: 2;
             order: 2;
-            background-color: rgba(94, 19, 148, 0.9);
+            background-color: rgba(94, 19, 148, 0.95);
             color: white;
             font-size: 1.1rem;
             border: 1px solid rgba(255, 255, 255, 0.7); }
@@ -873,28 +898,36 @@ header {
               padding: 2.2rem 1rem; }
           .calendar-container .calendar .grid .day-square .contents .minor {
             order: 4;
-            background-color: rgba(238, 238, 238, 0.9);
+            background-color: rgba(238, 238, 238, 0.95);
             color: #00467f;
-            font-size: 1rem; }
+            font-size: 1rem;
+            flex: 0; }
             .calendar-container .calendar .grid .day-square .contents .minor .color-bar {
               background-color: #00467f; }
             .calendar-container .calendar .grid .day-square .contents .minor span {
               padding: 0.5rem 1rem; }
-          .calendar-container .calendar .grid .day-square .contents .training {
+          .calendar-container .calendar .grid .day-square .contents .training,
+          .calendar-container .calendar .grid .day-square .contents .commercial {
             order: 5;
-            background-color: rgba(238, 238, 238, 0.9);
-            color: #3ba020;
-            font-size: 1rem; }
-            .calendar-container .calendar .grid .day-square .contents .training .color-bar {
-              background-color: #3ba020; }
-            .calendar-container .calendar .grid .day-square .contents .training span {
+            background-color: rgba(238, 238, 238, 0.95);
+            color: #1e8e00;
+            font-size: 1rem;
+            flex: 0; }
+            .calendar-container .calendar .grid .day-square .contents .training .color-bar,
+            .calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
+              background-color: #1e8e00; }
+            .calendar-container .calendar .grid .day-square .contents .training span,
+            .calendar-container .calendar .grid .day-square .contents .commercial span {
               padding: 0.5rem 1rem; }
+          .calendar-container .calendar .grid .day-square .contents .commercial {
+            color: #D2000F; }
+            .calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
+              background-color: #D2000F; }
           .calendar-container .calendar .grid .day-square .contents .seasonal {
             order: 1;
-            background-color: rgba(221, 92, 15, 0.9);
+            background-color: rgba(221, 92, 15, 0.95);
             color: white;
-            font-size: 0.9rem;
-            font-size: 0.85rem; }
+            flex: 0; }
             .calendar-container .calendar .grid .day-square .contents .seasonal .color-bar {
               background-color: #dd5c0f; }
             .calendar-container .calendar .grid .day-square .contents .seasonal span {
@@ -1005,10 +1038,12 @@ header {
             .calendar-container .calendar .grid .day-square .contents .major span {
               padding: 0.75rem 0.5rem; }
           .calendar-container .calendar .grid .day-square .contents .minor,
-          .calendar-container .calendar .grid .day-square .contents .training {
+          .calendar-container .calendar .grid .day-square .contents .training,
+          .calendar-container .calendar .grid .day-square .contents .commercial {
             flex: 0 1 auto; }
             .calendar-container .calendar .grid .day-square .contents .minor span,
-            .calendar-container .calendar .grid .day-square .contents .training span {
+            .calendar-container .calendar .grid .day-square .contents .training span,
+            .calendar-container .calendar .grid .day-square .contents .commercial span {
               display: inline-block;
               padding: 0.07rem 0.5rem; }
           .calendar-container .calendar .grid .day-square .contents .seasonal {
@@ -1022,12 +1057,7 @@ header {
     font-size: 10rem;
     line-height: 7.7rem; }
   .hero-container .top .text h4 {
-    font-size: 2.1rem; }
-  .event-modal-wrapper .event-modal > .inner .details .columns {
-    flex-direction: row;
-    align-items: center; }
-    .event-modal-wrapper .event-modal > .inner .details .columns .links {
-      margin: 0; } }
+    font-size: 2.1rem; } }
 
 @media (min-width: 992px) {
   header .months-dropdown-menu {

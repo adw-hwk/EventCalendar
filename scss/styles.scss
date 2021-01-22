@@ -1,5 +1,5 @@
 @import 'hamburger';
-$cl-training: rgb(59, 160, 32);
+$cl-training: #1e8e00;
 $cl-seasonal: rgb(221, 92, 15);
 $cl-fnblue: #00467f;
 $cl-fnblue-darkened: #00366f;
@@ -8,6 +8,7 @@ $cl-bodygrey: #444444;
 $cl-whitegrey: #eeeeee;
 $cl-feature-purple: rgb(94, 19, 148);
 $cl-headerbg: #dfdfdf;
+$cl-com-red: #D2000F;
 $br-sm: 0.13rem;
 $br-md: 0.22rem;
 $br-lg: 0.5rem;
@@ -325,13 +326,16 @@ body {
                 }
                 &.minor {
                     color: $cl-fnblue;
-                    background-color: #eee;
+                    background-color: #fff;
                 }
                 &.seasonal {
                     background-color: $cl-seasonal;
                 }
                 &.training {
                     background-color: $cl-training;
+                }
+                &.commercial {
+                    background-color: $cl-com-red;
                 }
                 &.convention {
                     background-color: $cl-feature-purple;
@@ -348,13 +352,17 @@ body {
             }
             .details {
                 flex: 1;
-                // background: rgba(68, 68, 68, 0.85);
-                // backdrop-filter: blur(5px);
-                background: rgba(255, 255, 255, 0.85);
-                padding: 0.75rem;
+                background: $cl-whitegrey;
+                // background-image: url(../img/geometric.jpg);
+                // background-position: center;
+                // background-repeat: no-repeat;
+                // background-size: cover;
                 .columns {
                     display: flex;
                     flex-direction: column;
+                    padding: 1.25rem;
+                    background-color: #444;
+                    color: white;
                     .text {
                         flex: 1;
                         .title {
@@ -377,9 +385,11 @@ body {
                         flex-wrap: wrap;
                         align-items: center;
                         margin: 0.75rem 0 0.25rem;
+                        gap: 0.4rem;
+                        flex: 0 0 auto;
                         a {
                             text-decoration: none;
-                            padding: 0.3rem 0.65rem;
+                            padding: 0.15rem 0.5rem;
                             border-radius: $br-md;
                             color: white;
                             font-weight: 500;
@@ -403,11 +413,37 @@ body {
                                 background-color: $cl-whitegrey;
                                 color: $cl-bodygrey;
                             }
+                            &.enquiry {
+                                background-color: $cl-bodygrey;
+                                color: $cl-whitegrey;
+                            }
                         }
+                    }
+                    &.major {
+                        background-color: rgba($cl-fnblue, 0.85);
+                    }
+                    &.minor {
+                        background-color: rgba($cl-bodygrey, 0.7);
+                    }
+                    &.seasonal {
+                        background-color: rgba($cl-seasonal, 0.7);
+                    }
+                    &.convention {
+                        background-color: rgba($cl-feature-purple, 0.85);
+                    }
+                    &.training {
+                        background-color: rgba($cl-training, 0.7);
+                    }
+                    &.commercial {
+                        background-color: rgba($cl-com-red, 0.7);
                     }
                 }
                 .description {
                     height: 100%;
+                    background-color: $cl-whitegrey;
+                    .inner {
+                        padding: 1.25rem;
+                    }
                 }
             }
         }
@@ -608,10 +644,6 @@ header {
     overflow-y: auto;
     overflow-x: hidden;
     color: white;
-    .top,
-    .bottom {
-        flex: 1;
-    }
     .top {
         z-index: 2;
         position: relative;
@@ -619,6 +651,7 @@ header {
         justify-content: center;
         align-items: center;
         // clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 0% 100%);
+        flex: 1;
         .hero-bg-img {
             position: absolute;
             top: 0;
@@ -676,10 +709,11 @@ header {
         justify-content: space-around;
         align-items: center;
         flex-direction: column;
+        flex: 0 0 auto;
         .counter-container {
             display: flex;
             justify-content: center;
-            margin: 3rem 1rem 0;
+            margin: 3rem 1rem 1.5rem;
             align-items: center;
             max-width: 24rem;
             .counter {
@@ -699,7 +733,7 @@ header {
         }
         .prompt-container {
             width: 20rem;
-            margin-bottom: 7rem;
+            margin-bottom: 4.5rem;
             bottom: 0;
             p {
                 margin: 0;
@@ -791,9 +825,6 @@ header {
                 // border-bottom: 2px solid rgba(255, 255, 255, 0.5);
                 border: 2px solid rgba(255, 255, 255, 0.6);
                 background: rgba($cl-feature-purple, 0.5);
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
                 text-transform: uppercase;
                 display: flex;
                 justify-content: center;
@@ -837,6 +868,8 @@ header {
                 width: 45rem;
                 max-width: 100%;
                 margin: 1rem;
+                font-size: 1.1rem;
+                font-weight: 500;
                 &>div {
                     display: flex;
                     flex-direction: column;
@@ -858,7 +891,7 @@ header {
                         flex: 1;
                         .list-event {
                             padding-left: 0.5rem;
-                            margin: 0.3rem 0;
+                            margin: 0.4rem 0;
                             border-left: 3px solid;
                             line-height: 1.1;
                         }
@@ -871,7 +904,6 @@ header {
                     .contents {
                         .list-event {
                             border-color: rgba($cl-fnblue, 0.85);
-                            font-weight: 500;
                         }
                     }
                 }
@@ -963,7 +995,7 @@ header {
                     flex: 1;
                     display: flex;
                     flex-direction: column;
-                    padding: 0.25rem;
+                    padding: 0.2rem;
                     gap: 0.25rem;
                     .day-event {
                         display: flex;
@@ -973,6 +1005,8 @@ header {
                         border-radius: $br-xl;
                         overflow: hidden;
                         font-weight: 500;
+                        font-size: 0.9rem;
+                        line-height: 1.2;
                         &:hover {
                             cursor: pointer;
                         }
@@ -988,19 +1022,21 @@ header {
                     }
                     .major {
                         order: 3;
-                        background-color: rgba($cl-fnblue, 0.9);
+                        background-color: rgba($cl-fnblue, 0.95);
                         color: white;
                         font-size: 1.1rem;
+                        flex: 1;
                         .color-bar {
                             background-color: $cl-whitegrey;
                         }
                         span {
-                            padding: 2.2rem 1rem;
+                            padding: 2rem 1rem;
                         }
                     }
                     .convention {
+                        flex: 2;
                         order: 2;
-                        background-color: rgba($cl-feature-purple, 0.9);
+                        background-color: rgba($cl-feature-purple, 0.95);
                         color: white;
                         font-size: 1.1rem;
                         border: 1px solid rgba(255, 255, 255, 0.7);
@@ -1013,9 +1049,10 @@ header {
                     }
                     .minor {
                         order: 4;
-                        background-color: rgba($cl-whitegrey, 0.9);
+                        background-color: rgba($cl-whitegrey, 0.95);
                         color: $cl-fnblue;
                         font-size: 1rem;
+                        flex: 0;
                         .color-bar {
                             background-color: $cl-fnblue;
                         }
@@ -1023,11 +1060,13 @@ header {
                             padding: 0.5rem 1rem;
                         }
                     }
-                    .training {
+                    .training,
+                    .commercial {
                         order: 5;
-                        background-color: rgba($cl-whitegrey, 0.9);
+                        background-color: rgba($cl-whitegrey, 0.95);
                         color: $cl-training;
                         font-size: 1rem;
+                        flex: 0;
                         .color-bar {
                             background-color: $cl-training;
                         }
@@ -1035,13 +1074,18 @@ header {
                             padding: 0.5rem 1rem;
                         }
                     }
+                    .commercial {
+                        color: $cl-com-red;
+                        .color-bar {
+                            background-color: $cl-com-red;
+                        }
+                    }
                     .seasonal {
                         order: 1;
-                        background-color: rgba($cl-seasonal, 0.9);
+                        background-color: rgba($cl-seasonal, 0.95);
                         color: white;
                         // text-transform: uppercase;
-                        font-size: 0.9rem;
-                        font-size: 0.85rem;
+                        flex: 0;
                         .color-bar {
                             background-color: $cl-seasonal;
                         }
@@ -1218,7 +1262,8 @@ header {
                             }
                         }
                         .minor,
-                        .training {
+                        .training,
+                        .commercial {
                             flex: 0 1 auto;
                             span {
                                 display: inline-block;
@@ -1252,21 +1297,6 @@ header {
                 }
                 h4 {
                     font-size: 2.1rem;
-                }
-            }
-        }
-    }
-    .event-modal-wrapper {
-        .event-modal {
-            &>.inner {
-                .details {
-                    .columns {
-                        flex-direction: row;
-                        align-items: center;
-                        .links {
-                            margin: 0;
-                        }
-                    }
                 }
             }
         }
