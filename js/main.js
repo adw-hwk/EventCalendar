@@ -22,7 +22,7 @@ window.addEventListener("load", () => {
 
                     getAllFeatured: (events) => {
                         let featuredArr = [];
-                        monthKeys = Object.keys(events);
+                        const monthKeys = Object.keys(events);
 
                         monthKeys.forEach((month) => {
                             events[month].forEach((e) => {
@@ -49,7 +49,7 @@ window.addEventListener("load", () => {
 
                     getHomepageFeatured: (events) => {
                         let featuredArr = [];
-                        monthKeys = Object.keys(events);
+                        const monthKeys = Object.keys(events);
 
                         monthKeys.forEach((month) => {
                             events[month].forEach((e) => {
@@ -68,7 +68,7 @@ window.addEventListener("load", () => {
 
                     getFeatured: (events) => {
                         let featuredArr = [];
-                        monthKeys = Object.keys(events);
+                        const monthKeys = Object.keys(events);
 
                         monthKeys.forEach((month) => {
                             events[month].forEach((e) => {
@@ -681,7 +681,7 @@ window.addEventListener("load", () => {
     };
 
     return {
-      init: async () => {
+      init: () => {
         dataCtrl.state.currentMonth = 0;
 
         dataCtrl.state.monthsVisited = new Array();
