@@ -5165,8 +5165,6 @@ window.addEventListener("load", function() {
                 var conventionDates;
 
                 if (conventionEvent !== undefined) {
-                    console.log(conventionEvent);
-
                     if (conventionEvent.start_date.day === conventionEvent.end_date.day && conventionEvent.start_date.month === conventionEvent.end_date.month) {
                         conventionDates = "".concat(conventionEvent.start_date.day, " ").concat(months[conventionEvent.start_date.month - 1]);
                     } else if (conventionEvent.start_date.day !== conventionEvent.end_date.day && conventionEvent.start_date.month === conventionEvent.end_date.month) {
@@ -5204,14 +5202,14 @@ window.addEventListener("load", function() {
                     'seasonal': null
                 };
                 var eventClass = getEventClass(event);
-                HTML += "<div class=\"banner ".concat(eventClass, "\"><span class=\"date\">").concat(event.end_date.day === event.start_date.day ? "".concat(days[new Date(event.start_date.UTC).getDay()], " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1]) : "".concat(days[new Date(event.start_date.UTC).getDay()], " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1], " - ").concat(days[new Date(event.end_date.UTC).getDay()], " ").concat(event.end_date.day, " ").concat(months[event.end_date.month - 1]), "</span></div>");
+                HTML += "<div class=\"banner ".concat(eventClass, "\"><span class=\"date\">").concat(event.end_date.day === event.start_date.day ? "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1]) : "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1], " - ").concat(days[new Date(event.end_date.UTC).getDay()], " ").concat(event.end_date.day, " ").concat(months[event.end_date.month - 1]), "</span></div>");
 
                 if (event.image) {
                     HTML += "<div class=\"image\"><img src=\"".concat(event.image.large, "\" alt=\"").concat(event.title, "\"></div>");
                 }
 
                 HTML += "<div class=\"details\"><div class=\"columns ".concat(eventClass, "\">");
-                HTML += "<div class=\"text\">".concat(event.title.length > 0 ? "<div class=\"title\">".concat(event.title, "</div>") : "").concat(event.venue !== null ? "".concat(event.venue.name !== undefined ? "<div class=\"venue\"><i class=\"fas fa-building\"></i>".concat(event.venue.name, "</div>") : "").concat(event.venue.city !== undefined ? "<div class=\"city\"><i class=\"fas fa-map-marked-alt\"></i>".concat(event.venue.city, "</div>") : "") : "").concat(!event.all_day && [event.start_date.day, event.start_date.hour, event.start_date.minute] !== [event.end_date.day, event.end_date.hour, event.end_date.minute] ? "<div class=\"time\"><i class=\"far fa-clock\"></i>".concat(event.start_date.hour % 12, ":").concat(event.start_date.minute == 0 ? '00' : event.start_date.minute, " - ").concat(event.end_date.hour % 12, ":").concat(event.end_date.minute == 0 ? '00' : event.end_date.minute, "</div>") : '', "</div>");
+                HTML += "<div class=\"text\">".concat(event.title.length > 0 ? "<div class=\"title\">".concat(event.title, "</div>") : "").concat(event.venue !== null ? "".concat(event.venue.name !== undefined ? "<div class=\"venue\"><i class=\"fas fa-building\"></i>".concat(event.venue.name, "</div>") : "").concat(event.venue.city !== undefined ? "<div class=\"city\"><i class=\"fas fa-map-marked-alt\"></i>".concat(event.venue.city, "</div>") : "") : "").concat(!event.all_day && [event.start_date.day, event.start_date.hour, event.start_date.minute] !== [event.end_date.day, event.end_date.hour, event.end_date.minute] ? "<div class=\"time\"><i class=\"far fa-clock\"></i>".concat(event.start_date.hour % 12, ":").concat(event.start_date.minute == 0 ? '00' : event.start_date.minute, " - ").concat(event.end_date.hour % 12 == 0 ? '12' : event.end_date.hour % 12, ":").concat(event.end_date.minute == 0 ? '00' : event.end_date.minute, "</div>") : '', "</div>");
                 HTML += "<div class=\"links\"><a class=\"add-to-calendar\" target=\"_blank\">Add to calendar</a>".concat(enquiryEmail[event.type] !== null ? "<a href=\"mailto:".concat(enquiryEmail[event.type], "?subject=Enquiry%20about%20").concat(event.title.replace(' ', '%20'), "&body=Hi%20FN%20").concat(event.type == 'training' ? 'Training' : 'Events', "%20team%2C%0D%0A%0D%0A\" class=\"enquiry\">Enquire</a>") : "").concat(event.URL == null ? "" : "<a class=\"info\" href=\"".concat(event.URL, "\" target=\"_blank\">More info</a>")).concat(event.reg_link == null ? "" : "<a class=\"register\" href=\"".concat(event.reg_link, "\" target=\"_blank\">Register</a>"));
                 HTML += "</div>";
                 HTML += '</div>';

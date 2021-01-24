@@ -77,6 +77,12 @@ function console_log($output, $with_script_tags = true) {
             'UTC' => $meta['_EventStartDateUTC'][0]
         );
 
+        $start_date_str = $start_date_arr['year'] . '-' . $start_date_arr['month'] . '-' . $start_date_arr['day'];
+
+        $unix_start_date = strtotime($start_date_str);
+
+        $start_date_arr['weekday'] = date('l', $unix_start_date);
+
         $end_date_parsed = date_parse($meta->_EventEndDateUTC);
 
         $end_date_arr = array (
@@ -87,6 +93,12 @@ function console_log($output, $with_script_tags = true) {
             'minute' => date_parse($meta['_EventEndDateUTC'][0])["minute"],
             'UTC' => $meta['_EventEndDateUTC'][0]
         );
+
+        $end_date_str = $end_date_arr['year'] . '-' . $end_date_arr['month'] . '-' . $end_date_arr['day'];
+
+        $unix_end_date = strtotime($end_date_str);
+
+        $end_date_arr['weekday'] = date('l', $unix_end_date);
 
         $venueID = $meta['_EventVenueID'][0];
 

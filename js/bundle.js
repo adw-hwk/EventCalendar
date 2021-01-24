@@ -2699,10 +2699,6 @@
 }));
 //# sourceMappingURL=swiper-bundle.min.js.map
 
-
-
-
-
 window.addEventListener("load", () => {
             const months = [
                 "January",
@@ -3139,7 +3135,6 @@ events.forEach((event) => {
 let conventionDates;
 
 if (conventionEvent !== undefined) {
-  console.log(conventionEvent);
   if (
     conventionEvent.start_date.day === conventionEvent.end_date.day &&
     conventionEvent.start_date.month === conventionEvent.end_date.month
@@ -3232,10 +3227,10 @@ const eventClass = getEventClass(event);
 
 HTML += `<div class="banner ${eventClass}"><span class="date">${
   event.end_date.day === event.start_date.day
-    ? `${days[new Date(event.start_date.UTC).getDay()]} ${
+    ? `${event.start_date.weekday} ${
         event.start_date.day
       } ${months[event.start_date.month - 1]}`
-    : `${days[new Date(event.start_date.UTC).getDay()]} ${
+    : `${event.start_date.weekday} ${
         event.start_date.day
       } ${months[event.start_date.month - 1]} - ${
         days[new Date(event.end_date.UTC).getDay()]
@@ -3254,7 +3249,7 @@ HTML += `<div class="text">${
     : ``
 }${event.venue !== null ? `${event.venue.name !== undefined ? `<div class="venue"><i class="fas fa-building"></i>${event.venue.name}</div>` : ``}${ event.venue.city !== undefined ? `<div class="city"><i class="fas fa-map-marked-alt"></i>${event.venue.city}</div>` : ``}`
     : ``
-}${!event.all_day && [event.start_date.day, event.start_date.hour, event.start_date.minute] !== [event.end_date.day, event.end_date.hour, event.end_date.minute] ? `<div class="time"><i class="far fa-clock"></i>${event.start_date.hour % 12}:${event.start_date.minute == 0 ? '00' : event.start_date.minute} - ${(event.end_date.hour) % 12}:${event.end_date.minute == 0 ? '00' : event.end_date.minute}</div>` : ''}</div>`;
+}${!event.all_day && [event.start_date.day, event.start_date.hour, event.start_date.minute] !== [event.end_date.day, event.end_date.hour, event.end_date.minute] ? `<div class="time"><i class="far fa-clock"></i>${event.start_date.hour % 12}:${event.start_date.minute == 0 ? '00' : event.start_date.minute} - ${(event.end_date.hour) % 12 == 0 ? '12' : (event.end_date.hour) % 12}:${event.end_date.minute == 0 ? '00' : event.end_date.minute}</div>` : ''}</div>`;
 
 HTML += `<div class="links"><a class="add-to-calendar" target="_blank">Add to calendar</a>${enquiryEmail[event.type] !== null ? `<a href="mailto:${enquiryEmail[event.type]}?subject=Enquiry%20about%20${event.title.replace(' ', '%20')}&body=Hi%20FN%20${event.type == 'training' ? 'Training' : 'Events'}%20team%2C%0D%0A%0D%0A" class="enquiry">Enquire</a>` : ``}${
     event.URL == null
