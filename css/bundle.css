@@ -965,14 +965,14 @@ body {
     z-index: -5000;
     opacity: 0;
     transition: opacity 250ms ease-in-out;
-    padding: 0.75rem 0.75rem 3.75rem;
+    padding: 1.25rem 0.75rem 7.5rem;
     overflow-y: auto;
 }
 
 .event-modal-wrapper .event-modal {
     position: relative;
     max-width: 40rem;
-    margin: 5rem auto 0;
+    margin: 2.7rem auto 0;
     background: #fff;
     z-index: 1000;
     border-radius: 0.75rem;
@@ -1509,7 +1509,7 @@ header .months-dropdown-menu .month:hover {
 }
 
 .calendar-page .top {
-    flex: 1 0 25rem;
+    flex: 1 0 auto;
     position: relative;
     color: white;
     width: 100%;
@@ -1561,6 +1561,7 @@ header .months-dropdown-menu .month:hover {
     backdrop-filter: blur(0.75rem);
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: -2px 4px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 2rem;
 }
 
 .calendar-page .top .event-summary {
@@ -2066,6 +2067,7 @@ header .months-dropdown-menu .month:hover {
     .calendar-page .text .inner h2 {
         font-size: 6rem;
         padding: 3rem 3.8rem;
+        margin-top: 0;
     }
     .hero-container .bottom .counter-container {
         max-width: 34rem;
