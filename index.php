@@ -158,7 +158,6 @@ function console_log($output, $with_script_tags = true) {
 
     }   
     
-    console_log($sorted_events);
 
     echo ('<script> var __calEvents = ' . json_encode($sorted_events) . ';</script>')
 
@@ -182,7 +181,29 @@ function console_log($output, $with_script_tags = true) {
     <div class="filter">
 
         <div class="btn">
-            See just your state<i class="fas fa-chevron-up"></i>
+            <span>S</span>
+            <span>e</span>
+            <span>e</span>
+            <span>&nbsp;</span>
+            <span>j</span>
+            <span>u</span>
+            <span>s</span>
+            <span>t</span>
+            <span>&nbsp;</span>
+            <span>w</span>
+            <span>h</span>
+            <span>a</span>
+            <span>t</span>
+            <span>&nbsp;</span>
+            <span>y</span>
+            <span>o</span>
+            <span>u</span>
+            <span>&nbsp;</span>
+            <span>w</span>
+            <span>a</span>
+            <span>n</span>
+            <span>t</span>
+            <span><i class="fas fa-chevron-up"></i><span>
         </div>
 
         <div class="filter-menu">
