@@ -5202,7 +5202,7 @@ window.addEventListener("load", function() {
                     'seasonal': null
                 };
                 var eventClass = getEventClass(event);
-                HTML += "<div class=\"banner ".concat(eventClass, "\"><span class=\"date\">").concat(event.end_date.day === event.start_date.day ? "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1]) : "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1], " - ").concat(days[new Date(event.end_date.UTC).getDay()], " ").concat(event.end_date.day, " ").concat(months[event.end_date.month - 1]), "</span></div>");
+                HTML += "<div class=\"banner ".concat(eventClass, "\"><span class=\"date\">").concat(event.end_date.day === event.start_date.day ? "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1]) : "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1], " - ").concat(event.end_date.weekday, " ").concat(event.end_date.day, " ").concat(months[event.end_date.month - 1]), "</span></div>");
 
                 if (event.image) {
                     HTML += "<div class=\"image\"><img src=\"".concat(event.image.large, "\" alt=\"").concat(event.title, "\"></div>");

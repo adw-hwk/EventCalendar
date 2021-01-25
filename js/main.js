@@ -136,6 +136,8 @@ window.addEventListener("load", () => {
                             eventModalContents: document.querySelector(".event-modal .inner"),
 
                             eventModalClose: document.querySelector(".event-modal .close-btn"),
+
+                            filter: document.querySelector('.filter'),
                         };
 
                         const DOMStrings = {
@@ -147,21 +149,17 @@ window.addEventListener("load", () => {
                             fadeEls: ".fade-in",
                         };
 
-                        const getEventClass = (event) => {
-                            const isConvention = event.tags !== null && event.tags.includes("convention") ? true : false;
-                            const isCommercial = event.tags !== null && event.tags.includes("commercial") ? true : false;
+                        const getEventClasses = (event) => {
 
-                            let eventClass;
+                            let eventClasses = event.type;
 
-                            if (isCommercial) {
-                                eventClass = 'commercial';
-                            } else if (isConvention) {
-                                eventClass = 'convention';
-                            } else {
-                                eventClass = event.type;
+                            if (event.tags !== null && event.tags.length > 0) {
+                                event.tags.forEach(tag => {
+                                    eventClasses += ` ${tag}`;
+                                })
                             }
 
-                            return eventClass;
+                            return eventClasses;
                         };
 
                         return {
@@ -283,13 +281,13 @@ window.addEventListener("load", () => {
 
                                             events.forEach((event) => {
 
-                                                        const eventClass = getEventClass(event);
+                                                        const eventClasses = getEventClasses(event);
 
                                                         if (
                                                             event.start_date.day == day ||
                                                             (event.end_date.day >= day && event.start_date.day < day)
                                                         ) {
-                                                            eventList += `<div class="day-event ${eventClass}" data-event-id="${event.ID}">${
+                                                            eventList += `<div class="day-event ${eventClasses}" data-event-id="${event.ID}">${
                 event.type === "seasonal" ? `` : `<div class="color-bar"></div>`
               }<span>${event.title}</span></div>`;
             }
@@ -485,27 +483,6 @@ window.addEventListener("load", () => {
                 </div>`;
       },
 
-      getFadeElements: () => {
-        return document.querySelectorAll(DOMStrings.fadeEls);
-      },
-
-      calendarFade: (activeMonth, speed) => {
-        Array.prototype.slice
-          .call(document.querySelectorAll(DOMStrings.fadeEls))
-          .forEach((el) => {
-            el.classList.remove("shown");
-          });
-
-        const currentEls = DOM.monthSlides[activeMonth].querySelectorAll(
-          DOMStrings.fadeEls
-        );
-
-        setTimeout(() => {
-          currentEls.forEach((el) => {
-            el.classList.add("shown");
-          });
-        }, speed);
-      },
 
       openEventModal: (event) => {
         const modalContents = DOM.eventModalContents,
@@ -522,9 +499,9 @@ window.addEventListener("load", () => {
           'seasonal': null
         };
 
-        const eventClass = getEventClass(event);
+        const eventClasses = getEventClasses(event);
 
-        HTML += `<div class="banner ${eventClass}"><span class="date">${
+        HTML += `<div class="banner ${eventClasses}"><span class="date">${
           event.end_date.day === event.start_date.day
             ? `${event.start_date.weekday} ${
                 event.start_date.day
@@ -532,7 +509,7 @@ window.addEventListener("load", () => {
             : `${event.start_date.weekday} ${
                 event.start_date.day
               } ${months[event.start_date.month - 1]} - ${
-                days[new Date(event.end_date.UTC).getDay()]
+                event.end_date.weekday
               } ${event.end_date.day} ${months[event.end_date.month - 1]}`
         }</span></div>`;
 
@@ -540,7 +517,7 @@ window.addEventListener("load", () => {
             HTML += `<div class="image"><img src="${event.image.large}" alt="${event.title}"></div>`;
           }
 
-          HTML += `<div class="details"><div class="columns ${eventClass}">`;
+          HTML += `<div class="details"><div class="columns ${eventClasses}">`;
 
         HTML += `<div class="text">${
           event.title.length > 0
@@ -590,6 +567,112 @@ window.addEventListener("load", () => {
       unsetNavArrowAnimation: () => {
         DOM.nextMonthBtn.style.animation = "none";
       },
+
+      toggleFilteredCalendarEvents: (state, type) => {
+
+        const calendarEventsArr = Array.prototype.slice.call(document.querySelectorAll('.day-event'));
+
+        // const stateStrings = ['qld', 'nsw', 'vic', 'tas', 'sa', 'wa', 'nt', 'nz'];
+
+        let fnEvents = [], trainingEvents = [];
+
+        let stateEvents = {};
+        
+        calendarEventsArr.forEach(event => {
+          if (event.classList.contains('minor') || event.classList.contains('major')) {
+            fnEvents.push(event);
+          };
+          if (event.classList.contains('training')) {
+            trainingEvents.push(event);
+          };
+          // stateStrings.forEach((state, i) => {
+          //   const stateStr = state;
+          //   if (event.classList.contains(state)) {
+          //     if (stateEvents[stateStr] === undefined) {
+          //       stateEvents[stateStr] = new Array();
+          //     };
+          //     stateEvents[stateStr].push(event);
+          //   }
+          // });
+
+          if (type === 'all' && state === 'all') {
+              event.classList.remove('hidden');
+          } else if (type === 'all') {
+              if (!event.classList.contains(state)) {
+                event.classList.add('hidden');
+              } else {
+                event.classList.remove('hidden');
+              }
+          } else if (state === 'all') {
+            if (type === 'events') {
+
+                if (!fnEvents.includes(event)) {
+                  event.classList.add('hidden');
+                } else {
+                  event.classList.remove('hidden');
+                }
+
+            }
+            if (type === 'training') {
+
+                if (!trainingEvents.includes(event)) {
+                  event.classList.add('hidden');
+                } else {
+                  event.classList.remove('hidden');
+                }
+
+            }
+
+          } else {
+            if (type === 'training') {
+              if (!trainingEvents.includes(event) || !event.classList.contains(state)) {
+                event.classList.add('hidden')
+              } else {
+                event.classList.remove('hidden')
+              }
+            }
+            if (type === 'events') {
+              if (!fnEvents.includes(event) || !event.classList.contains(state)) {
+                event.classList.add('hidden')
+              } else {
+                event.classList.remove('hidden')
+              }
+            }
+          }
+        });
+        console.log(fnEvents);
+        console.log(trainingEvents);
+        console.log(stateEvents);
+
+      },
+
+      showFilterMenu: () => {
+        DOM.filter.classList.add('shown');
+      },
+      hideFilterMenu: () => {
+        DOM.filter.classList.remove('shown');
+      },
+
+      showFilterBtn: (delay=300) => {
+        DOM.filter.querySelector('.btn').style.display = "flex";
+        // short delay to allow for transition
+        setTimeout(() => {
+          DOM.filter.querySelector('.btn').classList.add('shown');
+        },10);
+      },
+
+      hideFilterBtn: (delay=300) => {
+        DOM.filter.querySelector('.btn').classList.remove('shown');
+        setTimeout(() => {
+          DOM.filter.querySelector('.btn').style.display = "none";
+
+        }, delay)
+      },
+
+      setFilterBtnAnimation: (duration = 600) => {
+        DOM.filter.querySelector('.btn i').style.animationName = `filter-prompt`;
+        DOM.filter.querySelector('.btn i').style.animationDuration = `${duration}ms`;
+      }
     };
   })();
 
@@ -603,6 +686,9 @@ window.addEventListener("load", () => {
     const setupEventListeners = () => {
       // window listeners
       window.addEventListener("click", (e) => {
+        if (e.target.closest('.filter') == null && UICtrl.DOM.filter.classList.contains('shown')) {
+          UICtrl.hideFilterMenu();
+        }
         if (
           UICtrl.DOM.monthMenu.classList.contains("open") &&
           e.target.closest("a") !== UICtrl.DOM.calendarButton
@@ -677,23 +763,68 @@ window.addEventListener("load", () => {
           UICtrl.showDropdownMenu();
         }
       });
+
+      UICtrl.DOM.filter.querySelector('.filter-menu').addEventListener('click', (e) => {
+        console.log('menu')
+        console.log(e);
+        const clicked = e.target.closest('a');
+        let anchors;
+        if (clicked.classList.contains('state')) {
+          const state = clicked.dataset.state;
+
+
+
+          if (state !== dataCtrl.state.filter.state) {
+            dataCtrl.state.filter.state = state;
+            UICtrl.toggleFilteredCalendarEvents(state, dataCtrl.state.filter.type);
+            anchors = UICtrl.DOM.filter.querySelectorAll('a.state');
+            anchors.forEach(a => {
+              if (a.dataset.state === state) {
+                a.classList.add('active');
+              }else {
+                a.classList.remove('active');
+              }
+            });
+          }
+        } else if (clicked.classList.contains('type')) {
+          const type = clicked.dataset.type;
+
+          if (type !== dataCtrl.state.filter.type) {
+            dataCtrl.state.filter.type = type;
+            UICtrl.toggleFilteredCalendarEvents(dataCtrl.state.filter.state, type);
+            anchors = UICtrl.DOM.filter.querySelectorAll('a.type');
+            anchors.forEach(a => {
+              if (a.dataset.type === type) {
+                a.classList.add('active');
+              }else {
+                a.classList.remove('active');
+              }
+            });
+          }
+        }
+      });
+
+      UICtrl.DOM.filter.querySelector('.btn').addEventListener('click', () => {
+        if (UICtrl.DOM.filter.classList.contains('shown')) {
+          UICtrl.hideFilterMenu();
+        } else {
+          UICtrl.showFilterMenu();
+        }
+      })
     };
 
     return {
       init: () => {
         dataCtrl.state.currentMonth = 0;
-
         dataCtrl.state.monthsVisited = new Array();
+        dataCtrl.state.filter = {};
+        dataCtrl.state.filter.state = 'all';
+        dataCtrl.state.filter.type = 'all';
 
         // __calEvents is the global JS object of events from the WP database that is
         // added to the HTML page when it's rendered
 
         dataCtrl.state.events = __calEvents;
-
-        // randomise the homepage featured events array
-        let homepageEvents = dataCtrl
-          .getFeatured(dataCtrl.state.events)
-          .sort(() => Math.random() - 0.5);
 
         // writing the DOM
         UICtrl.DOM.monthSlides.forEach((slide, i) => {
@@ -773,6 +904,14 @@ window.addEventListener("load", () => {
                 dataCtrl.state.slideHasBeenChanged = false;
               },
               slideChange: function () {
+
+                if (this.activeIndex > 0) {
+                  UICtrl.showFilterBtn();
+                } else {
+                  UICtrl.hideFilterBtn();
+                };
+
+
                 if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
                   const slide = UICtrl.DOM.monthSlides[this.activeIndex];
 
@@ -784,6 +923,10 @@ window.addEventListener("load", () => {
 
                   dataCtrl.state.monthsVisited.push(this.activeIndex);
                 }
+                if (dataCtrl.state.monthsVisited.length === 2) {
+                  UICtrl.setFilterBtnAnimation();
+                }
+
                 dataCtrl.state.currentMonth = this.activeIndex;
 
                 UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);

@@ -9,6 +9,15 @@ $cl-whitegrey: #eeeeee;
 $cl-feature-purple: rgb(94, 19, 148);
 $cl-headerbg: #dfdfdf;
 $cl-com-red: #D2000F;
+$cl-qld: #800000;
+$cl-nsw: #1e83b9;
+$cl-vic: #06386F;
+$cl-tas: #008A33;
+$cl-sa: #CB1805;
+$cl-wa:#ffd700;
+$cl-nt: #cc7722;
+$cl-nz: black;
+$cl-trans-white: rgba(255, 255, 255, 0.9);
 $br-sm: 0.13rem;
 $br-md: 0.22rem;
 $br-lg: 0.5rem;
@@ -326,7 +335,8 @@ body {
                     background-color: #fff;
                 }
                 &.seasonal {
-                    background-color: $cl-seasonal;
+                    color: $cl-seasonal;
+                    background-color: white;
                 }
                 &.training {
                     background-color: $cl-training;
@@ -336,6 +346,38 @@ body {
                 }
                 &.convention {
                     background-color: $cl-feature-purple;
+                }
+                &.qld {
+                    background-color: $cl-qld;
+                    color: white;
+                }
+                &.nsw {
+                    background-color: $cl-nsw;
+                    color: white;
+                }
+                &.vic {
+                    background-color: $cl-vic;
+                    color: white;
+                }
+                &.tas {
+                    background-color: $cl-tas;
+                    color: white;
+                }
+                &.sa {
+                    background-color: $cl-sa;
+                    color: white;
+                }
+                &.wa {
+                    background-color: $cl-wa;
+                    color: $cl-bodygrey;
+                }
+                &.nt {
+                    background-color: $cl-nt;
+                    color: white;
+                }
+                &.nz {
+                    background-color: $cl-nz;
+                    color: white;
                 }
             }
             .image {
@@ -358,8 +400,8 @@ body {
                     display: flex;
                     flex-direction: column;
                     padding: 1.25rem;
-                    background-color: #444;
-                    color: white;
+                    background-color: $cl-headerbg;
+                    color: $cl-bodygrey;
                     .text {
                         flex: 1;
                         .title {
@@ -418,24 +460,6 @@ body {
                             }
                         }
                     }
-                    &.major {
-                        background-color: rgba($cl-fnblue, 0.85);
-                    }
-                    &.minor {
-                        background-color: rgba($cl-bodygrey, 0.7);
-                    }
-                    &.seasonal {
-                        background-color: rgba($cl-seasonal, 0.7);
-                    }
-                    &.convention {
-                        background-color: rgba($cl-feature-purple, 0.85);
-                    }
-                    &.training {
-                        background-color: rgba($cl-training, 0.7);
-                    }
-                    &.commercial {
-                        background-color: rgba($cl-com-red, 0.7);
-                    }
                 }
                 .description {
                     height: 100%;
@@ -464,6 +488,18 @@ body {
     }
     100% {
         transform: translateX(0rem);
+    }
+}
+
+@keyframes filter-prompt {
+    0% {
+        transform: translateY(0rem);
+    }
+    50% {
+        transform: translateY(-0.5rem);
+    }
+    100% {
+        transform: translateY(0rem);
     }
 }
 
@@ -505,24 +541,178 @@ header {
     bottom: 0;
     width: 18rem;
     left: calc(50vw - 9rem);
+    .filter {
+        position: absolute;
+        bottom: 3rem;
+        left: 0;
+        .btn {
+            margin: auto;
+            text-align: center;
+            display: block;
+            font-size: 1rem;
+            // text-transform: uppercase;
+            letter-spacing: 1px;
+            background: #E77C00;
+            color: white;
+            width: 11rem;
+            font-weight: 500;
+            align-items: center;
+            justify-content: center;
+            height: 1.6rem;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 250ms linear;
+            display: none;
+            &.shown {
+                opacity: 0.75;
+                &:hover {
+                    opacity: 1;
+                }
+            }
+            &:before,
+            &:after {
+                content: "";
+                display: block;
+                height: 1.6rem;
+                width: 1.6rem;
+                border-left: 2px solid #E77C00;
+                border-top: 2px solid #E77C00;
+                transform: skewX(-30deg);
+                border-top-left-radius: 5px;
+                position: absolute;
+                top: 0px;
+                left: -1rem;
+                background-color: #E77C00;
+                z-index: -1;
+            }
+            &:after {
+                transform: rotateY(180deg) skewX(-30deg);
+                left: unset;
+                right: -1rem;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+            i {
+                transform: rotate(0deg);
+                transition: transform 300ms linear;
+                margin-left: 0.3rem;
+                font-size: 0.9rem;
+                animation-iteration-count: 2;
+            }
+        }
+        .filter-menu {
+            height: 0;
+            overflow: hidden;
+            background: $cl-headerbg;
+            border-top-left-radius: 0.2rem;
+            border-top-right-radius: 0.2rem;
+            overflow: hidden;
+            transition: height 300ms ease-out;
+            .text {
+                margin: 0.25rem 0.25rem 0.5rem;
+                padding: 0.3rem 0;
+                border-bottom: 1px solid rgba($cl-bodygrey, 0.25);
+                font-weight: 500;
+                font-size: 1.1rem;
+            }
+            .states,
+            .types {
+                font-size: 1rem;
+                flex-wrap: wrap;
+                display: flex;
+                margin: 0.25rem;
+                border-radius: 0.2rem;
+                overflow: hidden;
+                a {
+                    flex: 1 0 21%;
+                    text-align: center;
+                    padding: 0.2rem 0.4rem;
+                    background-color: $cl-bodygrey;
+                    color: white;
+                    opacity: 0.5;
+                    font-weight: 300;
+                    &:hover {
+                        cursor: pointer;
+                        &:not(.active) {
+                            opacity: 0.75;
+                        }
+                    }
+                    &.active {
+                        opacity: 1;
+                        box-shadow: 0px 0px 3px rgba($cl-bodygrey, 0.5);
+                        font-weight: 500;
+                    }
+                    &:first-child {
+                        flex: 0 0 100%;
+                        letter-spacing: 2px;
+                    }
+                    &#filter-qld {
+                        background-color: $cl-qld;
+                        color: white;
+                    }
+                    &#filter-nsw {
+                        background-color: $cl-nsw;
+                        color: white;
+                    }
+                    &#filter-vic {
+                        background-color: $cl-vic;
+                        color: white;
+                    }
+                    &#filter-tas {
+                        background-color: $cl-tas;
+                        color: white;
+                    }
+                    &#filter-sa {
+                        background-color: $cl-sa;
+                        color: white;
+                    }
+                    &#filter-wa {
+                        background-color: $cl-wa;
+                        color: $cl-bodygrey;
+                    }
+                    &#filter-nt {
+                        background-color: $cl-nt;
+                        color: white;
+                    }
+                    &#filter-nz {
+                        background-color: $cl-nz;
+                        color: white;
+                    }
+                }
+            }
+        }
+        &.shown {
+            .filter-menu {
+                height: 250px;
+            }
+            .btn {
+                i {
+                    transform: rotate(180deg);
+                }
+                opacity: 1;
+            }
+        }
+    }
     .navigation {
         position: relative;
         display: flex;
         justify-content: center;
-    }
-    a {
-        flex: 0;
-        flex-basis: 2.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 250ms ease-in-out;
-        font-size: 1.25rem;
-        &:hover {
-            cursor: pointer;
-        }
-        &:focus {
-            outline: none;
+        a {
+            flex: 0;
+            flex-basis: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 250ms ease-in-out;
+            font-size: 1.25rem;
+            &:hover {
+                cursor: pointer;
+            }
+            &:focus {
+                outline: none;
+            }
         }
     }
     .month-text-container {
@@ -815,7 +1005,7 @@ header {
             flex-direction: column;
             z-index: 10;
             .convention-feature {
-                margin: 2rem 0;
+                margin: 2rem;
                 padding: 1rem;
                 width: 39rem;
                 max-width: 100%;
@@ -949,8 +1139,6 @@ header {
             flex: 1;
             height: 100%;
             .day-square {
-                // backdrop-filter: blur(3px);
-                // -webkit-backdrop-filter: blur(3px);
                 background: rgba(255, 255, 255, 0.15);
                 margin: 0.75rem 0;
                 border-radius: $br-xxl;
@@ -997,6 +1185,9 @@ header {
                     flex-direction: column;
                     padding: 0.2rem;
                     .day-event {
+                        &.hidden {
+                            display: none !important;
+                        }
                         display: flex;
                         // justify-content: center;
                         align-items: stretch;
@@ -1004,7 +1195,7 @@ header {
                         border-radius: $br-xl;
                         overflow: hidden;
                         font-weight: 500;
-                        font-size: 0.9rem;
+                        font-size: 1rem;
                         line-height: 1.2;
                         margin-bottom: 0.25rem;
                         &:hover {
@@ -1012,18 +1203,18 @@ header {
                         }
                         .color-bar {
                             flex: 0 0 auto;
-                            width: 0.75rem;
+                            width: 0.6rem;
                         }
                         span {
                             flex: 1;
                             display: flex;
                             align-items: center;
+                            word-break: break-word;
                         }
                     }
                     .major {
                         order: 3;
                         background-color: rgba($cl-fnblue, 0.95);
-                        color: white;
                         font-size: 1.1rem;
                         flex: 1;
                         .color-bar {
@@ -1031,6 +1222,42 @@ header {
                         }
                         span {
                             padding: 2rem 1rem;
+                        }
+                    }
+                    .minor {
+                        order: 4;
+                        background-color: rgba($cl-whitegrey, 0.95);
+                        color: $cl-fnblue;
+                        flex: 0;
+                        .color-bar {
+                            background-color: $cl-fnblue;
+                        }
+                        span {
+                            padding: 0.5rem 1rem;
+                        }
+                    }
+                    .training {
+                        order: 5;
+                        background-color: $cl-trans-white;
+                        flex: 0;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-training;
+                        }
+                        span {
+                            padding: 0.5rem 1rem;
+                        }
+                    }
+                    .commercial {
+                        order: 5;
+                        background-color: $cl-trans-white;
+                        flex: 0;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-com-red;
+                        }
+                        span {
+                            padding: 0.5rem 1rem;
                         }
                     }
                     .convention {
@@ -1047,64 +1274,133 @@ header {
                             padding: 2.2rem 1rem;
                         }
                     }
-                    .minor {
-                        order: 4;
-                        background-color: rgba($cl-whitegrey, 0.95);
-                        color: $cl-fnblue;
-                        font-size: 1rem;
-                        flex: 0;
-                        .color-bar {
-                            background-color: $cl-fnblue;
-                        }
-                        span {
-                            padding: 0.5rem 1rem;
-                        }
-                    }
-                    .training,
-                    .commercial {
-                        order: 5;
-                        background-color: rgba($cl-whitegrey, 0.95);
-                        color: $cl-training;
-                        font-size: 1rem;
-                        flex: 0;
-                        .color-bar {
-                            background-color: $cl-training;
-                        }
-                        span {
-                            padding: 0.5rem 1rem;
-                        }
-                    }
-                    .commercial {
-                        color: $cl-com-red;
-                        .color-bar {
-                            background-color: $cl-com-red;
-                        }
-                    }
                     .seasonal {
                         order: 1;
-                        background-color: rgba($cl-seasonal, 0.95);
-                        color: white;
-                        // text-transform: uppercase;
+                        color: $cl-seasonal !important;
+                        background-color: $cl-trans-white !important;
                         flex: 0;
-                        .color-bar {
-                            background-color: $cl-seasonal;
-                        }
+                        font-size: 0.9rem;
                         span {
                             padding: 0.3rem 1rem;
+                        }
+                    }
+                    .qld {
+                        background-color: $cl-trans-white;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-qld;
+                        }
+                    }
+                    .nsw {
+                        background-color: $cl-trans-white;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-nsw;
+                        }
+                    }
+                    .vic {
+                        background-color: $cl-trans-white;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-vic;
+                        }
+                    }
+                    .sa {
+                        background-color: $cl-trans-white;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-sa;
+                        }
+                    }
+                    .tas {
+                        background-color: $cl-trans-white;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-tas;
+                        }
+                    }
+                    .wa {
+                        background-color: $cl-trans-white;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-wa;
+                        }
+                    }
+                    .nt {
+                        background-color: $cl-trans-white;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-nt;
+                        }
+                    }
+                    .nz {
+                        background-color: $cl-trans-white;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-nz;
+                        }
+                    }
+                    .major {
+                        &.qld {
+                            background-color: $cl-qld;
+                            color: white;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
+                        }
+                        &.nsw {
+                            background-color: $cl-nsw;
+                            color: white;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
+                        }
+                        &.vic {
+                            background-color: $cl-vic;
+                            color: white;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
+                        }
+                        &.sa {
+                            background-color: $cl-sa;
+                            color: white;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
+                        }
+                        &.tas {
+                            background-color: $cl-tas;
+                            color: white;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
+                        }
+                        &.wa {
+                            background-color: $cl-wa;
+                            color: $cl-bodygrey;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
+                        }
+                        &.nt {
+                            background-color: $cl-nt;
+                            color: white;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
+                        }
+                        &.nz {
+                            background-color: $cl-nz;
+                            color: white;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
                         }
                     }
                 }
             }
         }
-    }
-}
-
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(1rem);
     }
 }
 
@@ -1180,10 +1476,10 @@ header {
                 }
             }
             .event-summary {
-                flex: 1;
-                .summary-columns {
-                    display: flex;
-                }
+                // flex: 1 1 auto;
+                // .summary-columns {
+                //     display: flex;
+                // }
             }
         }
     }
@@ -1253,9 +1549,9 @@ header {
                             span {
                                 height: 100%;
                             }
-                            .color-bar {
-                                width: 0.45rem;
-                            }
+                            // .color-bar {
+                            //     width: 0.45rem;
+                            // }
                         }
                         .major {
                             flex: 1 0 auto;
@@ -1326,11 +1622,6 @@ header {
         }
     }
     .calendar-page {
-        .top {
-            .top-wrapper {
-                flex-direction: row;
-            }
-        }
         .text {
             .inner {
                 h2 {

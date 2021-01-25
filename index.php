@@ -179,6 +179,37 @@ function console_log($output, $with_script_tags = true) {
 
     <header>
 
+    <div class="filter">
+
+        <div class="btn">
+            See just your state<i class="fas fa-chevron-up"></i>
+        </div>
+
+        <div class="filter-menu">
+
+            <div class="text">States</div>
+            <div class="states">
+                <a class="state active" data-state="all">ALL</a>
+                <a class="state" id="filter-qld" data-state="qld">QLD</a>
+                <a class="state" id="filter-nsw" data-state="nsw">NSW</a>
+                <a class="state" id="filter-vic" data-state="vic">VIC</a>
+                <a class="state" id="filter-tas" data-state="tas">TAS</a>
+                <a class="state" id="filter-sa" data-state="sa">SA</a>
+                <a class="state" id="filter-wa" data-state="wa">WA</a>
+                <a class="state" id="filter-nt" data-state="nt">NT</a>
+                <a class="state" id="filter-nz" data-state="nz">NZ</a>
+            </div>
+            <div class="text">Event type</div>
+            <div class="types">
+                <a class="type active" data-type="all">ALL</a>
+                <a class="type" data-type="events">Events</a>
+                <a class="type" data-type="training">Training</a>
+            </div>
+
+        </div>
+
+    </div>
+
         <div class="navigation">
             <a id="prev-month-nav" class="month-navigation"><i class="fas fa-angle-double-left"></i
       ></a>
@@ -419,7 +450,7 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                         </div>
@@ -427,7 +458,7 @@ function console_log($output, $with_script_tags = true) {
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -455,14 +486,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -490,14 +521,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -525,14 +556,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -560,14 +591,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -595,14 +626,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -630,14 +661,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -665,14 +696,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -700,14 +731,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -735,14 +766,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>
@@ -770,14 +801,14 @@ function console_log($output, $with_script_tags = true) {
                             </div>
                         </div>
 
-                        <div class="event-summary fade-in">
+                        <div class="event-summary">
 
                         </div>
                     </div>
                     </div>
 
                     <div class="calendar-container">
-                        <div class="calendar fade-in">
+                        <div class="calendar">
                             <div class="weekdays">
                                 <div>Sunday</div>
                                 <div>Monday</div>

@@ -338,13 +338,38 @@ body {
           color: #00467f;
           background-color: #fff; }
         .event-modal-wrapper .event-modal > .inner .banner.seasonal {
-          background-color: #dd5c0f; }
+          color: #dd5c0f;
+          background-color: white; }
         .event-modal-wrapper .event-modal > .inner .banner.training {
           background-color: #1e8e00; }
         .event-modal-wrapper .event-modal > .inner .banner.commercial {
           background-color: #D2000F; }
         .event-modal-wrapper .event-modal > .inner .banner.convention {
           background-color: #5e1394; }
+        .event-modal-wrapper .event-modal > .inner .banner.qld {
+          background-color: #800000;
+          color: white; }
+        .event-modal-wrapper .event-modal > .inner .banner.nsw {
+          background-color: #1e83b9;
+          color: white; }
+        .event-modal-wrapper .event-modal > .inner .banner.vic {
+          background-color: #06386F;
+          color: white; }
+        .event-modal-wrapper .event-modal > .inner .banner.tas {
+          background-color: #008A33;
+          color: white; }
+        .event-modal-wrapper .event-modal > .inner .banner.sa {
+          background-color: #CB1805;
+          color: white; }
+        .event-modal-wrapper .event-modal > .inner .banner.wa {
+          background-color: #ffd700;
+          color: #444444; }
+        .event-modal-wrapper .event-modal > .inner .banner.nt {
+          background-color: #cc7722;
+          color: white; }
+        .event-modal-wrapper .event-modal > .inner .banner.nz {
+          background-color: black;
+          color: white; }
       .event-modal-wrapper .event-modal > .inner .image {
         flex: 1; }
         .event-modal-wrapper .event-modal > .inner .image img {
@@ -359,8 +384,8 @@ body {
           display: flex;
           flex-direction: column;
           padding: 1.25rem;
-          background-color: #444;
-          color: white; }
+          background-color: #dfdfdf;
+          color: #444444; }
           .event-modal-wrapper .event-modal > .inner .details .columns .text {
             flex: 1; }
             .event-modal-wrapper .event-modal > .inner .details .columns .text .title {
@@ -408,18 +433,6 @@ body {
               .event-modal-wrapper .event-modal > .inner .details .columns .links a.enquiry {
                 background-color: #444444;
                 color: #eeeeee; }
-          .event-modal-wrapper .event-modal > .inner .details .columns.major {
-            background-color: rgba(0, 70, 127, 0.85); }
-          .event-modal-wrapper .event-modal > .inner .details .columns.minor {
-            background-color: rgba(68, 68, 68, 0.7); }
-          .event-modal-wrapper .event-modal > .inner .details .columns.seasonal {
-            background-color: rgba(221, 92, 15, 0.7); }
-          .event-modal-wrapper .event-modal > .inner .details .columns.convention {
-            background-color: rgba(94, 19, 148, 0.85); }
-          .event-modal-wrapper .event-modal > .inner .details .columns.training {
-            background-color: rgba(30, 142, 0, 0.7); }
-          .event-modal-wrapper .event-modal > .inner .details .columns.commercial {
-            background-color: rgba(210, 0, 15, 0.7); }
         .event-modal-wrapper .event-modal > .inner .details .description {
           height: 100%;
           background-color: #eeeeee; }
@@ -437,6 +450,14 @@ body {
     transform: translateX(0.8rem); }
   100% {
     transform: translateX(0rem); } }
+
+@keyframes filter-prompt {
+  0% {
+    transform: translateY(0rem); }
+  50% {
+    transform: translateY(-0.5rem); }
+  100% {
+    transform: translateY(0rem); } }
 
 header {
   margin: 0;
@@ -471,22 +492,158 @@ header {
     transform: rotateY(180deg) skewX(-30deg);
     left: unset;
     right: -1.4rem; }
+  header .filter {
+    position: absolute;
+    bottom: 3rem;
+    left: 0; }
+    header .filter .btn {
+      margin: auto;
+      text-align: center;
+      display: block;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      background: #E77C00;
+      color: white;
+      width: 11rem;
+      font-weight: 500;
+      align-items: center;
+      justify-content: center;
+      height: 1.6rem;
+      position: relative;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 250ms linear;
+      display: none; }
+      header .filter .btn.shown {
+        opacity: 0.75; }
+        header .filter .btn.shown:hover {
+          opacity: 1; }
+      header .filter .btn:before, header .filter .btn:after {
+        content: "";
+        display: block;
+        height: 1.6rem;
+        width: 1.6rem;
+        border-left: 2px solid #E77C00;
+        border-top: 2px solid #E77C00;
+        transform: skewX(-30deg);
+        border-top-left-radius: 5px;
+        position: absolute;
+        top: 0px;
+        left: -1rem;
+        background-color: #E77C00;
+        z-index: -1; }
+      header .filter .btn:after {
+        transform: rotateY(180deg) skewX(-30deg);
+        left: unset;
+        right: -1rem; }
+      header .filter .btn:hover {
+        cursor: pointer; }
+      header .filter .btn i {
+        transform: rotate(0deg);
+        transition: transform 300ms linear;
+        margin-left: 0.3rem;
+        font-size: 0.9rem;
+        animation-iteration-count: 2; }
+    header .filter .filter-menu {
+      height: 0;
+      overflow: hidden;
+      background: #dfdfdf;
+      border-top-left-radius: 0.2rem;
+      border-top-right-radius: 0.2rem;
+      overflow: hidden;
+      transition: height 300ms ease-out; }
+      header .filter .filter-menu .text {
+        margin: 0.25rem 0.25rem 0.5rem;
+        padding: 0.3rem 0;
+        border-bottom: 1px solid rgba(68, 68, 68, 0.25);
+        font-weight: 500;
+        font-size: 1.1rem; }
+      header .filter .filter-menu .states,
+      header .filter .filter-menu .types {
+        font-size: 1rem;
+        flex-wrap: wrap;
+        display: flex;
+        margin: 0.25rem;
+        border-radius: 0.2rem;
+        overflow: hidden; }
+        header .filter .filter-menu .states a,
+        header .filter .filter-menu .types a {
+          flex: 1 0 21%;
+          text-align: center;
+          padding: 0.2rem 0.4rem;
+          background-color: #444444;
+          color: white;
+          opacity: 0.5;
+          font-weight: 300; }
+          header .filter .filter-menu .states a:hover,
+          header .filter .filter-menu .types a:hover {
+            cursor: pointer; }
+            header .filter .filter-menu .states a:hover:not(.active),
+            header .filter .filter-menu .types a:hover:not(.active) {
+              opacity: 0.75; }
+          header .filter .filter-menu .states a.active,
+          header .filter .filter-menu .types a.active {
+            opacity: 1;
+            box-shadow: 0px 0px 3px rgba(68, 68, 68, 0.5);
+            font-weight: 500; }
+          header .filter .filter-menu .states a:first-child,
+          header .filter .filter-menu .types a:first-child {
+            flex: 0 0 100%;
+            letter-spacing: 2px; }
+          header .filter .filter-menu .states a#filter-qld,
+          header .filter .filter-menu .types a#filter-qld {
+            background-color: #800000;
+            color: white; }
+          header .filter .filter-menu .states a#filter-nsw,
+          header .filter .filter-menu .types a#filter-nsw {
+            background-color: #1e83b9;
+            color: white; }
+          header .filter .filter-menu .states a#filter-vic,
+          header .filter .filter-menu .types a#filter-vic {
+            background-color: #06386F;
+            color: white; }
+          header .filter .filter-menu .states a#filter-tas,
+          header .filter .filter-menu .types a#filter-tas {
+            background-color: #008A33;
+            color: white; }
+          header .filter .filter-menu .states a#filter-sa,
+          header .filter .filter-menu .types a#filter-sa {
+            background-color: #CB1805;
+            color: white; }
+          header .filter .filter-menu .states a#filter-wa,
+          header .filter .filter-menu .types a#filter-wa {
+            background-color: #ffd700;
+            color: #444444; }
+          header .filter .filter-menu .states a#filter-nt,
+          header .filter .filter-menu .types a#filter-nt {
+            background-color: #cc7722;
+            color: white; }
+          header .filter .filter-menu .states a#filter-nz,
+          header .filter .filter-menu .types a#filter-nz {
+            background-color: black;
+            color: white; }
+    header .filter.shown .filter-menu {
+      height: 250px; }
+    header .filter.shown .btn {
+      opacity: 1; }
+      header .filter.shown .btn i {
+        transform: rotate(180deg); }
   header .navigation {
     position: relative;
     display: flex;
     justify-content: center; }
-  header a {
-    flex: 0;
-    flex-basis: 2.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 250ms ease-in-out;
-    font-size: 1.25rem; }
-    header a:hover {
-      cursor: pointer; }
-    header a:focus {
-      outline: none; }
+    header .navigation a {
+      flex: 0;
+      flex-basis: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 250ms ease-in-out;
+      font-size: 1.25rem; }
+      header .navigation a:hover {
+        cursor: pointer; }
+      header .navigation a:focus {
+        outline: none; }
   header .month-text-container {
     flex: 0 1 auto;
     overflow: hidden;
@@ -729,7 +886,7 @@ header {
       flex-direction: column;
       z-index: 10; }
       .calendar-page .top .event-summary .convention-feature {
-        margin: 2rem 0;
+        margin: 2rem;
         padding: 1rem;
         width: 39rem;
         max-width: 100%;
@@ -867,28 +1024,57 @@ header {
             border-radius: 0.75rem;
             overflow: hidden;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 1rem;
             line-height: 1.2;
             margin-bottom: 0.25rem; }
+            .calendar-container .calendar .grid .day-square .contents .day-event.hidden {
+              display: none !important; }
             .calendar-container .calendar .grid .day-square .contents .day-event:hover {
               cursor: pointer; }
             .calendar-container .calendar .grid .day-square .contents .day-event .color-bar {
               flex: 0 0 auto;
-              width: 0.75rem; }
+              width: 0.6rem; }
             .calendar-container .calendar .grid .day-square .contents .day-event span {
               flex: 1;
               display: flex;
-              align-items: center; }
+              align-items: center;
+              word-break: break-word; }
           .calendar-container .calendar .grid .day-square .contents .major {
             order: 3;
             background-color: rgba(0, 70, 127, 0.95);
-            color: white;
             font-size: 1.1rem;
             flex: 1; }
             .calendar-container .calendar .grid .day-square .contents .major .color-bar {
               background-color: #eeeeee; }
             .calendar-container .calendar .grid .day-square .contents .major span {
               padding: 2rem 1rem; }
+          .calendar-container .calendar .grid .day-square .contents .minor {
+            order: 4;
+            background-color: rgba(238, 238, 238, 0.95);
+            color: #00467f;
+            flex: 0; }
+            .calendar-container .calendar .grid .day-square .contents .minor .color-bar {
+              background-color: #00467f; }
+            .calendar-container .calendar .grid .day-square .contents .minor span {
+              padding: 0.5rem 1rem; }
+          .calendar-container .calendar .grid .day-square .contents .training {
+            order: 5;
+            background-color: rgba(255, 255, 255, 0.9);
+            flex: 0;
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .training .color-bar {
+              background-color: #1e8e00; }
+            .calendar-container .calendar .grid .day-square .contents .training span {
+              padding: 0.5rem 1rem; }
+          .calendar-container .calendar .grid .day-square .contents .commercial {
+            order: 5;
+            background-color: rgba(255, 255, 255, 0.9);
+            flex: 0;
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
+              background-color: #D2000F; }
+            .calendar-container .calendar .grid .day-square .contents .commercial span {
+              padding: 0.5rem 1rem; }
           .calendar-container .calendar .grid .day-square .contents .convention {
             flex: 2;
             order: 2;
@@ -900,48 +1086,94 @@ header {
               background-color: #eeeeee; }
             .calendar-container .calendar .grid .day-square .contents .convention span {
               padding: 2.2rem 1rem; }
-          .calendar-container .calendar .grid .day-square .contents .minor {
-            order: 4;
-            background-color: rgba(238, 238, 238, 0.95);
-            color: #00467f;
-            font-size: 1rem;
-            flex: 0; }
-            .calendar-container .calendar .grid .day-square .contents .minor .color-bar {
-              background-color: #00467f; }
-            .calendar-container .calendar .grid .day-square .contents .minor span {
-              padding: 0.5rem 1rem; }
-          .calendar-container .calendar .grid .day-square .contents .training,
-          .calendar-container .calendar .grid .day-square .contents .commercial {
-            order: 5;
-            background-color: rgba(238, 238, 238, 0.95);
-            color: #1e8e00;
-            font-size: 1rem;
-            flex: 0; }
-            .calendar-container .calendar .grid .day-square .contents .training .color-bar,
-            .calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
-              background-color: #1e8e00; }
-            .calendar-container .calendar .grid .day-square .contents .training span,
-            .calendar-container .calendar .grid .day-square .contents .commercial span {
-              padding: 0.5rem 1rem; }
-          .calendar-container .calendar .grid .day-square .contents .commercial {
-            color: #D2000F; }
-            .calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
-              background-color: #D2000F; }
           .calendar-container .calendar .grid .day-square .contents .seasonal {
             order: 1;
-            background-color: rgba(221, 92, 15, 0.95);
-            color: white;
-            flex: 0; }
-            .calendar-container .calendar .grid .day-square .contents .seasonal .color-bar {
-              background-color: #dd5c0f; }
+            color: #dd5c0f !important;
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            flex: 0;
+            font-size: 0.9rem; }
             .calendar-container .calendar .grid .day-square .contents .seasonal span {
               padding: 0.3rem 1rem; }
-
-@keyframes bounce {
-  0% {
-    transform: translateY(0); }
-  100% {
-    transform: translateY(1rem); } }
+          .calendar-container .calendar .grid .day-square .contents .qld {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .qld .color-bar {
+              background-color: #800000; }
+          .calendar-container .calendar .grid .day-square .contents .nsw {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .nsw .color-bar {
+              background-color: #1e83b9; }
+          .calendar-container .calendar .grid .day-square .contents .vic {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .vic .color-bar {
+              background-color: #06386F; }
+          .calendar-container .calendar .grid .day-square .contents .sa {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .sa .color-bar {
+              background-color: #CB1805; }
+          .calendar-container .calendar .grid .day-square .contents .tas {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .tas .color-bar {
+              background-color: #008A33; }
+          .calendar-container .calendar .grid .day-square .contents .wa {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .wa .color-bar {
+              background-color: #ffd700; }
+          .calendar-container .calendar .grid .day-square .contents .nt {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .nt .color-bar {
+              background-color: #cc7722; }
+          .calendar-container .calendar .grid .day-square .contents .nz {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .nz .color-bar {
+              background-color: black; }
+          .calendar-container .calendar .grid .day-square .contents .major.qld {
+            background-color: #800000;
+            color: white; }
+            .calendar-container .calendar .grid .day-square .contents .major.qld .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
+          .calendar-container .calendar .grid .day-square .contents .major.nsw {
+            background-color: #1e83b9;
+            color: white; }
+            .calendar-container .calendar .grid .day-square .contents .major.nsw .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
+          .calendar-container .calendar .grid .day-square .contents .major.vic {
+            background-color: #06386F;
+            color: white; }
+            .calendar-container .calendar .grid .day-square .contents .major.vic .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
+          .calendar-container .calendar .grid .day-square .contents .major.sa {
+            background-color: #CB1805;
+            color: white; }
+            .calendar-container .calendar .grid .day-square .contents .major.sa .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
+          .calendar-container .calendar .grid .day-square .contents .major.tas {
+            background-color: #008A33;
+            color: white; }
+            .calendar-container .calendar .grid .day-square .contents .major.tas .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
+          .calendar-container .calendar .grid .day-square .contents .major.wa {
+            background-color: #ffd700;
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .major.wa .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
+          .calendar-container .calendar .grid .day-square .contents .major.nt {
+            background-color: #cc7722;
+            color: white; }
+            .calendar-container .calendar .grid .day-square .contents .major.nt .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
+          .calendar-container .calendar .grid .day-square .contents .major.nz {
+            background-color: black;
+            color: white; }
+            .calendar-container .calendar .grid .day-square .contents .major.nz .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
 
 @media (min-width: 576px) {
   html,
@@ -980,10 +1212,6 @@ header {
     padding: 2.2rem 3rem; }
   .calendar-page .top .text .inner h4 {
     font-size: 2.2rem; }
-  .calendar-page .top .event-summary {
-    flex: 1; }
-    .calendar-page .top .event-summary .summary-columns {
-      display: flex; }
   .calendar-container .calendar {
     border-radius: 0.22rem;
     overflow: hidden; }
@@ -1037,8 +1265,6 @@ header {
               box-shadow: 0px 0px 10px white; }
             .calendar-container .calendar .grid .day-square .contents .day-event span {
               height: 100%; }
-            .calendar-container .calendar .grid .day-square .contents .day-event .color-bar {
-              width: 0.45rem; }
           .calendar-container .calendar .grid .day-square .contents .major {
             flex: 1 0 auto; }
             .calendar-container .calendar .grid .day-square .contents .major span {
@@ -1074,8 +1300,6 @@ header {
   header .months-dropdown-menu .month:hover {
     cursor: pointer;
     background-color: rgba(78, 78, 78, 0.15); }
-  .calendar-page .top .top-wrapper {
-    flex-direction: row; }
   .calendar-page .text .inner h2 {
     font-size: 6rem;
     padding: 3rem 3.8rem;

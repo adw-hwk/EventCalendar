@@ -1035,7 +1035,8 @@ body {
 }
 
 .event-modal-wrapper .event-modal>.inner .banner.seasonal {
-    background-color: #dd5c0f;
+    color: #dd5c0f;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .event-modal-wrapper .event-modal>.inner .banner.training {
@@ -1772,7 +1773,7 @@ header .months-dropdown-menu .month:hover {
     border-radius: 0.75rem;
     overflow: hidden;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 1rem;
     line-height: 1.2;
     margin-bottom: 0.25rem;
 }
@@ -1795,7 +1796,6 @@ header .months-dropdown-menu .month:hover {
 .calendar-container .calendar .grid .day-square .contents .major {
     order: 3;
     background-color: rgba(0, 70, 127, 0.95);
-    color: white;
     font-size: 1.1rem;
     flex: 1;
 }
@@ -1806,6 +1806,41 @@ header .months-dropdown-menu .month:hover {
 
 .calendar-container .calendar .grid .day-square .contents .major span {
     padding: 2rem 1rem;
+}
+
+.calendar-container .calendar .grid .day-square .contents .minor {
+    order: 4;
+    background-color: rgba(0, 70, 127, 0.95);
+    flex: 0;
+}
+
+.calendar-container .calendar .grid .day-square .contents .minor .color-bar {
+    background-color: #eeeeee;
+}
+
+.calendar-container .calendar .grid .day-square .contents .minor span {
+    padding: 0.5rem 1rem;
+}
+
+.calendar-container .calendar .grid .day-square .contents .training,
+.calendar-container .calendar .grid .day-square .contents .commercial {
+    order: 5;
+    background-color: rgba(30, 142, 0, 0.95);
+    flex: 0;
+}
+
+.calendar-container .calendar .grid .day-square .contents .training .color-bar,
+.calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
+    background-color: #eeeeee;
+}
+
+.calendar-container .calendar .grid .day-square .contents .training span,
+.calendar-container .calendar .grid .day-square .contents .commercial span {
+    padding: 0.5rem 1rem;
+}
+
+.calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
+    background-color: #D2000F;
 }
 
 .calendar-container .calendar .grid .day-square .contents .convention {
@@ -1825,62 +1860,44 @@ header .months-dropdown-menu .month:hover {
     padding: 2.2rem 1rem;
 }
 
-.calendar-container .calendar .grid .day-square .contents .minor {
-    order: 4;
-    background-color: rgba(238, 238, 238, 0.95);
-    color: #00467f;
-    font-size: 1rem;
-    flex: 0;
-}
-
-.calendar-container .calendar .grid .day-square .contents .minor .color-bar {
-    background-color: #00467f;
-}
-
-.calendar-container .calendar .grid .day-square .contents .minor span {
-    padding: 0.5rem 1rem;
-}
-
-.calendar-container .calendar .grid .day-square .contents .training,
-.calendar-container .calendar .grid .day-square .contents .commercial {
-    order: 5;
-    background-color: rgba(238, 238, 238, 0.95);
-    color: #1e8e00;
-    font-size: 1rem;
-    flex: 0;
-}
-
-.calendar-container .calendar .grid .day-square .contents .training .color-bar,
-.calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
-    background-color: #1e8e00;
-}
-
-.calendar-container .calendar .grid .day-square .contents .training span,
-.calendar-container .calendar .grid .day-square .contents .commercial span {
-    padding: 0.5rem 1rem;
-}
-
-.calendar-container .calendar .grid .day-square .contents .commercial {
-    color: #D2000F;
-}
-
-.calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
-    background-color: #D2000F;
-}
-
 .calendar-container .calendar .grid .day-square .contents .seasonal {
     order: 1;
-    background-color: rgba(221, 92, 15, 0.95);
-    color: white;
+    color: #dd5c0f;
+    background-color: rgba(255, 255, 255, 0.9);
     flex: 0;
-}
-
-.calendar-container .calendar .grid .day-square .contents .seasonal .color-bar {
-    background-color: #dd5c0f;
+    font-size: 0.9rem;
 }
 
 .calendar-container .calendar .grid .day-square .contents .seasonal span {
     padding: 0.3rem 1rem;
+}
+
+.calendar-container .calendar .grid .day-square .contents .qld {
+    background-color: rgba(128, 0, 0, 0.5);
+}
+
+.calendar-container .calendar .grid .day-square .contents .nsw {
+    background-color: rgba(173, 216, 230, 0.5);
+}
+
+.calendar-container .calendar .grid .day-square .contents .vic {
+    background-color: rgba(0, 0, 139, 0.5);
+}
+
+.calendar-container .calendar .grid .day-square .contents .sa {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.calendar-container .calendar .grid .day-square .contents .tas {
+    background-color: rgba(0, 128, 0, 0.5);
+}
+
+.calendar-container .calendar .grid .day-square .contents .wa {
+    background-color: rgba(255, 215, 0, 0.5);
+}
+
+.calendar-container .calendar .grid .day-square .contents .nt {
+    background-color: rgba(204, 119, 34, 0.5);
 }
 
 @keyframes bounce {

@@ -2698,7 +2698,6 @@
     return R.use(ce), R
 }));
 //# sourceMappingURL=swiper-bundle.min.js.map
-
 window.addEventListener("load", () => {
             const months = [
                 "January",
@@ -2848,21 +2847,17 @@ window.addEventListener("load", () => {
                             fadeEls: ".fade-in",
                         };
 
-                        const getEventClass = (event) => {
-                            const isConvention = event.tags !== null && event.tags.includes("convention") ? true : false;
-                            const isCommercial = event.tags !== null && event.tags.includes("commercial") ? true : false;
+                        const getEventClasses = (event) => {
 
-                            let eventClass;
+                            let eventClasses = event.type;
 
-                            if (isCommercial) {
-                                eventClass = 'commercial';
-                            } else if (isConvention) {
-                                eventClass = 'convention';
-                            } else {
-                                eventClass = event.type;
+                            if (event.tags !== null && event.tags.length > 0) {
+                                event.tags.forEach(tag => {
+                                    eventClasses += ` ${tag}`;
+                                })
                             }
 
-                            return eventClass;
+                            return eventClasses;
                         };
 
                         return {
@@ -2984,13 +2979,13 @@ window.addEventListener("load", () => {
 
                                             events.forEach((event) => {
 
-                                                        const eventClass = getEventClass(event);
+                                                        const eventClasses = getEventClasses(event);
 
                                                         if (
                                                             event.start_date.day == day ||
                                                             (event.end_date.day >= day && event.start_date.day < day)
                                                         ) {
-                                                            eventList += `<div class="day-event ${eventClass}" data-event-id="${event.ID}">${
+                                                            eventList += `<div class="day-event ${eventClasses}" data-event-id="${event.ID}">${
         event.type === "seasonal" ? `` : `<div class="color-bar"></div>`
       }<span>${event.title}</span></div>`;
     }
@@ -3223,9 +3218,9 @@ let enquiryEmail = {
   'seasonal': null
 };
 
-const eventClass = getEventClass(event);
+const eventClasses = getEventClasses(event);
 
-HTML += `<div class="banner ${eventClass}"><span class="date">${
+HTML += `<div class="banner ${eventClasses}"><span class="date">${
   event.end_date.day === event.start_date.day
     ? `${event.start_date.weekday} ${
         event.start_date.day
@@ -3233,7 +3228,7 @@ HTML += `<div class="banner ${eventClass}"><span class="date">${
     : `${event.start_date.weekday} ${
         event.start_date.day
       } ${months[event.start_date.month - 1]} - ${
-        days[new Date(event.end_date.UTC).getDay()]
+        event.end_date.weekday
       } ${event.end_date.day} ${months[event.end_date.month - 1]}`
 }</span></div>`;
 
@@ -3241,7 +3236,7 @@ if (event.image) {
     HTML += `<div class="image"><img src="${event.image.large}" alt="${event.title}"></div>`;
   }
 
-  HTML += `<div class="details"><div class="columns ${eventClass}">`;
+  HTML += `<div class="details"><div class="columns ${eventClasses}">`;
 
 HTML += `<div class="text">${
   event.title.length > 0
