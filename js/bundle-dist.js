@@ -4921,7 +4921,11 @@ window.addEventListener("load", function() {
             calendarGrids: Array.prototype.slice.call(document.querySelectorAll(".calendar .grid")),
             eventModalWrapper: document.querySelector(".event-modal-wrapper"),
             eventModalContents: document.querySelector(".event-modal .inner"),
-            eventModalClose: document.querySelector(".event-modal .close-btn")
+            eventModalClose: document.querySelector(".event-modal .close-btn"),
+            filter: document.querySelector(".filter"),
+            filterBtn: document.querySelector('.filter .btn'),
+            filterMenu: document.querySelector('.filter .filter-menu'),
+            filterSpans: Array.prototype.slice.call(document.querySelectorAll('.filter .btn span'))
         };
         var DOMStrings = {
             monthNavs: {
@@ -4931,20 +4935,16 @@ window.addEventListener("load", function() {
             fadeEls: ".fade-in"
         };
 
-        var getEventClass = function getEventClass(event) {
-            var isConvention = event.tags !== null && event.tags.includes("convention") ? true : false;
-            var isCommercial = event.tags !== null && event.tags.includes("commercial") ? true : false;
-            var eventClass;
+        var getEventClasses = function getEventClasses(event) {
+            var eventClasses = event.type;
 
-            if (isCommercial) {
-                eventClass = 'commercial';
-            } else if (isConvention) {
-                eventClass = 'convention';
-            } else {
-                eventClass = event.type;
+            if (event.tags !== null && event.tags.length > 0) {
+                event.tags.forEach(function(tag) {
+                    eventClasses += " ".concat(tag);
+                });
             }
 
-            return eventClass;
+            return eventClasses;
         };
 
         return {
@@ -5003,36 +5003,6 @@ window.addEventListener("load", function() {
             getAllImages: function getAllImages() {
                 return Array.prototype.slice.call(document.images);
             },
-            sortImages: function sortImages(images) {
-                var sortedImages = {};
-                DOM.monthSlides.forEach(function(slide, i) {
-                    images.forEach(function(image) {
-                        if (image.closest(".calendar-slide") === slide) {
-                            // initialise month array
-                            if (sortedImages[months[i]] === undefined) {
-                                sortedImages[months[i]] = new Array();
-                            }
-
-                            if (image.classList.contains("swiper-image")) {
-                                if (sortedImages[months[i]].swiper === undefined) {
-                                    sortedImages[months[i]].swiper = new Array();
-                                }
-
-                                sortedImages[months[i]].swiper.push(image);
-                            } else if (image.classList.contains("hero-bg-image")) {
-                                sortedImages[months[i]].heroBG = image;
-                            } else {
-                                if (sortedImages[months[i]].events === undefined) {
-                                    sortedImages[months[i]].events = new Array();
-                                }
-
-                                sortedImages[months[i]].events.push(image);
-                            }
-                        }
-                    });
-                });
-                return sortedImages;
-            },
             setActiveMenuMonth: function setActiveMenuMonth(currentMonth) {
                 DOM.dropdownMonthArr.forEach(function(month) {
                     if (month.classList.contains("active")) {
@@ -5049,10 +5019,10 @@ window.addEventListener("load", function() {
                 var writeDaysEvents = function writeDaysEvents(day, events) {
                     var eventList = "";
                     events.forEach(function(event) {
-                        var eventClass = getEventClass(event);
+                        var eventClasses = getEventClasses(event);
 
                         if (event.start_date.day == day || event.end_date.day >= day && event.start_date.day < day) {
-                            eventList += "<div class=\"day-event ".concat(eventClass, "\" data-event-id=\"").concat(event.ID, "\">").concat(event.type === "seasonal" ? "" : "<div class=\"color-bar\"></div>", "<span>").concat(event.title, "</span></div>");
+                            eventList += "<div class=\"day-event ".concat(eventClasses, "\" data-event-id=\"").concat(event.ID, "\">").concat(event.type === "seasonal" ? "" : "<div class=\"color-bar\"></div>", "<span>").concat(event.title, "</span></div>");
                         }
                     });
                     return eventList;
@@ -5176,45 +5146,31 @@ window.addEventListener("load", function() {
 
                 return "".concat(conventionOn ? "<div class=\"convention-feature\"><i class=\"fas fa-circle\"></i><div class=\"text\"><div class=\"title\">National Convention</div><div class=\"details\">".concat(conventionDates.length > 0 ? "<div class=\"date\">".concat(conventionDates, "</div>") : "").concat(conventionEvent.venue !== null && conventionEvent.venue.city.length > 0 ? "<div class=\"city\">".concat(conventionEvent.venue.city, "</div>") : "", "</div></div><i class=\"fas fa-circle\"></i></div>") : "", "<div class=\"summary-columns\">\n        ").concat(summaryHTML.major.length > 0 ? "<div class=\"major\"><div class=\"banner\"><i class=\"fas fa-star\"></i></div><div class=\"contents\">".concat(summaryHTML.major, "</div></div>") : "", "\n        ").concat(summaryHTML.training.length > 0 ? "<div class=\"training\"><div class=\"banner\"><i class=\"fas fa-graduation-cap\"></i></div><div class=\"contents\">".concat(summaryHTML.training, "</div></div>") : "", "\n        ").concat(summaryHTML.seasonal.length > 0 ? "<div class=\"seasonal\"><div class=\"banner\"><i class=\"far fa-snowflake\"></i></div><div class=\"contents\">".concat(summaryHTML.seasonal, "</div></div>") : "", "\n        </div>");
             },
-            getFadeElements: function getFadeElements() {
-                return document.querySelectorAll(DOMStrings.fadeEls);
-            },
-            calendarFade: function calendarFade(activeMonth, speed) {
-                Array.prototype.slice.call(document.querySelectorAll(DOMStrings.fadeEls)).forEach(function(el) {
-                    el.classList.remove("shown");
-                });
-                var currentEls = DOM.monthSlides[activeMonth].querySelectorAll(DOMStrings.fadeEls);
-                setTimeout(function() {
-                    currentEls.forEach(function(el) {
-                        el.classList.add("shown");
-                    });
-                }, speed);
-            },
             openEventModal: function openEventModal(event) {
                 var modalContents = DOM.eventModalContents,
                     modalWrapper = DOM.eventModalWrapper;
                 modalWrapper.style.zIndex = "5000";
                 var HTML = "";
                 var enquiryEmail = {
-                    'major': 'events@firstnational.com.au',
-                    'minor': 'events@firstnational.com.au',
-                    'training': 'training@firstnational.com.au',
-                    'seasonal': null
+                    major: "events@firstnational.com.au",
+                    minor: "events@firstnational.com.au",
+                    training: "training@firstnational.com.au",
+                    seasonal: null
                 };
-                var eventClass = getEventClass(event);
-                HTML += "<div class=\"banner ".concat(eventClass, "\"><span class=\"date\">").concat(event.end_date.day === event.start_date.day ? "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1]) : "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1], " - ").concat(event.end_date.weekday, " ").concat(event.end_date.day, " ").concat(months[event.end_date.month - 1]), "</span></div>");
+                var eventClasses = getEventClasses(event);
+                HTML += "<div class=\"banner ".concat(eventClasses, "\"><span class=\"date\">").concat(event.end_date.day === event.start_date.day ? "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1]) : "".concat(event.start_date.weekday, " ").concat(event.start_date.day, " ").concat(months[event.start_date.month - 1], " - ").concat(event.end_date.weekday, " ").concat(event.end_date.day, " ").concat(months[event.end_date.month - 1]), "</span></div>");
 
                 if (event.image) {
                     HTML += "<div class=\"image\"><img src=\"".concat(event.image.large, "\" alt=\"").concat(event.title, "\"></div>");
                 }
 
-                HTML += "<div class=\"details\"><div class=\"columns ".concat(eventClass, "\">");
-                HTML += "<div class=\"text\">".concat(event.title.length > 0 ? "<div class=\"title\">".concat(event.title, "</div>") : "").concat(event.venue !== null ? "".concat(event.venue.name !== undefined ? "<div class=\"venue\"><i class=\"fas fa-building\"></i>".concat(event.venue.name, "</div>") : "").concat(event.venue.city !== undefined ? "<div class=\"city\"><i class=\"fas fa-map-marked-alt\"></i>".concat(event.venue.city, "</div>") : "") : "").concat(!event.all_day && [event.start_date.day, event.start_date.hour, event.start_date.minute] !== [event.end_date.day, event.end_date.hour, event.end_date.minute] ? "<div class=\"time\"><i class=\"far fa-clock\"></i>".concat(event.start_date.hour % 12, ":").concat(event.start_date.minute == 0 ? '00' : event.start_date.minute, " - ").concat(event.end_date.hour % 12 == 0 ? '12' : event.end_date.hour % 12, ":").concat(event.end_date.minute == 0 ? '00' : event.end_date.minute, "</div>") : '', "</div>");
-                HTML += "<div class=\"links\"><a class=\"add-to-calendar\" target=\"_blank\">Add to calendar</a>".concat(enquiryEmail[event.type] !== null ? "<a href=\"mailto:".concat(enquiryEmail[event.type], "?subject=Enquiry%20about%20").concat(event.title.replace(' ', '%20'), "&body=Hi%20FN%20").concat(event.type == 'training' ? 'Training' : 'Events', "%20team%2C%0D%0A%0D%0A\" class=\"enquiry\">Enquire</a>") : "").concat(event.URL == null ? "" : "<a class=\"info\" href=\"".concat(event.URL, "\" target=\"_blank\">More info</a>")).concat(event.reg_link == null ? "" : "<a class=\"register\" href=\"".concat(event.reg_link, "\" target=\"_blank\">Register</a>"));
+                HTML += "<div class=\"details\"><div class=\"columns ".concat(eventClasses, "\">");
+                HTML += "<div class=\"text\">".concat(event.title.length > 0 ? "<div class=\"title\">".concat(event.title, "</div>") : "").concat(event.venue !== null ? "".concat(event.venue.name !== undefined ? "<div class=\"venue\"><i class=\"fas fa-building\"></i>".concat(event.venue.name, "</div>") : "").concat(event.venue.city !== undefined ? "<div class=\"city\"><i class=\"fas fa-map-marked-alt\"></i>".concat(event.venue.city, "</div>") : "") : "").concat(!event.all_day && [event.start_date.day, event.start_date.hour, event.start_date.minute] !== [event.end_date.day, event.end_date.hour, event.end_date.minute] ? "<div class=\"time\"><i class=\"far fa-clock\"></i>".concat(event.start_date.hour % 12, ":").concat(event.start_date.minute == 0 ? "00" : event.start_date.minute, " - ").concat(event.end_date.hour % 12 == 0 ? "12" : event.end_date.hour % 12, ":").concat(event.end_date.minute == 0 ? "00" : event.end_date.minute, "</div>") : "", "</div>");
+                HTML += "<div class=\"links\"><a class=\"add-to-calendar\" target=\"_blank\">Add to calendar</a>".concat(enquiryEmail[event.type] !== null ? "<a href=\"mailto:".concat(enquiryEmail[event.type], "?subject=Enquiry%20about%20").concat(event.title.replace(" ", "%20"), "&body=Hi%20FN%20").concat(event.type == "training" ? "Training" : "Events", "%20team%2C%0D%0A%0D%0A\" class=\"enquiry\">Enquire</a>") : "").concat(event.URL == null ? "" : "<a class=\"info\" href=\"".concat(event.URL, "\" target=\"_blank\">More info</a>")).concat(event.reg_link == null ? "" : "<a class=\"register\" href=\"".concat(event.reg_link, "\" target=\"_blank\">Register</a>"));
                 HTML += "</div>";
-                HTML += '</div>';
-                HTML += event.description.length > 0 ? "<div class=\"description\"><div class=\"inner\">".concat(event.description, "</div></div>") : '';
-                HTML += '</div>';
+                HTML += "</div>";
+                HTML += event.description.length > 0 ? "<div class=\"description\"><div class=\"inner\">".concat(event.description, "</div></div>") : "";
+                HTML += "</div>";
                 modalContents.innerHTML = HTML;
                 modalWrapper.classList.add("shown");
             },
@@ -5230,6 +5186,115 @@ window.addEventListener("load", function() {
             },
             unsetNavArrowAnimation: function unsetNavArrowAnimation() {
                 DOM.nextMonthBtn.style.animation = "none";
+            },
+            toggleFilteredCalendarEvents: function toggleFilteredCalendarEvents(state, type) {
+                var calendarEventsArr = Array.prototype.slice.call(document.querySelectorAll(".day-event")); // const stateStrings = ['qld', 'nsw', 'vic', 'tas', 'sa', 'wa', 'nt', 'nz'];
+
+                var fnEvents = [],
+                    trainingEvents = [];
+                var stateEvents = {};
+                calendarEventsArr.forEach(function(event) {
+                    if (event.classList.contains("minor") || event.classList.contains("major")) {
+                        fnEvents.push(event);
+                    }
+
+                    if (event.classList.contains("training")) {
+                        trainingEvents.push(event);
+                    } // stateStrings.forEach((state, i) => {
+                    //   const stateStr = state;
+                    //   if (event.classList.contains(state)) {
+                    //     if (stateEvents[stateStr] === undefined) {
+                    //       stateEvents[stateStr] = new Array();
+                    //     };
+                    //     stateEvents[stateStr].push(event);
+                    //   }
+                    // });
+
+
+                    if (type === "all" && state === "all") {
+                        event.classList.remove("hidden");
+                    } else if (type === "all") {
+                        if (!event.classList.contains(state)) {
+                            event.classList.add("hidden");
+                        } else {
+                            event.classList.remove("hidden");
+                        }
+                    } else if (state === "all") {
+                        if (type === "events") {
+                            if (!fnEvents.includes(event)) {
+                                event.classList.add("hidden");
+                            } else {
+                                event.classList.remove("hidden");
+                            }
+                        }
+
+                        if (type === "training") {
+                            if (!trainingEvents.includes(event)) {
+                                event.classList.add("hidden");
+                            } else {
+                                event.classList.remove("hidden");
+                            }
+                        }
+                    } else {
+                        if (type === "training") {
+                            if (!trainingEvents.includes(event) || !event.classList.contains(state)) {
+                                event.classList.add("hidden");
+                            } else {
+                                event.classList.remove("hidden");
+                            }
+                        }
+
+                        if (type === "events") {
+                            if (!fnEvents.includes(event) || !event.classList.contains(state)) {
+                                event.classList.add("hidden");
+                            } else {
+                                event.classList.remove("hidden");
+                            }
+                        }
+                    }
+                });
+            },
+            showFilterMenu: function showFilterMenu() {
+                DOM.filter.classList.add("shown");
+            },
+            hideFilterMenu: function hideFilterMenu() {
+                DOM.filter.classList.remove("shown");
+            },
+            showFilterBtn: function showFilterBtn() {
+                var delay = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 300;
+                DOM.filterBtn.style.display = "flex"; // short delay to allow for transition
+
+                setTimeout(function() {
+                    DOM.filterBtn.classList.add("shown");
+                }, 10);
+            },
+            hideFilterBtn: function hideFilterBtn() {
+                var delay = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 300;
+                DOM.filterBtn.classList.remove("shown");
+                setTimeout(function() {
+                    DOM.filterBtn.style.display = "none";
+                }, delay);
+            },
+            setFilterBtnAnimation: function setFilterBtnAnimation() {
+                var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 600;
+                DOM.filterBtn.querySelector("i").style.animationName = "filter-prompt";
+                DOM.filterBtn.querySelector("i").style.animationDuration = "".concat(duration, "ms");
+            },
+            animateFilterBtn: function animateFilterBtn() {
+                var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 45;
+                var animationDelay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 400;
+                var animationDuration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 420;
+                var fadeDelay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 900;
+                DOM.filterSpans.forEach(function(span, i) {
+                    setTimeout(function() {
+                        span.style.animationDuration = "".concat(animationDuration, "ms");
+                        span.style.animationIterationCount = '1';
+                        span.style.animationName = "filter-prompt";
+                    }, step * i + animationDelay);
+                });
+                setTimeout(function() {
+                    DOM.filterBtn.classList.add('minimised');
+                }, DOM.filterSpans.length * step + fadeDelay);
             }
         };
     }();
@@ -5244,6 +5309,10 @@ window.addEventListener("load", function() {
         var setupEventListeners = function setupEventListeners() {
             // window listeners
             window.addEventListener("click", function(e) {
+                if (e.target.closest(".filter") == null && UICtrl.DOM.filter.classList.contains("shown")) {
+                    UICtrl.hideFilterMenu();
+                }
+
                 if (UICtrl.DOM.monthMenu.classList.contains("open") && e.target.closest("a") !== UICtrl.DOM.calendarButton) {
                     UICtrl.hideDropdownMenu();
                 }
@@ -5267,12 +5336,11 @@ window.addEventListener("load", function() {
             });
             UICtrl.DOM.eventModalClose.addEventListener("click", function() {
                 UICtrl.hideEventModal();
-            });
-            UICtrl.DOM.eventModalContents.addEventListener("click", function(e) {
-                console.log(e);
+            }); // ADD TO CALENDAR BUTTON ICS DOWNLOAD
 
+            UICtrl.DOM.eventModalContents.addEventListener("click", function(e) {
                 if (e.target.closest("a") == document.querySelector(".event-modal .add-to-calendar")) {
-                    dataCtrl.ics.download("".concat(dataCtrl.state.currentEvent.title.replace(' ', '').replace('\'', '').replace('/', '')));
+                    dataCtrl.ics.download("".concat(dataCtrl.state.currentEvent.title.replace(" ", "").replace("'", "").replace("/", "")));
                 }
             });
             var monthMenuArr = Array.prototype.slice.call(document.querySelectorAll(".months-dropdown-menu .month"));
@@ -5288,38 +5356,73 @@ window.addEventListener("load", function() {
                     UICtrl.showDropdownMenu();
                 }
             });
+            UICtrl.DOM.filterMenu.addEventListener("click", function(e) {
+                var clicked = e.target.closest("a");
+                var anchors;
+
+                if (clicked.classList.contains("state")) {
+                    var state = clicked.dataset.state;
+
+                    if (state !== dataCtrl.state.filter.state) {
+                        dataCtrl.state.filter.state = state;
+                        UICtrl.toggleFilteredCalendarEvents(state, dataCtrl.state.filter.type);
+                        anchors = UICtrl.DOM.filter.querySelectorAll("a.state");
+                        anchors.forEach(function(a) {
+                            if (a.dataset.state === state) {
+                                a.classList.add("active");
+                            } else {
+                                a.classList.remove("active");
+                            }
+                        });
+                    }
+                } else if (clicked.classList.contains("type")) {
+                    var type = clicked.dataset.type;
+
+                    if (type !== dataCtrl.state.filter.type) {
+                        dataCtrl.state.filter.type = type;
+                        UICtrl.toggleFilteredCalendarEvents(dataCtrl.state.filter.state, type);
+                        anchors = UICtrl.DOM.filter.querySelectorAll("a.type");
+                        anchors.forEach(function(a) {
+                            if (a.dataset.type === type) {
+                                a.classList.add("active");
+                            } else {
+                                a.classList.remove("active");
+                            }
+                        });
+                    }
+                }
+            });
+            UICtrl.DOM.filterBtn.addEventListener("click", function() {
+                if (UICtrl.DOM.filter.classList.contains("shown")) {
+                    UICtrl.hideFilterMenu();
+                } else {
+                    UICtrl.showFilterMenu();
+                }
+            });
         };
 
         return {
             init: function init() {
+                // init state
                 dataCtrl.state.currentMonth = 0;
-                dataCtrl.state.monthsVisited = new Array(); // __calEvents is the global JS object of events from the WP database that is
+                dataCtrl.state.monthsVisited = new Array();
+                dataCtrl.state.filter = {};
+                dataCtrl.state.filter.state = "all";
+                dataCtrl.state.filter.type = "all"; // __calEvents is the global JS object of events from the WP database that is
                 // added to the HTML page when it's rendered
 
-                dataCtrl.state.events = __calEvents; // randomise the homepage featured events array
-
-                var homepageEvents = dataCtrl.getFeatured(dataCtrl.state.events).sort(function() {
-                    return Math.random() - 0.5;
-                }); // writing the DOM
+                dataCtrl.state.events = __calEvents; // writing the DOM
 
                 UICtrl.DOM.monthSlides.forEach(function(slide, i) {
-                    if (i == 0) {
-                        //homepage
-                        console.log("homepage");
-                    } else {
-                        //calendar pages
+                    // if not landing page
+                    if (i !== 0) {
                         var monthEvents = dataCtrl.state.events[months[i]];
                         var calendar = slide.querySelector(".calendar .grid");
                         var eventSummary = slide.querySelector(".event-summary");
                         calendar.innerHTML = UICtrl.writeCalendarGrid(i + 1, monthEvents);
                         eventSummary.innerHTML = UICtrl.writeEventSummary(monthEvents);
-
-                        if (monthEvents !== undefined) {
-                            var monthFeatured = dataCtrl.getMonthFeatured(monthEvents);
-                        }
                     }
                 });
-                dataCtrl.state.images = UICtrl.sortImages(UICtrl.getAllImages());
                 var monthTextSwiper = new Swiper(document.querySelector(".month-text-container"), {
                     slidesPerView: 1,
                     freeMode: false,
@@ -5347,29 +5450,36 @@ window.addEventListener("load", function() {
                     spaceBetween: 0,
                     on: {
                         init: function init() {
-                            var slide = UICtrl.DOM.monthSlides[this.activeIndex];
-                            Array.prototype.slice.call(slide.querySelectorAll("img")).forEach(function(image) {
-                                setImgSrc(image);
-                            });
                             UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
                             UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
                             dataCtrl.state.monthsVisited.push(this.activeIndex);
                             dataCtrl.state.slideHasBeenChanged = false;
                         },
                         slideChange: function slideChange() {
+                            // don't show filter button on landing page
+                            if (this.activeIndex > 0) {
+                                UICtrl.showFilterBtn();
+                            } else {
+                                UICtrl.hideFilterBtn();
+                            }
+
+                            var slide = UICtrl.DOM.monthSlides[this.activeIndex];
+                            var bgImg = slide.querySelector('.calendar-bg-img');
+
+                            if (bgImg !== null) {
+                                setImgSrc(bgImg);
+                            }
+
                             if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
-                                var slide = UICtrl.DOM.monthSlides[this.activeIndex];
-                                Array.prototype.slice.call(slide.querySelectorAll("img")).forEach(function(image) {
-                                    setImgSrc(image);
-                                });
                                 dataCtrl.state.monthsVisited.push(this.activeIndex);
                             }
 
                             dataCtrl.state.currentMonth = this.activeIndex;
                             UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
-                            UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
+                            UICtrl.toggleNavArrows(dataCtrl.state.currentMonth); // perform these actions only on the first slide change 
 
                             if (!dataCtrl.state.slideHasBeenChanged) {
+                                UICtrl.animateFilterBtn();
                                 UICtrl.unsetNavArrowAnimation();
                                 dataCtrl.state.slideHasBeenChanged = true;
                             }

@@ -113,13 +113,6 @@ body {
 body {
   overflow: hidden; }
 
-.calendar-slide {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: -5;
-  position: relative; }
-
 .calendar-slide:after {
   content: '';
   position: absolute;
@@ -131,39 +124,6 @@ body {
   z-index: -4;
   top: 0;
   left: 0; }
-
-#february-slider {
-  background-image: url(../img/february.jpg); }
-
-#march-slider {
-  background-image: url(../img/march.jpg); }
-
-#april-slider {
-  background-image: url(../img/april.jpg); }
-
-#may-slider {
-  background-image: url(../img/may.jpg); }
-
-#june-slider {
-  background-image: url(../img/june.jpg); }
-
-#july-slider {
-  background-image: url(../img/july.jpg); }
-
-#august-slider {
-  background-image: url(../img/august.jpg); }
-
-#september-slider {
-  background-image: url(../img/september.jpg); }
-
-#october-slider {
-  background-image: url(../img/october.jpg); }
-
-#november-slider {
-  background-image: url(../img/november.jpg); }
-
-#december-slider {
-  background-image: url(../img/december.jpg); }
 
 *,
 *::before,
@@ -749,9 +709,20 @@ header {
       flex-direction: column;
       position: relative;
       transition: filter 300ms ease-in-out;
-      overflow-x: hidden; }
+      overflow-x: hidden;
+      background: linear-gradient(to bottom right, #1e83b9, #00467f);
+      z-index: -2; }
       .calendar-swiper .swiper-wrapper .swiper-slide.blur {
         filter: blur(6px) brightness(0.6); }
+      .calendar-swiper .swiper-wrapper .swiper-slide .calendar-bg-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        filter: brightness(0.5); }
 
 .hero-container {
   width: 100%;
@@ -861,16 +832,6 @@ header {
       max-width: 100%;
       width: 110rem;
       height: 100%; }
-    .calendar-page .top .calendar-bg-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 5;
-      filter: brightness(0.5);
-      display: none; }
     .calendar-page .top .text {
       padding: 1rem;
       flex: 1;

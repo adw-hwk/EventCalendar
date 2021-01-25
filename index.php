@@ -408,58 +408,9 @@ function console_log($output, $with_script_tags = true) {
 
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-                <!-- <div class="hero-wrapper">
-                    <div class="swiper-container hero-swiper-container">
-                        <div class="hero-article-wrapper swiper-wrapper"></div>
-                    </div>
-                    <div class="hero-text-wrapper">
-                        <div class="upper">
-                            <img src="" alt="" class="hero-logo" />
-
-                            <div class="text homepage-text">
-                            <h4>What's on for your</h4>   
-                                <h1>
-                                    <?php //echo date('Y'); ?>
-                                </h1>
-                            </div>
-                            <img class="hero-bg-image" src="<?php //echo get_template_directory_uri() . '/img/january.jpg' ?>" alt="" />
-                        </div>
-
-                        <div class="lower">
-                            <div class="text">
-                                <div class="counter">
-                                    <?php //echo $fn_events; ?>
-                                </div>
-                                <div class="hero-blurb">
-                                    <div>
-                                        First National events scheduled for
-                                        <?php //echo date('Y'); ?>.
-                                    </div>
-
-                                    <div style="font-weight: 600">See you there.</div>
-
-                                    <a class="home-cta">See what's coming up in February
-                    <i class="fas fa-angle-double-right"></i
-                  ></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
             <div class="calendar-slide swiper-slide" id="february-slider">
+                <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/february.jpg' ?>" alt="">
                 <div class="calendar-page">
                     <div class="top">
                         <div class="top-wrapper">
@@ -496,6 +447,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="march-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/march.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -531,6 +484,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="april-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/april.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -566,6 +521,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="may-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/may.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -601,6 +558,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="june-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/june.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -636,6 +595,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="july-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/july.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -671,6 +632,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="august-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/august.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -706,6 +669,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="september-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/september.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -741,6 +706,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="october-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/october.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -776,6 +743,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="november-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/november.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">
@@ -811,6 +780,8 @@ function console_log($output, $with_script_tags = true) {
                 </div>
             </div>
             <div class="calendar-slide swiper-slide" id="december-slider">
+            <img class="calendar-bg-img" data-src="<?php echo get_template_directory_uri() . '/img/december.jpg' ?>" alt="">
+
                 <div class="calendar-page">
                     <div class="top">
                     <div class="top-wrapper">

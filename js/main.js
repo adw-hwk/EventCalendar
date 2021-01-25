@@ -141,6 +141,8 @@ window.addEventListener("load", () => {
 
                             filterBtn: document.querySelector('.filter .btn'),
 
+                            filterMenu: document.querySelector('.filter .filter-menu'),
+
                             filterSpans: Array.prototype.slice.call(document.querySelectorAll('.filter .btn span'))
                         };
 
@@ -227,39 +229,6 @@ window.addEventListener("load", () => {
 
                             getAllImages: () => {
                                 return Array.prototype.slice.call(document.images);
-                            },
-
-                            sortImages: (images) => {
-                                let sortedImages = {};
-
-                                DOM.monthSlides.forEach((slide, i) => {
-                                    images.forEach((image) => {
-                                        if (image.closest(".calendar-slide") === slide) {
-                                            // initialise month array
-                                            if (sortedImages[months[i]] === undefined) {
-                                                sortedImages[months[i]] = new Array();
-                                            }
-
-                                            if (image.classList.contains("swiper-image")) {
-                                                if (sortedImages[months[i]].swiper === undefined) {
-                                                    sortedImages[months[i]].swiper = new Array();
-                                                }
-
-                                                sortedImages[months[i]].swiper.push(image);
-                                            } else if (image.classList.contains("hero-bg-image")) {
-                                                sortedImages[months[i]].heroBG = image;
-                                            } else {
-                                                if (sortedImages[months[i]].events === undefined) {
-                                                    sortedImages[months[i]].events = new Array();
-                                                }
-
-                                                sortedImages[months[i]].events.push(image);
-                                            }
-                                        }
-                                    });
-                                });
-
-                                return sortedImages;
                             },
 
                             setActiveMenuMonth: (currentMonth) => {
@@ -798,6 +767,8 @@ window.addEventListener("load", () => {
         UICtrl.hideEventModal();
       });
 
+
+      // ADD TO CALENDAR BUTTON ICS DOWNLOAD
       UICtrl.DOM.eventModalContents.addEventListener("click", (e) => {
         if (
           e.target.closest("a") ==
@@ -833,9 +804,7 @@ window.addEventListener("load", () => {
         }
       });
 
-      UICtrl.DOM.filter
-        .querySelector(".filter-menu")
-        .addEventListener("click", (e) => {
+      UICtrl.DOM.filterMenu.addEventListener("click", (e) => {
 
           const clicked = e.target.closest("a");
           let anchors;
@@ -889,6 +858,7 @@ window.addEventListener("load", () => {
 
     return {
       init: () => {
+        // init state
         dataCtrl.state.currentMonth = 0;
         dataCtrl.state.monthsVisited = new Array();
         dataCtrl.state.filter = {};
@@ -902,12 +872,9 @@ window.addEventListener("load", () => {
 
         // writing the DOM
         UICtrl.DOM.monthSlides.forEach((slide, i) => {
-          if (i == 0) {
-            //homepage
-
-          } else {
-            //calendar pages
-
+          // if not landing page
+          if (i !== 0) {
+ 
             const monthEvents = dataCtrl.state.events[months[i]];
 
             const calendar = slide.querySelector(".calendar .grid");
@@ -918,13 +885,8 @@ window.addEventListener("load", () => {
 
             eventSummary.innerHTML = UICtrl.writeEventSummary(monthEvents);
 
-            if (monthEvents !== undefined) {
-              const monthFeatured = dataCtrl.getMonthFeatured(monthEvents);
-            }
           }
         });
-
-        dataCtrl.state.images = UICtrl.sortImages(UICtrl.getAllImages());
 
         const monthTextSwiper = new Swiper(
           document.querySelector(".month-text-container"),
@@ -960,13 +922,6 @@ window.addEventListener("load", () => {
             spaceBetween: 0,
             on: {
               init: function () {
-                const slide = UICtrl.DOM.monthSlides[this.activeIndex];
-
-                Array.prototype.slice
-                  .call(slide.querySelectorAll("img"))
-                  .forEach((image) => {
-                    setImgSrc(image);
-                  });
 
                 UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
 
@@ -977,26 +932,26 @@ window.addEventListener("load", () => {
                 dataCtrl.state.slideHasBeenChanged = false;
               },
               slideChange: function () {
+
+                // don't show filter button on landing page
                 if (this.activeIndex > 0) {
                   UICtrl.showFilterBtn();
                 } else {
                   UICtrl.hideFilterBtn();
                 }
 
-                if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
-                  const slide = UICtrl.DOM.monthSlides[this.activeIndex];
+                const slide = UICtrl.DOM.monthSlides[this.activeIndex];
 
-                  Array.prototype.slice
-                    .call(slide.querySelectorAll("img"))
-                    .forEach((image) => {
-                      setImgSrc(image);
-                    });
+                const bgImg = slide.querySelector('.calendar-bg-img');
+
+                if (bgImg !== null) {
+                  setImgSrc(bgImg);
+                }
+
+                if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
+
 
                   dataCtrl.state.monthsVisited.push(this.activeIndex);
-                }
-                if (dataCtrl.state.monthsVisited.length === 2) {
-                  // UICtrl.setFilterBtnAnimation();
-                  UICtrl.animateFilterBtn();
                 }
 
                 dataCtrl.state.currentMonth = this.activeIndex;
@@ -1005,7 +960,9 @@ window.addEventListener("load", () => {
 
                 UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
 
+                // perform these actions only on the first slide change 
                 if (!dataCtrl.state.slideHasBeenChanged) {
+                  UICtrl.animateFilterBtn();
                   UICtrl.unsetNavArrowAnimation();
                   dataCtrl.state.slideHasBeenChanged = true;
                 }

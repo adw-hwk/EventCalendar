@@ -740,14 +740,6 @@ body {
     overflow: hidden;
 }
 
-.calendar-slide {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: -5;
-    position: relative;
-}
-
 .calendar-slide:after {
     content: '';
     position: absolute;
@@ -759,50 +751,6 @@ body {
     z-index: -4;
     top: 0;
     left: 0;
-}
-
-#february-slider {
-    background-image: url(../img/february.jpg);
-}
-
-#march-slider {
-    background-image: url(../img/march.jpg);
-}
-
-#april-slider {
-    background-image: url(../img/april.jpg);
-}
-
-#may-slider {
-    background-image: url(../img/may.jpg);
-}
-
-#june-slider {
-    background-image: url(../img/june.jpg);
-}
-
-#july-slider {
-    background-image: url(../img/july.jpg);
-}
-
-#august-slider {
-    background-image: url(../img/august.jpg);
-}
-
-#september-slider {
-    background-image: url(../img/september.jpg);
-}
-
-#october-slider {
-    background-image: url(../img/october.jpg);
-}
-
-#november-slider {
-    background-image: url(../img/november.jpg);
-}
-
-#december-slider {
-    background-image: url(../img/december.jpg);
 }
 
 *,
@@ -965,7 +913,7 @@ body {
     z-index: -5000;
     opacity: 0;
     transition: opacity 250ms ease-in-out;
-    padding: 1.25rem 0.75rem 7.5rem;
+    padding: 1.25rem 0.75rem 9.5rem;
     overflow-y: auto;
 }
 
@@ -1036,7 +984,7 @@ body {
 
 .event-modal-wrapper .event-modal>.inner .banner.seasonal {
     color: #dd5c0f;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: white;
 }
 
 .event-modal-wrapper .event-modal>.inner .banner.training {
@@ -1049,6 +997,46 @@ body {
 
 .event-modal-wrapper .event-modal>.inner .banner.convention {
     background-color: #5e1394;
+}
+
+.event-modal-wrapper .event-modal>.inner .banner.qld {
+    background-color: #800000;
+    color: white;
+}
+
+.event-modal-wrapper .event-modal>.inner .banner.nsw {
+    background-color: #1e83b9;
+    color: white;
+}
+
+.event-modal-wrapper .event-modal>.inner .banner.vic {
+    background-color: #06386F;
+    color: white;
+}
+
+.event-modal-wrapper .event-modal>.inner .banner.tas {
+    background-color: #008A33;
+    color: white;
+}
+
+.event-modal-wrapper .event-modal>.inner .banner.sa {
+    background-color: #CB1805;
+    color: white;
+}
+
+.event-modal-wrapper .event-modal>.inner .banner.wa {
+    background-color: #ffd700;
+    color: #444444;
+}
+
+.event-modal-wrapper .event-modal>.inner .banner.nt {
+    background-color: #cc7722;
+    color: white;
+}
+
+.event-modal-wrapper .event-modal>.inner .banner.nz {
+    background-color: black;
+    color: white;
 }
 
 .event-modal-wrapper .event-modal>.inner .image {
@@ -1071,8 +1059,8 @@ body {
     display: flex;
     flex-direction: column;
     padding: 1.25rem;
-    background-color: #444;
-    color: white;
+    background-color: #dfdfdf;
+    color: #444444;
 }
 
 .event-modal-wrapper .event-modal>.inner .details .columns .text {
@@ -1144,30 +1132,6 @@ body {
     color: #eeeeee;
 }
 
-.event-modal-wrapper .event-modal>.inner .details .columns.major {
-    background-color: rgba(0, 70, 127, 0.85);
-}
-
-.event-modal-wrapper .event-modal>.inner .details .columns.minor {
-    background-color: rgba(68, 68, 68, 0.7);
-}
-
-.event-modal-wrapper .event-modal>.inner .details .columns.seasonal {
-    background-color: rgba(221, 92, 15, 0.7);
-}
-
-.event-modal-wrapper .event-modal>.inner .details .columns.convention {
-    background-color: rgba(94, 19, 148, 0.85);
-}
-
-.event-modal-wrapper .event-modal>.inner .details .columns.training {
-    background-color: rgba(30, 142, 0, 0.7);
-}
-
-.event-modal-wrapper .event-modal>.inner .details .columns.commercial {
-    background-color: rgba(210, 0, 15, 0.7);
-}
-
 .event-modal-wrapper .event-modal>.inner .details .description {
     height: 100%;
     background-color: #eeeeee;
@@ -1194,6 +1158,18 @@ body {
     }
     100% {
         transform: translateX(0rem);
+    }
+}
+
+@keyframes filter-prompt {
+    0% {
+        transform: translateY(0rem);
+    }
+    50% {
+        transform: translateY(-0.5rem);
+    }
+    100% {
+        transform: translateY(0rem);
     }
 }
 
@@ -1237,13 +1213,225 @@ header:after {
     right: -1.4rem;
 }
 
+header .filter {
+    position: absolute;
+    bottom: 3rem;
+    left: 0;
+}
+
+header .filter .btn {
+    margin: auto;
+    text-align: center;
+    display: block;
+    font-size: 1rem;
+    background: #E77C00;
+    color: white;
+    width: 11rem;
+    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    position: relative;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 250ms linear, height 250ms ease-in-out;
+    display: none;
+}
+
+header .filter .btn:before,
+header .filter .btn:after {
+    content: "";
+    display: block;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-left: 2px solid #E77C00;
+    border-top: 2px solid #E77C00;
+    transform: skewX(-30deg);
+    border-top-left-radius: 5px;
+    position: absolute;
+    top: 0px;
+    left: -1rem;
+    background-color: #E77C00;
+    z-index: -1;
+    transition: height 250ms ease-in-out, width 250ms ease-in-out;
+}
+
+header .filter .btn:after {
+    transform: rotateY(180deg) skewX(-30deg);
+    left: unset;
+    right: -1rem;
+}
+
+header .filter .btn:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+header .filter .btn i {
+    transform: rotate(0deg);
+    transition: transform 300ms linear;
+    margin-left: 0.3rem;
+    font-size: 0.9rem;
+}
+
+header .filter .btn.shown {
+    opacity: 1;
+}
+
+header .filter .btn.minimised {
+    height: 1.6rem;
+    opacity: 0.85;
+}
+
+header .filter .btn.minimised:before,
+header .filter .btn.minimised:after {
+    height: 1.6rem;
+    width: 1.6rem;
+}
+
+header .filter .btn.minimised:hover {
+    opacity: 1;
+}
+
+header .filter .filter-menu {
+    height: 0;
+    overflow: hidden;
+    background: #dfdfdf;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+    overflow: hidden;
+    transition: height 300ms ease-out;
+}
+
+header .filter .filter-menu .text {
+    margin: 0.25rem 0.25rem 0.5rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(68, 68, 68, 0.25);
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+header .filter .filter-menu .states,
+header .filter .filter-menu .types {
+    font-size: 1rem;
+    flex-wrap: wrap;
+    display: flex;
+    margin: 0.25rem;
+    border-radius: 0.2rem;
+    overflow: hidden;
+}
+
+header .filter .filter-menu .states a,
+header .filter .filter-menu .types a {
+    flex: 1 0 21%;
+    text-align: center;
+    padding: 0.2rem 0.4rem;
+    background-color: #444444;
+    color: white;
+    border: 2px solid #444444;
+    opacity: 0.5;
+    font-weight: 300;
+}
+
+header .filter .filter-menu .states a:first-child,
+header .filter .filter-menu .types a:first-child {
+    flex: 0 0 100%;
+    letter-spacing: 2px;
+}
+
+header .filter .filter-menu .states a#filter-qld,
+header .filter .filter-menu .types a#filter-qld {
+    background-color: #800000;
+    border: 2px solid transparent;
+    color: white;
+}
+
+header .filter .filter-menu .states a#filter-nsw,
+header .filter .filter-menu .types a#filter-nsw {
+    background-color: #1e83b9;
+    border: 2px solid transparent;
+    color: white;
+}
+
+header .filter .filter-menu .states a#filter-vic,
+header .filter .filter-menu .types a#filter-vic {
+    background-color: #06386F;
+    border: 2px solid transparent;
+    color: white;
+}
+
+header .filter .filter-menu .states a#filter-tas,
+header .filter .filter-menu .types a#filter-tas {
+    background-color: #008A33;
+    border: 2px solid transparent;
+    color: white;
+}
+
+header .filter .filter-menu .states a#filter-sa,
+header .filter .filter-menu .types a#filter-sa {
+    background-color: #CB1805;
+    border: 2px solid transparent;
+    color: white;
+}
+
+header .filter .filter-menu .states a#filter-wa,
+header .filter .filter-menu .types a#filter-wa {
+    background-color: #ffd700;
+    border: 2px solid transparent;
+    color: #444444;
+}
+
+header .filter .filter-menu .states a#filter-nt,
+header .filter .filter-menu .types a#filter-nt {
+    background-color: #cc7722;
+    border: 2px solid transparent;
+    color: white;
+}
+
+header .filter .filter-menu .states a#filter-nz,
+header .filter .filter-menu .types a#filter-nz {
+    background-color: black;
+    border: 2px solid transparent;
+    color: white;
+}
+
+header .filter .filter-menu .states a:hover,
+header .filter .filter-menu .types a:hover {
+    cursor: pointer;
+}
+
+header .filter .filter-menu .states a:hover:not(.active),
+header .filter .filter-menu .types a:hover:not(.active) {
+    opacity: 0.75;
+}
+
+header .filter .filter-menu .states a.active,
+header .filter .filter-menu .types a.active {
+    opacity: 1;
+    box-shadow: 0px 0px 3px rgba(68, 68, 68, 0.5);
+    font-weight: 500;
+    border: 2px solid rgba(255, 255, 255, 0.9) !important;
+}
+
+header .filter.shown .filter-menu {
+    height: 269px;
+}
+
+header .filter.shown .btn {
+    opacity: 1;
+}
+
+header .filter.shown .btn i {
+    transform: rotate(180deg);
+}
+
 header .navigation {
     position: relative;
     display: flex;
     justify-content: center;
 }
 
-header a {
+header .navigation a {
     flex: 0;
     flex-basis: 2.5rem;
     display: flex;
@@ -1253,11 +1441,11 @@ header a {
     font-size: 1.25rem;
 }
 
-header a:hover {
+header .navigation a:hover {
     cursor: pointer;
 }
 
-header a:focus {
+header .navigation a:focus {
     outline: none;
 }
 
@@ -1378,10 +1566,23 @@ header .months-dropdown-menu .month:hover {
     position: relative;
     transition: filter 300ms ease-in-out;
     overflow-x: hidden;
+    background: linear-gradient(to bottom right, #1e83b9, #00467f);
+    z-index: -2;
 }
 
 .calendar-swiper .swiper-wrapper .swiper-slide.blur {
     filter: blur(6px) brightness(0.6);
+}
+
+.calendar-swiper .swiper-wrapper .swiper-slide .calendar-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.5);
 }
 
 .hero-container {
@@ -1525,18 +1726,6 @@ header .months-dropdown-menu .month:hover {
     height: 100%;
 }
 
-.calendar-page .top .calendar-bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 5;
-    filter: brightness(0.5);
-    display: none;
-}
-
 .calendar-page .top .text {
     padding: 1rem;
     flex: 1;
@@ -1576,7 +1765,7 @@ header .months-dropdown-menu .month:hover {
 }
 
 .calendar-page .top .event-summary .convention-feature {
-    margin: 2rem 0;
+    margin: 2rem;
     padding: 1rem;
     width: 39rem;
     max-width: 100%;
@@ -1690,7 +1879,7 @@ header .months-dropdown-menu .month:hover {
 .calendar-container {
     flex: 3;
     padding: 0.5rem;
-    padding-bottom: 3.5rem;
+    padding-bottom: 5.1rem;
     max-width: 100%;
     width: 110rem;
 }
@@ -1763,7 +1952,7 @@ header .months-dropdown-menu .month:hover {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0.2rem;
+    padding: 0.2rem 0.2rem 0;
 }
 
 .calendar-container .calendar .grid .day-square .contents .day-event {
@@ -1776,6 +1965,11 @@ header .months-dropdown-menu .month:hover {
     font-size: 1rem;
     line-height: 1.2;
     margin-bottom: 0.25rem;
+    transition: opacity 200ms linear;
+}
+
+.calendar-container .calendar .grid .day-square .contents .day-event.hidden {
+    opacity: 0.2 !important;
 }
 
 .calendar-container .calendar .grid .day-square .contents .day-event:hover {
@@ -1784,13 +1978,14 @@ header .months-dropdown-menu .month:hover {
 
 .calendar-container .calendar .grid .day-square .contents .day-event .color-bar {
     flex: 0 0 auto;
-    width: 0.75rem;
+    width: 0.6rem;
 }
 
 .calendar-container .calendar .grid .day-square .contents .day-event span {
     flex: 1;
     display: flex;
     align-items: center;
+    word-break: break-word;
 }
 
 .calendar-container .calendar .grid .day-square .contents .major {
@@ -1810,37 +2005,47 @@ header .months-dropdown-menu .month:hover {
 
 .calendar-container .calendar .grid .day-square .contents .minor {
     order: 4;
-    background-color: rgba(0, 70, 127, 0.95);
+    background-color: rgba(238, 238, 238, 0.95);
+    color: #00467f;
     flex: 0;
 }
 
 .calendar-container .calendar .grid .day-square .contents .minor .color-bar {
-    background-color: #eeeeee;
+    background-color: #00467f;
 }
 
 .calendar-container .calendar .grid .day-square .contents .minor span {
     padding: 0.5rem 1rem;
 }
 
-.calendar-container .calendar .grid .day-square .contents .training,
+.calendar-container .calendar .grid .day-square .contents .training {
+    order: 5;
+    background-color: rgba(255, 255, 255, 0.9);
+    flex: 0;
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .training .color-bar {
+    background-color: #1e8e00;
+}
+
+.calendar-container .calendar .grid .day-square .contents .training span {
+    padding: 0.5rem 1rem;
+}
+
 .calendar-container .calendar .grid .day-square .contents .commercial {
     order: 5;
-    background-color: rgba(30, 142, 0, 0.95);
+    background-color: rgba(255, 255, 255, 0.9);
     flex: 0;
-}
-
-.calendar-container .calendar .grid .day-square .contents .training .color-bar,
-.calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
-    background-color: #eeeeee;
-}
-
-.calendar-container .calendar .grid .day-square .contents .training span,
-.calendar-container .calendar .grid .day-square .contents .commercial span {
-    padding: 0.5rem 1rem;
+    color: #444444;
 }
 
 .calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
     background-color: #D2000F;
+}
+
+.calendar-container .calendar .grid .day-square .contents .commercial span {
+    padding: 0.5rem 1rem;
 }
 
 .calendar-container .calendar .grid .day-square .contents .convention {
@@ -1862,8 +2067,8 @@ header .months-dropdown-menu .month:hover {
 
 .calendar-container .calendar .grid .day-square .contents .seasonal {
     order: 1;
-    color: #dd5c0f;
-    background-color: rgba(255, 255, 255, 0.9);
+    color: #dd5c0f !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
     flex: 0;
     font-size: 0.9rem;
 }
@@ -1873,40 +2078,147 @@ header .months-dropdown-menu .month:hover {
 }
 
 .calendar-container .calendar .grid .day-square .contents .qld {
-    background-color: rgba(128, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .qld .color-bar {
+    background-color: #800000;
 }
 
 .calendar-container .calendar .grid .day-square .contents .nsw {
-    background-color: rgba(173, 216, 230, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .nsw .color-bar {
+    background-color: #1e83b9;
 }
 
 .calendar-container .calendar .grid .day-square .contents .vic {
-    background-color: rgba(0, 0, 139, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .vic .color-bar {
+    background-color: #06386F;
 }
 
 .calendar-container .calendar .grid .day-square .contents .sa {
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .sa .color-bar {
+    background-color: #CB1805;
 }
 
 .calendar-container .calendar .grid .day-square .contents .tas {
-    background-color: rgba(0, 128, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .tas .color-bar {
+    background-color: #008A33;
 }
 
 .calendar-container .calendar .grid .day-square .contents .wa {
-    background-color: rgba(255, 215, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .wa .color-bar {
+    background-color: #ffd700;
 }
 
 .calendar-container .calendar .grid .day-square .contents .nt {
-    background-color: rgba(204, 119, 34, 0.5);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444444;
 }
 
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(1rem);
-    }
+.calendar-container .calendar .grid .day-square .contents .nt .color-bar {
+    background-color: #cc7722;
+}
+
+.calendar-container .calendar .grid .day-square .contents .nz {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .nz .color-bar {
+    background-color: black;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.qld {
+    background-color: #800000;
+    color: white;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.qld .color-bar {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.nsw {
+    background-color: #1e83b9;
+    color: white;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.nsw .color-bar {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.vic {
+    background-color: #06386F;
+    color: white;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.vic .color-bar {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.sa {
+    background-color: #CB1805;
+    color: white;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.sa .color-bar {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.tas {
+    background-color: #008A33;
+    color: white;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.tas .color-bar {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.wa {
+    background-color: #ffd700;
+    color: #444444;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.wa .color-bar {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.nt {
+    background-color: #cc7722;
+    color: white;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.nt .color-bar {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.nz {
+    background-color: black;
+    color: white;
+}
+
+.calendar-container .calendar .grid .day-square .contents .major.nz .color-bar {
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 @media (min-width: 576px) {
@@ -1957,12 +2269,6 @@ header .months-dropdown-menu .month:hover {
     }
     .calendar-page .top .text .inner h4 {
         font-size: 2.2rem;
-    }
-    .calendar-page .top .event-summary {
-        flex: 1;
-    }
-    .calendar-page .top .event-summary .summary-columns {
-        display: flex;
     }
     .calendar-container .calendar {
         border-radius: 0.22rem;
@@ -2018,6 +2324,7 @@ header .months-dropdown-menu .month:hover {
         overflow-y: auto;
         overflow-x: hidden;
         gap: 0.25rem;
+        padding: 0.2rem;
     }
     .calendar-container .calendar .grid .day-square .contents .day-event {
         border-radius: 0.13rem;
@@ -2028,9 +2335,6 @@ header .months-dropdown-menu .month:hover {
     }
     .calendar-container .calendar .grid .day-square .contents .day-event span {
         height: 100%;
-    }
-    .calendar-container .calendar .grid .day-square .contents .day-event .color-bar {
-        width: 0.45rem;
     }
     .calendar-container .calendar .grid .day-square .contents .major {
         flex: 1 0 auto;
@@ -2079,9 +2383,6 @@ header .months-dropdown-menu .month:hover {
     header .months-dropdown-menu .month:hover {
         cursor: pointer;
         background-color: rgba(78, 78, 78, 0.15);
-    }
-    .calendar-page .top .top-wrapper {
-        flex-direction: row;
     }
     .calendar-page .text .inner h2 {
         font-size: 6rem;

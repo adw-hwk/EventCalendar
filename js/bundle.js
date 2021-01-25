@@ -2836,6 +2836,14 @@ window.addEventListener("load", () => {
                             eventModalContents: document.querySelector(".event-modal .inner"),
 
                             eventModalClose: document.querySelector(".event-modal .close-btn"),
+
+                            filter: document.querySelector(".filter"),
+
+                            filterBtn: document.querySelector('.filter .btn'),
+
+                            filterMenu: document.querySelector('.filter .filter-menu'),
+
+                            filterSpans: Array.prototype.slice.call(document.querySelectorAll('.filter .btn span'))
                         };
 
                         const DOMStrings = {
@@ -2848,13 +2856,12 @@ window.addEventListener("load", () => {
                         };
 
                         const getEventClasses = (event) => {
-
                             let eventClasses = event.type;
 
                             if (event.tags !== null && event.tags.length > 0) {
-                                event.tags.forEach(tag => {
+                                event.tags.forEach((tag) => {
                                     eventClasses += ` ${tag}`;
-                                })
+                                });
                             }
 
                             return eventClasses;
@@ -2924,39 +2931,6 @@ window.addEventListener("load", () => {
                                 return Array.prototype.slice.call(document.images);
                             },
 
-                            sortImages: (images) => {
-                                let sortedImages = {};
-
-                                DOM.monthSlides.forEach((slide, i) => {
-                                    images.forEach((image) => {
-                                        if (image.closest(".calendar-slide") === slide) {
-                                            // initialise month array
-                                            if (sortedImages[months[i]] === undefined) {
-                                                sortedImages[months[i]] = new Array();
-                                            }
-
-                                            if (image.classList.contains("swiper-image")) {
-                                                if (sortedImages[months[i]].swiper === undefined) {
-                                                    sortedImages[months[i]].swiper = new Array();
-                                                }
-
-                                                sortedImages[months[i]].swiper.push(image);
-                                            } else if (image.classList.contains("hero-bg-image")) {
-                                                sortedImages[months[i]].heroBG = image;
-                                            } else {
-                                                if (sortedImages[months[i]].events === undefined) {
-                                                    sortedImages[months[i]].events = new Array();
-                                                }
-
-                                                sortedImages[months[i]].events.push(image);
-                                            }
-                                        }
-                                    });
-                                });
-
-                                return sortedImages;
-                            },
-
                             setActiveMenuMonth: (currentMonth) => {
                                 DOM.dropdownMonthArr.forEach((month) => {
                                     if (month.classList.contains("active")) {
@@ -2967,8 +2941,6 @@ window.addEventListener("load", () => {
                                 DOM.dropdownMonthArr[currentMonth].classList.add("active");
                             },
 
-
-
                             writeCalendarGrid: (month, events) => {
                                     const getDaysInMonth = (monthNum, year) => {
                                         return new Date(year, monthNum, 0).getDate();
@@ -2978,14 +2950,15 @@ window.addEventListener("load", () => {
                                             let eventList = "";
 
                                             events.forEach((event) => {
-
                                                         const eventClasses = getEventClasses(event);
 
                                                         if (
                                                             event.start_date.day == day ||
                                                             (event.end_date.day >= day && event.start_date.day < day)
                                                         ) {
-                                                            eventList += `<div class="day-event ${eventClasses}" data-event-id="${event.ID}">${
+                                                            eventList += `<div class="day-event ${eventClasses}" data-event-id="${
+        event.ID
+      }">${
         event.type === "seasonal" ? `` : `<div class="color-bar"></div>`
       }<span>${event.title}</span></div>`;
     }
@@ -3181,28 +3154,6 @@ return `${
         </div>`;
 },
 
-getFadeElements: () => {
-return document.querySelectorAll(DOMStrings.fadeEls);
-},
-
-calendarFade: (activeMonth, speed) => {
-Array.prototype.slice
-  .call(document.querySelectorAll(DOMStrings.fadeEls))
-  .forEach((el) => {
-    el.classList.remove("shown");
-  });
-
-const currentEls = DOM.monthSlides[activeMonth].querySelectorAll(
-  DOMStrings.fadeEls
-);
-
-setTimeout(() => {
-  currentEls.forEach((el) => {
-    el.classList.add("shown");
-  });
-}, speed);
-},
-
 openEventModal: (event) => {
 const modalContents = DOM.eventModalContents,
   modalWrapper = DOM.eventModalWrapper;
@@ -3212,60 +3163,98 @@ modalWrapper.style.zIndex = "5000";
 let HTML = "";
 
 let enquiryEmail = {
-  'major': 'events@firstnational.com.au',
-  'minor': 'events@firstnational.com.au',
-  'training': 'training@firstnational.com.au',
-  'seasonal': null
+  major: "events@firstnational.com.au",
+  minor: "events@firstnational.com.au",
+  training: "training@firstnational.com.au",
+  seasonal: null,
 };
 
 const eventClasses = getEventClasses(event);
 
 HTML += `<div class="banner ${eventClasses}"><span class="date">${
   event.end_date.day === event.start_date.day
-    ? `${event.start_date.weekday} ${
-        event.start_date.day
-      } ${months[event.start_date.month - 1]}`
-    : `${event.start_date.weekday} ${
-        event.start_date.day
-      } ${months[event.start_date.month - 1]} - ${
-        event.end_date.weekday
-      } ${event.end_date.day} ${months[event.end_date.month - 1]}`
+    ? `${event.start_date.weekday} ${event.start_date.day} ${
+        months[event.start_date.month - 1]
+      }`
+    : `${event.start_date.weekday} ${event.start_date.day} ${
+        months[event.start_date.month - 1]
+      } - ${event.end_date.weekday} ${event.end_date.day} ${
+        months[event.end_date.month - 1]
+      }`
 }</span></div>`;
 
 if (event.image) {
-    HTML += `<div class="image"><img src="${event.image.large}" alt="${event.title}"></div>`;
-  }
+  HTML += `<div class="image"><img src="${event.image.large}" alt="${event.title}"></div>`;
+}
 
-  HTML += `<div class="details"><div class="columns ${eventClasses}">`;
+HTML += `<div class="details"><div class="columns ${eventClasses}">`;
 
 HTML += `<div class="text">${
   event.title.length > 0
     ? `<div class="title">${event.title}</div>`
     : ``
-}${event.venue !== null ? `${event.venue.name !== undefined ? `<div class="venue"><i class="fas fa-building"></i>${event.venue.name}</div>` : ``}${ event.venue.city !== undefined ? `<div class="city"><i class="fas fa-map-marked-alt"></i>${event.venue.city}</div>` : ``}`
+}${
+  event.venue !== null
+    ? `${
+        event.venue.name !== undefined
+          ? `<div class="venue"><i class="fas fa-building"></i>${event.venue.name}</div>`
+          : ``
+      }${
+        event.venue.city !== undefined
+          ? `<div class="city"><i class="fas fa-map-marked-alt"></i>${event.venue.city}</div>`
+          : ``
+      }`
     : ``
-}${!event.all_day && [event.start_date.day, event.start_date.hour, event.start_date.minute] !== [event.end_date.day, event.end_date.hour, event.end_date.minute] ? `<div class="time"><i class="far fa-clock"></i>${event.start_date.hour % 12}:${event.start_date.minute == 0 ? '00' : event.start_date.minute} - ${(event.end_date.hour) % 12 == 0 ? '12' : (event.end_date.hour) % 12}:${event.end_date.minute == 0 ? '00' : event.end_date.minute}</div>` : ''}</div>`;
+}${
+  !event.all_day &&
+  [
+    event.start_date.day,
+    event.start_date.hour,
+    event.start_date.minute,
+  ] !== [event.end_date.day, event.end_date.hour, event.end_date.minute]
+    ? `<div class="time"><i class="far fa-clock"></i>${
+        event.start_date.hour % 12
+      }:${
+        event.start_date.minute == 0 ? "00" : event.start_date.minute
+      } - ${
+        event.end_date.hour % 12 == 0 ? "12" : event.end_date.hour % 12
+      }:${
+        event.end_date.minute == 0 ? "00" : event.end_date.minute
+      }</div>`
+    : ""
+}</div>`;
 
-HTML += `<div class="links"><a class="add-to-calendar" target="_blank">Add to calendar</a>${enquiryEmail[event.type] !== null ? `<a href="mailto:${enquiryEmail[event.type]}?subject=Enquiry%20about%20${event.title.replace(' ', '%20')}&body=Hi%20FN%20${event.type == 'training' ? 'Training' : 'Events'}%20team%2C%0D%0A%0D%0A" class="enquiry">Enquire</a>` : ``}${
-    event.URL == null
-      ? ``
-      : `<a class="info" href="${event.URL}" target="_blank">More info</a>`
-  }${
-    event.reg_link == null
-      ? ``
-      : `<a class="register" href="${event.reg_link}" target="_blank">Register</a>`
-  }`;
+HTML += `<div class="links"><a class="add-to-calendar" target="_blank">Add to calendar</a>${
+  enquiryEmail[event.type] !== null
+    ? `<a href="mailto:${
+        enquiryEmail[event.type]
+      }?subject=Enquiry%20about%20${event.title.replace(
+        " ",
+        "%20"
+      )}&body=Hi%20FN%20${
+        event.type == "training" ? "Training" : "Events"
+      }%20team%2C%0D%0A%0D%0A" class="enquiry">Enquire</a>`
+    : ``
+}${
+  event.URL == null
+    ? ``
+    : `<a class="info" href="${event.URL}" target="_blank">More info</a>`
+}${
+  event.reg_link == null
+    ? ``
+    : `<a class="register" href="${event.reg_link}" target="_blank">Register</a>`
+}`;
 
 HTML += `</div>`;
 
-HTML += '</div>';
+HTML += "</div>";
 
-HTML += event.description.length > 0 ? `<div class="description"><div class="inner">${event.description}</div></div>` : '';
+HTML +=
+  event.description.length > 0
+    ? `<div class="description"><div class="inner">${event.description}</div></div>`
+    : "";
 
-HTML += '</div>';
-
-
-
+HTML += "</div>";
 
 modalContents.innerHTML = HTML;
 
@@ -3286,6 +3275,135 @@ DOM.nextMonthBtn.style.animation = "nav-prompt 900ms infinite";
 unsetNavArrowAnimation: () => {
 DOM.nextMonthBtn.style.animation = "none";
 },
+
+toggleFilteredCalendarEvents: (state, type) => {
+const calendarEventsArr = Array.prototype.slice.call(
+  document.querySelectorAll(".day-event")
+);
+
+// const stateStrings = ['qld', 'nsw', 'vic', 'tas', 'sa', 'wa', 'nt', 'nz'];
+
+let fnEvents = [],
+  trainingEvents = [];
+
+let stateEvents = {};
+
+calendarEventsArr.forEach((event) => {
+  if (
+    event.classList.contains("minor") ||
+    event.classList.contains("major")
+  ) {
+    fnEvents.push(event);
+  }
+  if (event.classList.contains("training")) {
+    trainingEvents.push(event);
+  }
+  // stateStrings.forEach((state, i) => {
+  //   const stateStr = state;
+  //   if (event.classList.contains(state)) {
+  //     if (stateEvents[stateStr] === undefined) {
+  //       stateEvents[stateStr] = new Array();
+  //     };
+  //     stateEvents[stateStr].push(event);
+  //   }
+  // });
+
+  if (type === "all" && state === "all") {
+    event.classList.remove("hidden");
+  } else if (type === "all") {
+    if (!event.classList.contains(state)) {
+      event.classList.add("hidden");
+    } else {
+      event.classList.remove("hidden");
+    }
+  } else if (state === "all") {
+    if (type === "events") {
+      if (!fnEvents.includes(event)) {
+        event.classList.add("hidden");
+      } else {
+        event.classList.remove("hidden");
+      }
+    }
+    if (type === "training") {
+      if (!trainingEvents.includes(event)) {
+        event.classList.add("hidden");
+      } else {
+        event.classList.remove("hidden");
+      }
+    }
+  } else {
+    if (type === "training") {
+      if (
+        !trainingEvents.includes(event) ||
+        !event.classList.contains(state)
+      ) {
+        event.classList.add("hidden");
+      } else {
+        event.classList.remove("hidden");
+      }
+    }
+    if (type === "events") {
+      if (
+        !fnEvents.includes(event) ||
+        !event.classList.contains(state)
+      ) {
+        event.classList.add("hidden");
+      } else {
+        event.classList.remove("hidden");
+      }
+    }
+  }
+});
+},
+
+showFilterMenu: () => {
+DOM.filter.classList.add("shown");
+},
+hideFilterMenu: () => {
+DOM.filter.classList.remove("shown");
+},
+
+showFilterBtn: (delay = 300) => {
+DOM.filterBtn.style.display = "flex";
+// short delay to allow for transition
+setTimeout(() => {
+  DOM.filterBtn.classList.add("shown");
+}, 10);
+},
+
+hideFilterBtn: (delay = 300) => {
+DOM.filterBtn.classList.remove("shown");
+setTimeout(() => {
+  DOM.filterBtn.style.display = "none";
+}, delay);
+},
+
+setFilterBtnAnimation: (duration = 600) => {
+DOM.filterBtn.querySelector(
+  "i"
+).style.animationName = `filter-prompt`;
+DOM.filterBtn.querySelector(
+  "i"
+).style.animationDuration = `${duration}ms`;
+},
+
+animateFilterBtn: (step = 45, animationDelay = 400, animationDuration = 420, fadeDelay = 900) => {
+DOM.filterSpans.forEach((span, i) => {
+
+  setTimeout(() => {
+    span.style.animationDuration = `${animationDuration}ms`;
+    span.style.animationIterationCount = '1';
+    span.style.animationName = `filter-prompt`;
+  }, step * i + animationDelay)
+
+});
+
+setTimeout(() => {
+
+  DOM.filterBtn.classList.add('minimised');
+
+}, DOM.filterSpans.length * step + fadeDelay);
+}
 };
 })();
 
@@ -3299,6 +3417,12 @@ image.src = image.dataset.src;
 const setupEventListeners = () => {
 // window listeners
 window.addEventListener("click", (e) => {
+if (
+  e.target.closest(".filter") == null &&
+  UICtrl.DOM.filter.classList.contains("shown")
+) {
+  UICtrl.hideFilterMenu();
+}
 if (
   UICtrl.DOM.monthMenu.classList.contains("open") &&
   e.target.closest("a") !== UICtrl.DOM.calendarButton
@@ -3343,13 +3467,19 @@ UICtrl.DOM.eventModalClose.addEventListener("click", () => {
 UICtrl.hideEventModal();
 });
 
+
+// ADD TO CALENDAR BUTTON ICS DOWNLOAD
 UICtrl.DOM.eventModalContents.addEventListener("click", (e) => {
-  console.log(e);
 if (
   e.target.closest("a") ==
   document.querySelector(".event-modal .add-to-calendar")
 ) {
-  dataCtrl.ics.download(`${dataCtrl.state.currentEvent.title.replace(' ', '').replace('\'', '').replace('/', '')}`);
+  dataCtrl.ics.download(
+    `${dataCtrl.state.currentEvent.title
+      .replace(" ", "")
+      .replace("'", "")
+      .replace("/", "")}`
+  );
 }
 });
 
@@ -3373,32 +3503,77 @@ if (UICtrl.DOM.monthMenu.classList.contains("open")) {
   UICtrl.showDropdownMenu();
 }
 });
+
+UICtrl.DOM.filterMenu.addEventListener("click", (e) => {
+
+  const clicked = e.target.closest("a");
+  let anchors;
+  if (clicked.classList.contains("state")) {
+    const state = clicked.dataset.state;
+
+    if (state !== dataCtrl.state.filter.state) {
+      dataCtrl.state.filter.state = state;
+      UICtrl.toggleFilteredCalendarEvents(
+        state,
+        dataCtrl.state.filter.type
+      );
+      anchors = UICtrl.DOM.filter.querySelectorAll("a.state");
+      anchors.forEach((a) => {
+        if (a.dataset.state === state) {
+          a.classList.add("active");
+        } else {
+          a.classList.remove("active");
+        }
+      });
+    }
+  } else if (clicked.classList.contains("type")) {
+    const type = clicked.dataset.type;
+
+    if (type !== dataCtrl.state.filter.type) {
+      dataCtrl.state.filter.type = type;
+      UICtrl.toggleFilteredCalendarEvents(
+        dataCtrl.state.filter.state,
+        type
+      );
+      anchors = UICtrl.DOM.filter.querySelectorAll("a.type");
+      anchors.forEach((a) => {
+        if (a.dataset.type === type) {
+          a.classList.add("active");
+        } else {
+          a.classList.remove("active");
+        }
+      });
+    }
+  }
+});
+
+UICtrl.DOM.filterBtn.addEventListener("click", () => {
+if (UICtrl.DOM.filter.classList.contains("shown")) {
+  UICtrl.hideFilterMenu();
+} else {
+  UICtrl.showFilterMenu();
+}
+});
 };
 
 return {
 init: () => {
+// init state
 dataCtrl.state.currentMonth = 0;
-
 dataCtrl.state.monthsVisited = new Array();
+dataCtrl.state.filter = {};
+dataCtrl.state.filter.state = "all";
+dataCtrl.state.filter.type = "all";
 
 // __calEvents is the global JS object of events from the WP database that is
 // added to the HTML page when it's rendered
 
 dataCtrl.state.events = __calEvents;
 
-// randomise the homepage featured events array
-let homepageEvents = dataCtrl
-  .getFeatured(dataCtrl.state.events)
-  .sort(() => Math.random() - 0.5);
-
 // writing the DOM
 UICtrl.DOM.monthSlides.forEach((slide, i) => {
-  if (i == 0) {
-    //homepage
-
-    console.log("homepage");
-  } else {
-    //calendar pages
+  // if not landing page
+  if (i !== 0) {
 
     const monthEvents = dataCtrl.state.events[months[i]];
 
@@ -3410,13 +3585,8 @@ UICtrl.DOM.monthSlides.forEach((slide, i) => {
 
     eventSummary.innerHTML = UICtrl.writeEventSummary(monthEvents);
 
-    if (monthEvents !== undefined) {
-      const monthFeatured = dataCtrl.getMonthFeatured(monthEvents);
-    }
   }
 });
-
-dataCtrl.state.images = UICtrl.sortImages(UICtrl.getAllImages());
 
 const monthTextSwiper = new Swiper(
   document.querySelector(".month-text-container"),
@@ -3452,13 +3622,6 @@ const calendarSwiper = new Swiper(
     spaceBetween: 0,
     on: {
       init: function () {
-        const slide = UICtrl.DOM.monthSlides[this.activeIndex];
-
-        Array.prototype.slice
-          .call(slide.querySelectorAll("img"))
-          .forEach((image) => {
-            setImgSrc(image);
-          });
 
         UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
 
@@ -3469,24 +3632,37 @@ const calendarSwiper = new Swiper(
         dataCtrl.state.slideHasBeenChanged = false;
       },
       slideChange: function () {
-        if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
-          const slide = UICtrl.DOM.monthSlides[this.activeIndex];
 
-          Array.prototype.slice
-            .call(slide.querySelectorAll("img"))
-            .forEach((image) => {
-              setImgSrc(image);
-            });
+        // don't show filter button on landing page
+        if (this.activeIndex > 0) {
+          UICtrl.showFilterBtn();
+        } else {
+          UICtrl.hideFilterBtn();
+        }
+
+        const slide = UICtrl.DOM.monthSlides[this.activeIndex];
+
+        const bgImg = slide.querySelector('.calendar-bg-img');
+
+        if (bgImg !== null) {
+          setImgSrc(bgImg);
+        }
+
+        if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
+
 
           dataCtrl.state.monthsVisited.push(this.activeIndex);
         }
+
         dataCtrl.state.currentMonth = this.activeIndex;
 
         UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
 
         UICtrl.toggleNavArrows(dataCtrl.state.currentMonth);
 
+        // perform these actions only on the first slide change 
         if (!dataCtrl.state.slideHasBeenChanged) {
+          UICtrl.animateFilterBtn();
           UICtrl.unsetNavArrowAnimation();
           dataCtrl.state.slideHasBeenChanged = true;
         }
