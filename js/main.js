@@ -1,234 +1,276 @@
 window.addEventListener("DOMContentLoaded", () => {
-  
-  // defined globally since it's used inside all controllers
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
-  const dataController = (() => {
-    let state = {};
+            // defined globally since it's used inside all controllers
+            const months = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+            ];
 
-    return {
-      state: state,
+            const dataController = (() => {
+                let state = {};
 
-      getAllFeatured: (events) => {
-        let featuredArr = [];
-        const monthKeys = Object.keys(events);
+                return {
+                    state: state,
 
-        monthKeys.forEach((month) => {
-          events[month].forEach((e) => {
-            if (e.featured) {
-              featuredArr.push(e);
-            }
-          });
-        });
+                    getAllFeatured: (events) => {
+                        let featuredArr = [];
+                        const monthKeys = Object.keys(events);
 
-        return featuredArr;
-      },
+                        monthKeys.forEach((month) => {
+                            events[month].forEach((e) => {
+                                if (e.featured) {
+                                    featuredArr.push(e);
+                                }
+                            });
+                        });
 
-      getMonthFeatured: (events) => {
-        let featuredArr = [];
+                        return featuredArr;
+                    },
 
-        events.forEach((e) => {
-          if (e.featured) {
-            featuredArr.push(e);
-          }
-        });
+                    getMonthFeatured: (events) => {
+                        let featuredArr = [];
 
-        return featuredArr;
-      },
+                        events.forEach((e) => {
+                            if (e.featured) {
+                                featuredArr.push(e);
+                            }
+                        });
 
-      getHomepageFeatured: (events) => {
-        let featuredArr = [];
-        const monthKeys = Object.keys(events);
+                        return featuredArr;
+                    },
 
-        monthKeys.forEach((month) => {
-          events[month].forEach((e) => {
-            if (e.tags !== null) {
-              e.tags.forEach((tag) => {
-                if (tag === "homepage") {
-                  featuredArr.push(e);
-                }
-              });
-            }
-          });
-        });
+                    getHomepageFeatured: (events) => {
+                        let featuredArr = [];
+                        const monthKeys = Object.keys(events);
 
-        return featuredArr;
-      },
+                        monthKeys.forEach((month) => {
+                            events[month].forEach((e) => {
+                                if (e.tags !== null) {
+                                    e.tags.forEach((tag) => {
+                                        if (tag === "homepage") {
+                                            featuredArr.push(e);
+                                        }
+                                    });
+                                }
+                            });
+                        });
 
-      getFeatured: (events) => {
-        let featuredArr = [];
-        const monthKeys = Object.keys(events);
+                        return featuredArr;
+                    },
 
-        monthKeys.forEach((month) => {
-          events[month].forEach((e) => {
-            if (e.featured) {
-              featuredArr.push(e);
-            }
-          });
-        });
+                    getFeatured: (events) => {
+                        let featuredArr = [];
+                        const monthKeys = Object.keys(events);
 
-        return featuredArr;
-      },
-    };
-  })();
+                        monthKeys.forEach((month) => {
+                            events[month].forEach((e) => {
+                                if (e.featured) {
+                                    featuredArr.push(e);
+                                }
+                            });
+                        });
 
-  const UIController = (() => {
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
+                        return featuredArr;
+                    },
 
-    const DOM = {
-      pageWrapper: document.querySelector("#page-wrapper"),
-      calendarSwiper: document.querySelector(".calendar-swiper"),
-      heroSwiperContainer: document.querySelector(".hero-swiper-container"),
-      heroEventWrapper: document.querySelector(".hero-article-wrapper"),
-      heroTextWrapper: document.querySelector(".hero-text-wrapper"),
-      eventWrapper: document.querySelector(".event-wrapper"),
+                    getConvention: (events) => {
+                        const monthKeys = Object.keys(events);
 
-      prevMonthBtn: document.querySelector("#prev-month-nav"),
-      nextMonthBtn: document.querySelector("#next-month-nav"),
+                        let convention = false;
 
-      monthText: document.querySelector("header .month-text"),
-      monthArrowString: ".month-text i",
-      monthMenu: document.querySelector(".months-dropdown-menu"),
-      dropdownMonthArr: Array.prototype.slice.call(
-        document
-          .querySelector(".months-dropdown-menu")
-          .querySelectorAll(".month")
-      ),
-      menuElements: [
-        document.querySelector("header .month-text"),
-        document.querySelector(".month-text strong"),
-        document.querySelector(".month-text i"),
-      ],
+                        monthKeys.forEach((month) => {
+                            events[month].forEach((e) => {
+                                if (e.tags !== null && e.tags.includes('convention')) {
+                                    console.log(e.tags);
+                                    convention = e;
+                                }
+                            });
+                        });
 
-      loader: document.querySelector("#page-wrapper .cal-loader"),
+                        return convention;
+                    }
+                };
+            })();
 
-      monthSlides: Array.prototype.slice.call(
-        document.querySelectorAll(".calendar-swiper .calendar-slide")
-      ),
+            const UIController = (() => {
+                        const days = [
+                            "Sunday",
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday",
+                            "Saturday",
+                        ];
 
-      calendarButton: document.querySelector(".show-months-btn"),
+                        const DOM = {
+                            pageWrapper: document.querySelector("#page-wrapper"),
+                            calendarSwiper: document.querySelector(".calendar-swiper"),
+                            heroSwiperContainer: document.querySelector(".hero-swiper-container"),
+                            heroEventWrapper: document.querySelector(".hero-article-wrapper"),
+                            heroTextWrapper: document.querySelector(".hero-text-wrapper"),
+                            eventWrapper: document.querySelector(".event-wrapper"),
 
-      calendarGrids: Array.prototype.slice.call(
-        document.querySelectorAll(".calendar .grid")
-      ),
+                            prevMonthBtn: document.querySelector("#prev-month-nav"),
+                            nextMonthBtn: document.querySelector("#next-month-nav"),
 
-      eventModalWrapper: document.querySelector(".event-modal-wrapper"),
+                            monthText: document.querySelector("header .month-text"),
+                            monthArrowString: ".month-text i",
+                            monthMenu: document.querySelector(".months-dropdown-menu"),
+                            dropdownMonthArr: Array.prototype.slice.call(
+                                document
+                                .querySelector(".months-dropdown-menu")
+                                .querySelectorAll(".month")
+                            ),
+                            menuElements: [
+                                document.querySelector("header .month-text"),
+                                document.querySelector(".month-text strong"),
+                                document.querySelector(".month-text i"),
+                            ],
 
-      eventModalContents: document.querySelector(".event-modal .inner"),
+                            loader: document.querySelector("#page-wrapper .cal-loader"),
 
-      eventModalClose: document.querySelector(".event-modal .close-btn"),
+                            monthSlides: Array.prototype.slice.call(
+                                document.querySelectorAll(".calendar-swiper .calendar-slide")
+                            ),
 
-      filter: document.querySelector(".filter"),
+                            calendarButton: document.querySelector(".show-months-btn"),
 
-      filterBtn: document.querySelector('.filter .btn'),
+                            calendarGrids: Array.prototype.slice.call(
+                                document.querySelectorAll(".calendar .grid")
+                            ),
 
-      filterMenu: document.querySelector('.filter .filter-menu'),
+                            eventModalWrapper: document.querySelector(".event-modal-wrapper"),
 
-      filterSpans: Array.prototype.slice.call(document.querySelectorAll('.filter .btn span'))
-    };
+                            eventModalContents: document.querySelector(".event-modal .inner"),
 
-    const DOMStrings = {
-      monthNavs: {
-        next: "#next-month-nav",
-        prev: "#prev-month-nav",
-      },
+                            eventModalClose: document.querySelector(".event-modal .close-btn"),
 
-      fadeEls: ".fade-in",
-    };
+                            filter: document.querySelector(".filter"),
 
-    const getEventClasses = (event) => {
-      let eventClasses = event.type;
+                            filterBtn: document.querySelector('.filter .btn'),
 
-      if (event.tags !== null && event.tags.length > 0) {
-        event.tags.forEach((tag) => {
-          eventClasses += ` ${tag}`;
-        });
-      }
+                            filterMenu: document.querySelector('.filter .filter-menu'),
 
-      return eventClasses;
-    };
+                            filterSpans: Array.prototype.slice.call(document.querySelectorAll('.filter .btn span'))
+                        };
 
-    return {
-      DOM: DOM,
+                        const DOMStrings = {
+                            monthNavs: {
+                                next: "#next-month-nav",
+                                prev: "#prev-month-nav",
+                            },
 
-      DOMStrings: DOMStrings,
+                            fadeEls: ".fade-in",
+                        };
 
-      toggleNavArrows: (currentMonth) => {
-        if (currentMonth == 0) {
-          DOM.nextMonthBtn.style.opacity = "1";
-          DOM.prevMonthBtn.style.opacity = "0";
-        } else if (currentMonth == 11) {
-          DOM.nextMonthBtn.style.opacity = "0";
-          DOM.prevMonthBtn.style.opacity = "1";
-        } else {
-          DOM.nextMonthBtn.style.opacity = "1";
-          DOM.prevMonthBtn.style.opacity = "1";
-        }
-      },
+                        const getEventClasses = (event) => {
+                            let eventClasses = event.type;
 
-      hideLoader: (fadeDelay = 250) => {
-        DOM.loader.style.transition = `opacity ${fadeDelay}ms ease-in-out`;
-        DOM.calendarSwiper.style.transition = `filter ${fadeDelay}ms ease-in-out`;
+                            if (event.tags !== null && event.tags.length > 0) {
+                                event.tags.forEach((tag) => {
+                                    eventClasses += ` ${tag}`;
+                                });
+                            }
 
-        DOM.loader.classList.add("fade");
-        DOM.calendarSwiper.classList.remove("blur");
-        setTimeout(() => {
-          DOM.loader.classList.add("hidden");
-        }, fadeDelay);
-      },
+                            return eventClasses;
+                        };
 
-      showDropdownMenu: () => {
-        DOM.monthMenu.style.display = "grid";
-        DOM.calendarButton.classList.add("is-active");
-        setTimeout(() => {
-          DOM.monthMenu.classList.add("open");
-        }, 25);
-        DOM.monthSlides.forEach((slide) => {
-          slide.classList.add("blur");
-        });
-      },
+                        return {
+                            DOM: DOM,
 
-      //delay set to 400ms in CSS
-      hideDropdownMenu: (delay = 400) => {
-        DOM.calendarButton.classList.remove("is-active");
-        DOM.monthMenu.classList.remove("open");
-        setTimeout(() => {
-          DOM.monthMenu.style.display = "none";
-        }, delay);
-        DOM.monthSlides.forEach((slide) => {
-          slide.classList.remove("blur");
-        });
-      },
+                            DOMStrings: DOMStrings,
 
-      setActiveMenuMonth: (currentMonth) => {
-        DOM.dropdownMonthArr.forEach((month) => {
-          if (month.classList.contains("active")) {
-            month.classList.remove("active");
-          }
-        });
+                            toggleNavArrows: (currentMonth) => {
+                                if (currentMonth == 0) {
+                                    DOM.nextMonthBtn.style.opacity = "1";
+                                    DOM.prevMonthBtn.style.opacity = "0";
+                                } else if (currentMonth == 11) {
+                                    DOM.nextMonthBtn.style.opacity = "0";
+                                    DOM.prevMonthBtn.style.opacity = "1";
+                                } else {
+                                    DOM.nextMonthBtn.style.opacity = "1";
+                                    DOM.prevMonthBtn.style.opacity = "1";
+                                }
+                            },
 
-        DOM.dropdownMonthArr[currentMonth].classList.add("active");
+                            hideLoader: (fadeDelay = 250) => {
+                                DOM.loader.style.transition = `opacity ${fadeDelay}ms ease-in-out`;
+                                DOM.calendarSwiper.style.transition = `filter ${fadeDelay}ms ease-in-out`;
+
+                                DOM.loader.classList.add("fade");
+                                DOM.calendarSwiper.classList.remove("blur");
+                                setTimeout(() => {
+                                    DOM.loader.classList.add("hidden");
+                                }, fadeDelay);
+                            },
+
+                            showDropdownMenu: () => {
+                                DOM.monthMenu.style.display = "grid";
+                                DOM.calendarButton.classList.add("is-active");
+                                setTimeout(() => {
+                                    DOM.monthMenu.classList.add("open");
+                                }, 25);
+                                DOM.monthSlides.forEach((slide) => {
+                                    slide.classList.add("blur");
+                                });
+                            },
+
+                            //delay set to 400ms in CSS
+                            hideDropdownMenu: (delay = 400) => {
+                                DOM.calendarButton.classList.remove("is-active");
+                                DOM.monthMenu.classList.remove("open");
+                                setTimeout(() => {
+                                    DOM.monthMenu.style.display = "none";
+                                }, delay);
+                                DOM.monthSlides.forEach((slide) => {
+                                    slide.classList.remove("blur");
+                                });
+                            },
+
+                            setActiveMenuMonth: (currentMonth) => {
+                                DOM.dropdownMonthArr.forEach((month) => {
+                                    if (month.classList.contains("active")) {
+                                        month.classList.remove("active");
+                                    }
+                                });
+
+                                DOM.dropdownMonthArr[currentMonth].classList.add("active");
+                            },
+
+                            writeConventionBanner: (conventionEvent) => {
+
+                                    let conventionDates;
+
+                                    if (
+                                        conventionEvent.start_date.day === conventionEvent.end_date.day &&
+                                        conventionEvent.start_date.month === conventionEvent.end_date.month
+                                    ) {
+                                        conventionDates = `${conventionEvent.start_date.day} ${
+            months[conventionEvent.start_date.month - 1]
+          }`;
+                                    } else if (
+                                        conventionEvent.start_date.day !== conventionEvent.end_date.day &&
+                                        conventionEvent.start_date.month === conventionEvent.end_date.month
+                                    ) {
+                                        conventionDates = `${conventionEvent.start_date.day} - ${
+            conventionEvent.end_date.day
+          } ${months[conventionEvent.start_date.month - 1]}`;
+                                    } else {
+                                        conventionDates = `${conventionEvent.start_date.day} ${conventionEvent.start_date.month} - ${conventionEvent.end_date.day} ${conventionEvent.end_date.month}`;
+                                    }
+
+                                    return `<div class="convention-feature"><i class="fas fa-circle"></i><div class="text"><div class="title">National Convention</div><div class="details">${conventionDates.length > 0 ? `<div class="date">${conventionDates}</div>` : `` }${conventionEvent.venue !== null && conventionEvent.venue.city.length > 0 ? `<div class="city">${conventionEvent.venue.city}</div>` : `` }</div></div><i class="fas fa-circle"></i></div></div>`;
       },
 
       writeCalendarGrid: (month, events) => {
@@ -713,6 +755,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
         dataCtrl.state.events = __calEvents;
 
+        const convention = dataCtrl.getConvention(dataCtrl.state.events);
+
+        console.log(convention);
+
         // writing the DOM
         UICtrl.DOM.monthSlides.forEach((slide, i) => {
           // if not landing page
@@ -724,6 +770,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
             calendar.innerHTML = UICtrl.writeCalendarGrid(i + 1, monthEvents);
 
+          }
+
+          if (convention && i == convention.start_date.month - 1) {
+            slide.querySelector('.event-summary').innerHTML = UICtrl.writeConventionBanner(convention);
           }
         });
 
