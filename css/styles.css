@@ -1004,7 +1004,9 @@ header {
             font-size: 1rem;
             line-height: 1.2;
             margin-bottom: 0.25rem;
-            transition: opacity 200ms linear; }
+            transition: opacity 200ms linear;
+            position: relative;
+            z-index: 1; }
             .calendar-container .calendar .grid .day-square .contents .day-event.hidden {
               opacity: 0.2 !important; }
             .calendar-container .calendar .grid .day-square .contents .day-event:hover {
@@ -1012,6 +1014,16 @@ header {
             .calendar-container .calendar .grid .day-square .contents .day-event .color-bar {
               flex: 0 0 auto;
               width: 0.6rem; }
+            .calendar-container .calendar .grid .day-square .contents .day-event .cal-event-bg-img {
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+              z-index: -1;
+              display: block;
+              filter: brightness(0.6); }
             .calendar-container .calendar .grid .day-square .contents .day-event span {
               flex: 1;
               display: flex;
@@ -1072,6 +1084,22 @@ header {
             font-size: 0.9rem; }
             .calendar-container .calendar .grid .day-square .contents .seasonal span {
               padding: 0.3rem 1rem; }
+            .calendar-container .calendar .grid .day-square .contents .seasonal.significant {
+              flex: 1;
+              display: flex;
+              align-items: center;
+              justify-content: center; }
+              .calendar-container .calendar .grid .day-square .contents .seasonal.significant span {
+                padding: 1.2rem 1rem;
+                font-weight: 600;
+                font-size: 1.1rem;
+                color: white;
+                display: inline;
+                text-shadow: 0px 0px 6px rgba(26, 26, 26, 0.7);
+                line-height: 1.6;
+                height: auto;
+                width: auto;
+                text-align: center; }
           .calendar-container .calendar .grid .day-square .contents .qld {
             background-color: rgba(255, 255, 255, 0.9);
             color: #444444; }

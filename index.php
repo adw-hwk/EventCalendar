@@ -112,7 +112,8 @@ function console_log($output, $with_script_tags = true) {
 
         $image = !get_the_post_thumbnail_url($event_ID) ? false : array(
             'full' => get_the_post_thumbnail_url($event_ID, 'full'),
-            'large' => get_the_post_thumbnail_url($event_ID, 'large')
+            'large' => get_the_post_thumbnail_url($event_ID, 'large'),
+            'cal' => get_the_post_thumbnail_url($event_ID, 'cal')
         );
 
         $tags_arr = array();
@@ -157,7 +158,6 @@ function console_log($output, $with_script_tags = true) {
         array_push($sorted_events[$months[$month_num - 1]], $formatted_event);
 
     }   
-    
 
     echo ('<script> var __calEvents = ' . json_encode($sorted_events) . ';</script>')
 
@@ -190,19 +190,16 @@ function console_log($output, $with_script_tags = true) {
             <span>s</span>
             <span>t</span>
             <span>&nbsp;</span>
-            <span>w</span>
-            <span>h</span>
-            <span>a</span>
-            <span>t</span>
-            <span>&nbsp;</span>
             <span>y</span>
             <span>o</span>
             <span>u</span>
+            <span>r</span>
             <span>&nbsp;</span>
-            <span>w</span>
-            <span>a</span>
-            <span>n</span>
+            <span>s</span>
             <span>t</span>
+            <span>a</span>
+            <span>t</span>
+            <span>e</span>
             <span><i class="fas fa-chevron-up"></i><span>
         </div>
 

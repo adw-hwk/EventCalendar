@@ -46,5 +46,9 @@ function remove_menus(){
 }  
 add_action( 'admin_menu', 'remove_menus' );  
 
+add_theme_support('post-thumbnails');
+
+add_image_size('cal', 760, 9999);
+
 
 ?>

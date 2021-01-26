@@ -1207,12 +1207,25 @@ header {
                         line-height: 1.2;
                         margin-bottom: 0.25rem;
                         transition: opacity 200ms linear;
+                        position: relative;
+                        z-index: 1;
                         &:hover {
                             cursor: pointer;
                         }
                         .color-bar {
                             flex: 0 0 auto;
                             width: 0.6rem;
+                        }
+                        .cal-event-bg-img {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            height: 100%;
+                            width: 100%;
+                            object-fit: cover;
+                            z-index: -1;
+                            display: block;
+                            filter: brightness(0.6);
                         }
                         span {
                             flex: 1;
@@ -1291,6 +1304,24 @@ header {
                         font-size: 0.9rem;
                         span {
                             padding: 0.3rem 1rem;
+                        }
+                        &.significant {
+                            flex: 1;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            span {
+                                padding: 1.2rem 1rem;
+                                font-weight: 600;
+                                font-size: 1.1rem;
+                                color: white;
+                                display: inline;
+                                text-shadow: 0px 0px 6px rgba($cl-offblack, 0.7);
+                                line-height: 1.6;
+                                height: auto;
+                                width: auto;
+                                text-align: center;
+                            }
                         }
                     }
                     .qld {
@@ -1559,9 +1590,6 @@ header {
                             span {
                                 height: 100%;
                             }
-                            // .color-bar {
-                            //     width: 0.45rem;
-                            // }
                         }
                         .major {
                             flex: 1 0 auto;
