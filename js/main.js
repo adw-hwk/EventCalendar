@@ -91,13 +91,38 @@ window.addEventListener("DOMContentLoaded", () => {
                         monthKeys.forEach((month) => {
                             events[month].forEach((e) => {
                                 if (e.tags !== null && e.tags.includes('convention')) {
-                                    console.log(e.tags);
                                     convention = e;
                                 }
                             });
                         });
 
                         return convention;
+                    },
+
+                    getEvent: (id, events) => {
+                      const monthKeys = Object.keys(events);
+
+                      let event = false;
+
+                      monthKeys.forEach((month) => {
+                          events[month].forEach((e) => {
+                              if (e.ID == id) {
+                                  event = e;
+                              }
+                          });
+                      });
+
+
+
+                      return event;
+                    },
+
+                    getURLParamEventID: () => {
+                      const qString = window.location.search;
+                      const params = new URLSearchParams(qString);
+                      const idString = params.get('event');
+                      
+                      return parseInt(idString);
                     }
                 };
             })();
@@ -750,14 +775,14 @@ window.addEventListener("DOMContentLoaded", () => {
         dataCtrl.state.filter.state = "all";
         dataCtrl.state.filter.type = "all";
 
+
+
         // __calEvents is the global JS object of events from the WP database that is
         // added to the HTML page when it's rendered
 
         dataCtrl.state.events = __calEvents;
 
         const convention = dataCtrl.getConvention(dataCtrl.state.events);
-
-        console.log(convention);
 
         // writing the DOM
         UICtrl.DOM.monthSlides.forEach((slide, i) => {
@@ -819,6 +844,16 @@ window.addEventListener("DOMContentLoaded", () => {
                 dataCtrl.state.monthsVisited.push(this.activeIndex);
 
                 dataCtrl.state.slideHasBeenChanged = false;
+
+                const nextSlide = UICtrl.DOM.monthSlides[this.activeIndex + 1];
+
+                const bgImg = nextSlide.querySelector('.calendar-bg-img');
+
+                if (bgImg !== null) {
+                  setImgSrc(bgImg);
+                }
+
+
               },
               slideChange: function () {
 
@@ -829,13 +864,25 @@ window.addEventListener("DOMContentLoaded", () => {
                   UICtrl.hideFilterBtn();
                 }
 
-                const slide = UICtrl.DOM.monthSlides[this.activeIndex];
+                let slides;
 
-                const bgImg = slide.querySelector('.calendar-bg-img');
-
-                if (bgImg !== null) {
-                  setImgSrc(bgImg);
+                if (this.activeIndex == 0) {
+                  slides = [UICtrl.DOM.monthSlides[this.activeIndex], UICtrl.DOM.monthSlides[this.activeIndex + 1]];
+                } else if (this.activeIndex == 11) {
+                  slides = [UICtrl.DOM.monthSlides[this.activeIndex - 1], UICtrl.DOM.monthSlides[this.activeIndex]];
+                } else {
+                  slides = [UICtrl.DOM.monthSlides[this.activeIndex - 1],UICtrl.DOM.monthSlides[this.activeIndex], UICtrl.DOM.monthSlides[this.activeIndex + 1]];
                 }
+
+                slides.forEach((slide) => {
+                  const bgImg = slide.querySelector('.calendar-bg-img');
+
+                  if (bgImg !== null) {
+                    setImgSrc(bgImg);
+                  }
+                });
+
+
 
                 if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
 
@@ -867,6 +914,17 @@ window.addEventListener("DOMContentLoaded", () => {
         UICtrl.hideLoader();
 
         UICtrl.setNavArrowAnimation();
+
+        const urlEventID = dataCtrl.getURLParamEventID();
+
+        if (urlEventID !== NaN) {
+          const urlEvent = dataCtrl.getEvent(urlEventID, dataCtrl.state.events);
+          const eventMonth = urlEvent.start_date.month;
+          dataCtrl.state.calendarSwiper.slideTo(eventMonth - 1, 750);
+          setTimeout(() => {
+            UICtrl.openEventModal(urlEvent);
+          }, 750);
+        }
       },
     };
   })(dataController, UIController);

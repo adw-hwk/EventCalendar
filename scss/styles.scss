@@ -9,6 +9,7 @@ $cl-whitegrey: #eeeeee;
 $cl-feature-purple: rgb(94, 19, 148);
 $cl-headerbg: #dfdfdf;
 $cl-com-red: #D2000F;
+$cl-rural: #4d1812;
 $cl-qld: #800000;
 $cl-nsw: #1e83b9;
 $cl-vic: #06386F;
@@ -365,6 +366,10 @@ body {
                 }
                 &.nz {
                     background-color: $cl-nz;
+                    color: white;
+                }
+                &.rural {
+                    background-color: $cl-rural;
                     color: white;
                 }
             }
@@ -1270,18 +1275,7 @@ header {
                             padding: 0.5rem 1rem;
                         }
                     }
-                    .commercial {
-                        order: 5;
-                        background-color: $cl-trans-white;
-                        flex: 0;
-                        color: $cl-bodygrey;
-                        .color-bar {
-                            background-color: $cl-com-red;
-                        }
-                        span {
-                            padding: 0.5rem 1rem;
-                        }
-                    }
+
                     .convention {
                         flex: 2;
                         order: 2;
@@ -1380,6 +1374,30 @@ header {
                             background-color: $cl-nz;
                         }
                     }
+                    .commercial {
+                        order: 5;
+                        background-color: $cl-trans-white;
+                        flex: 0;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-com-red;
+                        }
+                        span {
+                            padding: 0.5rem 1rem;
+                        }
+                    }
+                    .rural {
+                        order: 5;
+                        background-color: $cl-trans-white;
+                        flex: 0;
+                        color: $cl-bodygrey;
+                        .color-bar {
+                            background-color: $cl-rural;
+                        }
+                        span {
+                            padding: 0.5rem 1rem;
+                        }
+                    }
                     .major {
                         &.qld {
                             background-color: $cl-qld;
@@ -1432,6 +1450,13 @@ header {
                         }
                         &.nz {
                             background-color: $cl-nz;
+                            color: white;
+                            .color-bar {
+                                background-color: $cl-trans-white;
+                            }
+                        }
+                        &.rural {
+                            background-color: $cl-rural;
                             color: white;
                             .color-bar {
                                 background-color: $cl-trans-white;

@@ -2700,277 +2700,302 @@
 //# sourceMappingURL=swiper-bundle.min.js.map
 window.addEventListener("DOMContentLoaded", () => {
 
-            // defined globally since it's used inside all controllers
-            const months = [
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
-            ];
+    // defined globally since it's used inside all controllers
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
 
-            const dataController = (() => {
-                let state = {};
+    const dataController = (() => {
+        let state = {};
+
+        return {
+            state: state,
+
+            getAllFeatured: (events) => {
+                let featuredArr = [];
+                const monthKeys = Object.keys(events);
+
+                monthKeys.forEach((month) => {
+                    events[month].forEach((e) => {
+                        if (e.featured) {
+                            featuredArr.push(e);
+                        }
+                    });
+                });
+
+                return featuredArr;
+            },
+
+            getMonthFeatured: (events) => {
+                let featuredArr = [];
+
+                events.forEach((e) => {
+                    if (e.featured) {
+                        featuredArr.push(e);
+                    }
+                });
+
+                return featuredArr;
+            },
+
+            getHomepageFeatured: (events) => {
+                let featuredArr = [];
+                const monthKeys = Object.keys(events);
+
+                monthKeys.forEach((month) => {
+                    events[month].forEach((e) => {
+                        if (e.tags !== null) {
+                            e.tags.forEach((tag) => {
+                                if (tag === "homepage") {
+                                    featuredArr.push(e);
+                                }
+                            });
+                        }
+                    });
+                });
+
+                return featuredArr;
+            },
+
+            getFeatured: (events) => {
+                let featuredArr = [];
+                const monthKeys = Object.keys(events);
+
+                monthKeys.forEach((month) => {
+                    events[month].forEach((e) => {
+                        if (e.featured) {
+                            featuredArr.push(e);
+                        }
+                    });
+                });
+
+                return featuredArr;
+            },
+
+            getConvention: (events) => {
+                const monthKeys = Object.keys(events);
+
+                let convention = false;
+
+                monthKeys.forEach((month) => {
+                    events[month].forEach((e) => {
+                        if (e.tags !== null && e.tags.includes('convention')) {
+                            convention = e;
+                        }
+                    });
+                });
+
+                return convention;
+            },
+
+            getEvent: (id, events) => {
+              const monthKeys = Object.keys(events);
+
+              let event = false;
+
+              monthKeys.forEach((month) => {
+                  events[month].forEach((e) => {
+                      if (e.ID == id) {
+                          event = e;
+                      }
+                  });
+              });
+
+
+
+              return event;
+            },
+
+            getURLParamEventID: () => {
+              const qString = window.location.search;
+              const params = new URLSearchParams(qString);
+              const idString = params.get('event');
+              
+              return parseInt(idString);
+            }
+        };
+    })();
+
+    const UIController = (() => {
+                const days = [
+                    "Sunday",
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                ];
+
+                const DOM = {
+                    pageWrapper: document.querySelector("#page-wrapper"),
+                    calendarSwiper: document.querySelector(".calendar-swiper"),
+                    heroSwiperContainer: document.querySelector(".hero-swiper-container"),
+                    heroEventWrapper: document.querySelector(".hero-article-wrapper"),
+                    heroTextWrapper: document.querySelector(".hero-text-wrapper"),
+                    eventWrapper: document.querySelector(".event-wrapper"),
+
+                    prevMonthBtn: document.querySelector("#prev-month-nav"),
+                    nextMonthBtn: document.querySelector("#next-month-nav"),
+
+                    monthText: document.querySelector("header .month-text"),
+                    monthArrowString: ".month-text i",
+                    monthMenu: document.querySelector(".months-dropdown-menu"),
+                    dropdownMonthArr: Array.prototype.slice.call(
+                        document
+                        .querySelector(".months-dropdown-menu")
+                        .querySelectorAll(".month")
+                    ),
+                    menuElements: [
+                        document.querySelector("header .month-text"),
+                        document.querySelector(".month-text strong"),
+                        document.querySelector(".month-text i"),
+                    ],
+
+                    loader: document.querySelector("#page-wrapper .cal-loader"),
+
+                    monthSlides: Array.prototype.slice.call(
+                        document.querySelectorAll(".calendar-swiper .calendar-slide")
+                    ),
+
+                    calendarButton: document.querySelector(".show-months-btn"),
+
+                    calendarGrids: Array.prototype.slice.call(
+                        document.querySelectorAll(".calendar .grid")
+                    ),
+
+                    eventModalWrapper: document.querySelector(".event-modal-wrapper"),
+
+                    eventModalContents: document.querySelector(".event-modal .inner"),
+
+                    eventModalClose: document.querySelector(".event-modal .close-btn"),
+
+                    filter: document.querySelector(".filter"),
+
+                    filterBtn: document.querySelector('.filter .btn'),
+
+                    filterMenu: document.querySelector('.filter .filter-menu'),
+
+                    filterSpans: Array.prototype.slice.call(document.querySelectorAll('.filter .btn span'))
+                };
+
+                const DOMStrings = {
+                    monthNavs: {
+                        next: "#next-month-nav",
+                        prev: "#prev-month-nav",
+                    },
+
+                    fadeEls: ".fade-in",
+                };
+
+                const getEventClasses = (event) => {
+                    let eventClasses = event.type;
+
+                    if (event.tags !== null && event.tags.length > 0) {
+                        event.tags.forEach((tag) => {
+                            eventClasses += ` ${tag}`;
+                        });
+                    }
+
+                    return eventClasses;
+                };
 
                 return {
-                    state: state,
+                    DOM: DOM,
 
-                    getAllFeatured: (events) => {
-                        let featuredArr = [];
-                        const monthKeys = Object.keys(events);
+                    DOMStrings: DOMStrings,
 
-                        monthKeys.forEach((month) => {
-                            events[month].forEach((e) => {
-                                if (e.featured) {
-                                    featuredArr.push(e);
-                                }
-                            });
-                        });
-
-                        return featuredArr;
+                    toggleNavArrows: (currentMonth) => {
+                        if (currentMonth == 0) {
+                            DOM.nextMonthBtn.style.opacity = "1";
+                            DOM.prevMonthBtn.style.opacity = "0";
+                        } else if (currentMonth == 11) {
+                            DOM.nextMonthBtn.style.opacity = "0";
+                            DOM.prevMonthBtn.style.opacity = "1";
+                        } else {
+                            DOM.nextMonthBtn.style.opacity = "1";
+                            DOM.prevMonthBtn.style.opacity = "1";
+                        }
                     },
 
-                    getMonthFeatured: (events) => {
-                        let featuredArr = [];
+                    hideLoader: (fadeDelay = 250) => {
+                        DOM.loader.style.transition = `opacity ${fadeDelay}ms ease-in-out`;
+                        DOM.calendarSwiper.style.transition = `filter ${fadeDelay}ms ease-in-out`;
 
-                        events.forEach((e) => {
-                            if (e.featured) {
-                                featuredArr.push(e);
+                        DOM.loader.classList.add("fade");
+                        DOM.calendarSwiper.classList.remove("blur");
+                        setTimeout(() => {
+                            DOM.loader.classList.add("hidden");
+                        }, fadeDelay);
+                    },
+
+                    showDropdownMenu: () => {
+                        DOM.monthMenu.style.display = "grid";
+                        DOM.calendarButton.classList.add("is-active");
+                        setTimeout(() => {
+                            DOM.monthMenu.classList.add("open");
+                        }, 25);
+                        DOM.monthSlides.forEach((slide) => {
+                            slide.classList.add("blur");
+                        });
+                    },
+
+                    //delay set to 400ms in CSS
+                    hideDropdownMenu: (delay = 400) => {
+                        DOM.calendarButton.classList.remove("is-active");
+                        DOM.monthMenu.classList.remove("open");
+                        setTimeout(() => {
+                            DOM.monthMenu.style.display = "none";
+                        }, delay);
+                        DOM.monthSlides.forEach((slide) => {
+                            slide.classList.remove("blur");
+                        });
+                    },
+
+                    setActiveMenuMonth: (currentMonth) => {
+                        DOM.dropdownMonthArr.forEach((month) => {
+                            if (month.classList.contains("active")) {
+                                month.classList.remove("active");
                             }
                         });
 
-                        return featuredArr;
+                        DOM.dropdownMonthArr[currentMonth].classList.add("active");
                     },
 
-                    getHomepageFeatured: (events) => {
-                        let featuredArr = [];
-                        const monthKeys = Object.keys(events);
+                    writeConventionBanner: (conventionEvent) => {
 
-                        monthKeys.forEach((month) => {
-                            events[month].forEach((e) => {
-                                if (e.tags !== null) {
-                                    e.tags.forEach((tag) => {
-                                        if (tag === "homepage") {
-                                            featuredArr.push(e);
-                                        }
-                                    });
-                                }
-                            });
-                        });
+                            let conventionDates;
 
-                        return featuredArr;
-                    },
-
-                    getFeatured: (events) => {
-                        let featuredArr = [];
-                        const monthKeys = Object.keys(events);
-
-                        monthKeys.forEach((month) => {
-                            events[month].forEach((e) => {
-                                if (e.featured) {
-                                    featuredArr.push(e);
-                                }
-                            });
-                        });
-
-                        return featuredArr;
-                    },
-
-                    getConvention: (events) => {
-                        const monthKeys = Object.keys(events);
-
-                        let convention = false;
-
-                        monthKeys.forEach((month) => {
-                            events[month].forEach((e) => {
-                                if (e.tags !== null && e.tags.includes('convention')) {
-                                    console.log(e.tags);
-                                    convention = e;
-                                }
-                            });
-                        });
-
-                        return convention;
-                    }
-                };
-            })();
-
-            const UIController = (() => {
-                        const days = [
-                            "Sunday",
-                            "Monday",
-                            "Tuesday",
-                            "Wednesday",
-                            "Thursday",
-                            "Friday",
-                            "Saturday",
-                        ];
-
-                        const DOM = {
-                            pageWrapper: document.querySelector("#page-wrapper"),
-                            calendarSwiper: document.querySelector(".calendar-swiper"),
-                            heroSwiperContainer: document.querySelector(".hero-swiper-container"),
-                            heroEventWrapper: document.querySelector(".hero-article-wrapper"),
-                            heroTextWrapper: document.querySelector(".hero-text-wrapper"),
-                            eventWrapper: document.querySelector(".event-wrapper"),
-
-                            prevMonthBtn: document.querySelector("#prev-month-nav"),
-                            nextMonthBtn: document.querySelector("#next-month-nav"),
-
-                            monthText: document.querySelector("header .month-text"),
-                            monthArrowString: ".month-text i",
-                            monthMenu: document.querySelector(".months-dropdown-menu"),
-                            dropdownMonthArr: Array.prototype.slice.call(
-                                document
-                                .querySelector(".months-dropdown-menu")
-                                .querySelectorAll(".month")
-                            ),
-                            menuElements: [
-                                document.querySelector("header .month-text"),
-                                document.querySelector(".month-text strong"),
-                                document.querySelector(".month-text i"),
-                            ],
-
-                            loader: document.querySelector("#page-wrapper .cal-loader"),
-
-                            monthSlides: Array.prototype.slice.call(
-                                document.querySelectorAll(".calendar-swiper .calendar-slide")
-                            ),
-
-                            calendarButton: document.querySelector(".show-months-btn"),
-
-                            calendarGrids: Array.prototype.slice.call(
-                                document.querySelectorAll(".calendar .grid")
-                            ),
-
-                            eventModalWrapper: document.querySelector(".event-modal-wrapper"),
-
-                            eventModalContents: document.querySelector(".event-modal .inner"),
-
-                            eventModalClose: document.querySelector(".event-modal .close-btn"),
-
-                            filter: document.querySelector(".filter"),
-
-                            filterBtn: document.querySelector('.filter .btn'),
-
-                            filterMenu: document.querySelector('.filter .filter-menu'),
-
-                            filterSpans: Array.prototype.slice.call(document.querySelectorAll('.filter .btn span'))
-                        };
-
-                        const DOMStrings = {
-                            monthNavs: {
-                                next: "#next-month-nav",
-                                prev: "#prev-month-nav",
-                            },
-
-                            fadeEls: ".fade-in",
-                        };
-
-                        const getEventClasses = (event) => {
-                            let eventClasses = event.type;
-
-                            if (event.tags !== null && event.tags.length > 0) {
-                                event.tags.forEach((tag) => {
-                                    eventClasses += ` ${tag}`;
-                                });
-                            }
-
-                            return eventClasses;
-                        };
-
-                        return {
-                            DOM: DOM,
-
-                            DOMStrings: DOMStrings,
-
-                            toggleNavArrows: (currentMonth) => {
-                                if (currentMonth == 0) {
-                                    DOM.nextMonthBtn.style.opacity = "1";
-                                    DOM.prevMonthBtn.style.opacity = "0";
-                                } else if (currentMonth == 11) {
-                                    DOM.nextMonthBtn.style.opacity = "0";
-                                    DOM.prevMonthBtn.style.opacity = "1";
-                                } else {
-                                    DOM.nextMonthBtn.style.opacity = "1";
-                                    DOM.prevMonthBtn.style.opacity = "1";
-                                }
-                            },
-
-                            hideLoader: (fadeDelay = 250) => {
-                                DOM.loader.style.transition = `opacity ${fadeDelay}ms ease-in-out`;
-                                DOM.calendarSwiper.style.transition = `filter ${fadeDelay}ms ease-in-out`;
-
-                                DOM.loader.classList.add("fade");
-                                DOM.calendarSwiper.classList.remove("blur");
-                                setTimeout(() => {
-                                    DOM.loader.classList.add("hidden");
-                                }, fadeDelay);
-                            },
-
-                            showDropdownMenu: () => {
-                                DOM.monthMenu.style.display = "grid";
-                                DOM.calendarButton.classList.add("is-active");
-                                setTimeout(() => {
-                                    DOM.monthMenu.classList.add("open");
-                                }, 25);
-                                DOM.monthSlides.forEach((slide) => {
-                                    slide.classList.add("blur");
-                                });
-                            },
-
-                            //delay set to 400ms in CSS
-                            hideDropdownMenu: (delay = 400) => {
-                                DOM.calendarButton.classList.remove("is-active");
-                                DOM.monthMenu.classList.remove("open");
-                                setTimeout(() => {
-                                    DOM.monthMenu.style.display = "none";
-                                }, delay);
-                                DOM.monthSlides.forEach((slide) => {
-                                    slide.classList.remove("blur");
-                                });
-                            },
-
-                            setActiveMenuMonth: (currentMonth) => {
-                                DOM.dropdownMonthArr.forEach((month) => {
-                                    if (month.classList.contains("active")) {
-                                        month.classList.remove("active");
-                                    }
-                                });
-
-                                DOM.dropdownMonthArr[currentMonth].classList.add("active");
-                            },
-
-                            writeConventionBanner: (conventionEvent) => {
-
-                                    let conventionDates;
-
-                                    if (
-                                        conventionEvent.start_date.day === conventionEvent.end_date.day &&
-                                        conventionEvent.start_date.month === conventionEvent.end_date.month
-                                    ) {
-                                        conventionDates = `${conventionEvent.start_date.day} ${
+                            if (
+                                conventionEvent.start_date.day === conventionEvent.end_date.day &&
+                                conventionEvent.start_date.month === conventionEvent.end_date.month
+                            ) {
+                                conventionDates = `${conventionEvent.start_date.day} ${
     months[conventionEvent.start_date.month - 1]
   }`;
-                                    } else if (
-                                        conventionEvent.start_date.day !== conventionEvent.end_date.day &&
-                                        conventionEvent.start_date.month === conventionEvent.end_date.month
-                                    ) {
-                                        conventionDates = `${conventionEvent.start_date.day} - ${
+                            } else if (
+                                conventionEvent.start_date.day !== conventionEvent.end_date.day &&
+                                conventionEvent.start_date.month === conventionEvent.end_date.month
+                            ) {
+                                conventionDates = `${conventionEvent.start_date.day} - ${
     conventionEvent.end_date.day
   } ${months[conventionEvent.start_date.month - 1]}`;
-                                    } else {
-                                        conventionDates = `${conventionEvent.start_date.day} ${conventionEvent.start_date.month} - ${conventionEvent.end_date.day} ${conventionEvent.end_date.month}`;
-                                    }
+                            } else {
+                                conventionDates = `${conventionEvent.start_date.day} ${conventionEvent.start_date.month} - ${conventionEvent.end_date.day} ${conventionEvent.end_date.month}`;
+                            }
 
-                                    return `<div class="convention-feature"><i class="fas fa-circle"></i><div class="text"><div class="title">National Convention</div><div class="details">${conventionDates.length > 0 ? `<div class="date">${conventionDates}</div>` : `` }${conventionEvent.venue !== null && conventionEvent.venue.city.length > 0 ? `<div class="city">${conventionEvent.venue.city}</div>` : `` }</div></div><i class="fas fa-circle"></i></div></div>`;
+                            return `<div class="convention-feature"><i class="fas fa-circle"></i><div class="text"><div class="title">National Convention</div><div class="details">${conventionDates.length > 0 ? `<div class="date">${conventionDates}</div>` : `` }${conventionEvent.venue !== null && conventionEvent.venue.city.length > 0 ? `<div class="city">${conventionEvent.venue.city}</div>` : `` }</div></div><i class="fas fa-circle"></i></div></div>`;
 },
 
 writeCalendarGrid: (month, events) => {
@@ -3450,14 +3475,14 @@ dataCtrl.state.filter = {};
 dataCtrl.state.filter.state = "all";
 dataCtrl.state.filter.type = "all";
 
+
+
 // __calEvents is the global JS object of events from the WP database that is
 // added to the HTML page when it's rendered
 
 dataCtrl.state.events = __calEvents;
 
 const convention = dataCtrl.getConvention(dataCtrl.state.events);
-
-console.log(convention);
 
 // writing the DOM
 UICtrl.DOM.monthSlides.forEach((slide, i) => {
@@ -3519,6 +3544,16 @@ const calendarSwiper = new Swiper(
         dataCtrl.state.monthsVisited.push(this.activeIndex);
 
         dataCtrl.state.slideHasBeenChanged = false;
+
+        const nextSlide = UICtrl.DOM.monthSlides[this.activeIndex + 1];
+
+        const bgImg = nextSlide.querySelector('.calendar-bg-img');
+
+        if (bgImg !== null) {
+          setImgSrc(bgImg);
+        }
+
+
       },
       slideChange: function () {
 
@@ -3529,13 +3564,25 @@ const calendarSwiper = new Swiper(
           UICtrl.hideFilterBtn();
         }
 
-        const slide = UICtrl.DOM.monthSlides[this.activeIndex];
+        let slides;
 
-        const bgImg = slide.querySelector('.calendar-bg-img');
-
-        if (bgImg !== null) {
-          setImgSrc(bgImg);
+        if (this.activeIndex == 0) {
+          slides = [UICtrl.DOM.monthSlides[this.activeIndex], UICtrl.DOM.monthSlides[this.activeIndex + 1]];
+        } else if (this.activeIndex == 11) {
+          slides = [UICtrl.DOM.monthSlides[this.activeIndex - 1], UICtrl.DOM.monthSlides[this.activeIndex]];
+        } else {
+          slides = [UICtrl.DOM.monthSlides[this.activeIndex - 1],UICtrl.DOM.monthSlides[this.activeIndex], UICtrl.DOM.monthSlides[this.activeIndex + 1]];
         }
+
+        slides.forEach((slide) => {
+          const bgImg = slide.querySelector('.calendar-bg-img');
+
+          if (bgImg !== null) {
+            setImgSrc(bgImg);
+          }
+        });
+
+
 
         if (!dataCtrl.state.monthsVisited.includes(this.activeIndex)) {
 
@@ -3567,6 +3614,17 @@ setupEventListeners();
 UICtrl.hideLoader();
 
 UICtrl.setNavArrowAnimation();
+
+const urlEventID = dataCtrl.getURLParamEventID();
+
+if (urlEventID !== NaN) {
+  const urlEvent = dataCtrl.getEvent(urlEventID, dataCtrl.state.events);
+  const eventMonth = urlEvent.start_date.month;
+  dataCtrl.state.calendarSwiper.slideTo(eventMonth - 1, 750);
+  setTimeout(() => {
+    UICtrl.openEventModal(urlEvent);
+  }, 750);
+}
 },
 };
 })(dataController, UIController);

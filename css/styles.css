@@ -330,6 +330,9 @@ body {
         .event-modal-wrapper .event-modal > .inner .banner.nz {
           background-color: black;
           color: white; }
+        .event-modal-wrapper .event-modal > .inner .banner.rural {
+          background-color: #4d1812;
+          color: white; }
       .event-modal-wrapper .event-modal > .inner .image {
         flex: 1; }
         .event-modal-wrapper .event-modal > .inner .image img {
@@ -1056,15 +1059,6 @@ header {
               background-color: #1e8e00; }
             .calendar-container .calendar .grid .day-square .contents .training span {
               padding: 0.5rem 1rem; }
-          .calendar-container .calendar .grid .day-square .contents .commercial {
-            order: 5;
-            background-color: rgba(255, 255, 255, 0.9);
-            flex: 0;
-            color: #444444; }
-            .calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
-              background-color: #D2000F; }
-            .calendar-container .calendar .grid .day-square .contents .commercial span {
-              padding: 0.5rem 1rem; }
           .calendar-container .calendar .grid .day-square .contents .convention {
             flex: 2;
             order: 2;
@@ -1140,6 +1134,24 @@ header {
             color: #444444; }
             .calendar-container .calendar .grid .day-square .contents .nz .color-bar {
               background-color: black; }
+          .calendar-container .calendar .grid .day-square .contents .commercial {
+            order: 5;
+            background-color: rgba(255, 255, 255, 0.9);
+            flex: 0;
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .commercial .color-bar {
+              background-color: #D2000F; }
+            .calendar-container .calendar .grid .day-square .contents .commercial span {
+              padding: 0.5rem 1rem; }
+          .calendar-container .calendar .grid .day-square .contents .rural {
+            order: 5;
+            background-color: rgba(255, 255, 255, 0.9);
+            flex: 0;
+            color: #444444; }
+            .calendar-container .calendar .grid .day-square .contents .rural .color-bar {
+              background-color: #4d1812; }
+            .calendar-container .calendar .grid .day-square .contents .rural span {
+              padding: 0.5rem 1rem; }
           .calendar-container .calendar .grid .day-square .contents .major.qld {
             background-color: #800000;
             color: white; }
@@ -1179,6 +1191,11 @@ header {
             background-color: black;
             color: white; }
             .calendar-container .calendar .grid .day-square .contents .major.nz .color-bar {
+              background-color: rgba(255, 255, 255, 0.9); }
+          .calendar-container .calendar .grid .day-square .contents .major.rural {
+            background-color: #4d1812;
+            color: white; }
+            .calendar-container .calendar .grid .day-square .contents .major.rural .color-bar {
               background-color: rgba(255, 255, 255, 0.9); }
 
 @media (min-width: 576px) {

@@ -159,6 +159,8 @@ function console_log($output, $with_script_tags = true) {
 
     }   
 
+    console_log($sorted_events);
+
     echo ('<script> var __calEvents = ' . json_encode($sorted_events) . ';</script>')
 
 ?>
