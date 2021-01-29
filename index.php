@@ -64,9 +64,7 @@ function console_log($output, $with_script_tags = true) {
 
         $category = count(tribe_get_event_cat_slugs($event_ID)) > 0 ? tribe_get_event_cat_slugs($event_ID)[0] : null;
 
-        if ($category !== 'seasonal') {
-            $fn_events++;
-        }
+
 
         $start_date_arr = array (
             'year' => date_parse($meta['_EventStartDateUTC'][0])["year"],
@@ -157,9 +155,12 @@ function console_log($output, $with_script_tags = true) {
 
         array_push($sorted_events[$months[$month_num - 1]], $formatted_event);
 
+        if ($category !== 'seasonal' && !($tags_arr !== null && in_array('nocount', $tags_arr))) {
+            $fn_events++;
+        }
+
     }   
 
-    console_log($sorted_events);
 
     echo ('<script> var __calEvents = ' . json_encode($sorted_events) . ';</script>')
 
