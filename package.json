@@ -4,15 +4,23 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "scss": "node-sass --watch scss -o css"
+        "scss": "node-sass --watch scss -o css",
+        "prebuild:css": "node-sass --include-path scss src/scss/styles.scss src/css/styles.css",
+        "build:css": "postcss --use autoprefixer -b 'last 2 versions' < src/css/styles.css src/css/styles.css | postcss --use cssnano > dist/styles.css",
+        "build:js": "parcel build --no-source-maps src/js/main.js --out-file main.js",
+        "build": "npm run build:css && npm run build:js",
+        "prebuild:js": "parcel watch --no-source-maps src/js/main.js --out-file main.js",
+        "build:watch": "watch 'npm run build' src/*"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "node-sass": "^5.0.0"
-    },
-    "dependencies": {
-        "swiper": "^6.4.5"
+        "autoprefixer": "^10.2.4",
+        "cssnano": "^4.1.10",
+        "node-sass": "^5.0.0",
+        "postcss": "^8.2.4",
+        "postcss-cli": "^8.3.1",
+        "watch": "^1.0.2"
     }
 }

@@ -3,10 +3,7 @@
 
 function load_css() {
 
-    wp_register_style('swiper', get_template_directory_uri() . '/css/swiper-bundle.min.css', array(), false, 'all');
-    wp_enqueue_style('swiper');
-
-    wp_register_style('main', get_template_directory_uri() . '/css/styles.css', array(), false, 'all');
+    wp_register_style('main', get_template_directory_uri() . '/dist/styles.css', array(), false, 'all');
     wp_enqueue_style('main');
 
 };
@@ -17,13 +14,13 @@ function load_js() {
 
     wp_enqueue_script('jquery');
 
-    wp_register_script('swiper', get_template_directory_uri() . '/js/swiper-bundle.min.js', false, false, true);
+    wp_register_script('swiper', get_template_directory_uri() . '/dist/swiper.js', false, false, true);
     wp_enqueue_script('swiper');
 
-    wp_register_script('ics', get_template_directory_uri() . '/js/ics.js', false, false, true);
+    wp_register_script('ics', get_template_directory_uri() . '/dist/ics.js', false, false, true);
     wp_enqueue_script('ics');
 
-    wp_register_script('main', get_template_directory_uri() . '/js/main.js', false, false, true);
+    wp_register_script('main', get_template_directory_uri() . '/dist/main.js', false, false, true);
     wp_enqueue_script('main');
 
 };
