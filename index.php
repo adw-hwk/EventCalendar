@@ -130,6 +130,10 @@ function console_log($output, $with_script_tags = true) {
 
         $gcal = tribe_get_gcal_link($event_ID);
 
+        $description = apply_filters('the_content', $post->post_content);
+
+        $description_plain = wp_strip_all_tags($description);
+
         $formatted_event = array (
             'ID' => $event_ID,
             'title' => $post->post_title,
@@ -141,7 +145,8 @@ function console_log($output, $with_script_tags = true) {
                 'city' => $venue_obj -> city,
                 'state' => $venue_obj -> province
             ),
-            'description' => apply_filters('the_content', $post->post_content),
+            'description' => $description,
+            'description_plain' => $description_plain,
             'type' => $category,
             'tags' => $tags_arr,
             'featured' => $featured,
@@ -161,6 +166,8 @@ function console_log($output, $with_script_tags = true) {
 
     }   
 
+
+    console_log($sorted_events);
 
     echo ('<script> var __calEvents = ' . json_encode($sorted_events) . ';</script>')
 

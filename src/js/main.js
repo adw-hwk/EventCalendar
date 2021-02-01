@@ -627,10 +627,8 @@ window.addEventListener("DOMContentLoaded", () => {
               dataCtrl.ics = ics();
               dataCtrl.ics.addEvent(
                 event.title,
-                event.description,
-                `${event.venue ? event.venue.city : ``}, ${
-                  event.venue ? event.venue.state : ``
-                }`,
+                event.description_plain,
+                `${event.venue ? `${event.venue.city ? event.venue.city + ', ' : ''}${event.venue.state ? event.venue.state : ''}` : ''}`,
                 event.start_date.UTC,
                 event.end_date.UTC
               );

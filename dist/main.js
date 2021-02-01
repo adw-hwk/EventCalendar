@@ -511,7 +511,7 @@ window.addEventListener("DOMContentLoaded", function () {
           monthEvents.forEach(function (event) {
             if (event.ID === ID) {
               dataCtrl.ics = ics();
-              dataCtrl.ics.addEvent(event.title, event.description, "".concat(event.venue ? event.venue.city : "", ", ").concat(event.venue ? event.venue.state : ""), event.start_date.UTC, event.end_date.UTC);
+              dataCtrl.ics.addEvent(event.title, event.description_plain, "".concat(event.venue ? "".concat(event.venue.city ? event.venue.city + ', ' : '').concat(event.venue.state ? event.venue.state : '') : ''), event.start_date.UTC, event.end_date.UTC);
               dataCtrl.state.currentEvent = event;
               UICtrl.openEventModal(event);
             }
@@ -747,7 +747,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52562" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53075" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
