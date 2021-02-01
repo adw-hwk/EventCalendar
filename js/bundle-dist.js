@@ -4770,68 +4770,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   return R.use(ce), R;
 });
 window.addEventListener("DOMContentLoaded", function () {
-  // defined globally since it's used inside all controllers
-  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
   var dataController = function () {
     var state = {};
     return {
       state: state,
-      getAllFeatured: function getAllFeatured(events) {
-        var featuredArr = [];
-        var monthKeys = Object.keys(events);
-        monthKeys.forEach(function (month) {
-          events[month].forEach(function (e) {
-            if (e.featured) {
-              featuredArr.push(e);
-            }
-          });
-        });
-        return featuredArr;
-      },
-      getMonthFeatured: function getMonthFeatured(events) {
-        var featuredArr = [];
-        events.forEach(function (e) {
-          if (e.featured) {
-            featuredArr.push(e);
-          }
-        });
-        return featuredArr;
-      },
-      getHomepageFeatured: function getHomepageFeatured(events) {
-        var featuredArr = [];
-        var monthKeys = Object.keys(events);
-        monthKeys.forEach(function (month) {
-          events[month].forEach(function (e) {
-            if (e.tags !== null) {
-              e.tags.forEach(function (tag) {
-                if (tag === "homepage") {
-                  featuredArr.push(e);
-                }
-              });
-            }
-          });
-        });
-        return featuredArr;
-      },
-      getFeatured: function getFeatured(events) {
-        var featuredArr = [];
-        var monthKeys = Object.keys(events);
-        monthKeys.forEach(function (month) {
-          events[month].forEach(function (e) {
-            if (e.featured) {
-              featuredArr.push(e);
-            }
-          });
-        });
-        return featuredArr;
-      },
       getConvention: function getConvention(events) {
         var monthKeys = Object.keys(events);
         var convention = false;
         monthKeys.forEach(function (month) {
           events[month].forEach(function (e) {
-            if (e.tags !== null && e.tags.includes('convention')) {
+            if (e.tags !== null && e.tags.includes("convention")) {
               convention = e;
             }
           });
@@ -4850,17 +4798,19 @@ window.addEventListener("DOMContentLoaded", function () {
         });
         return event;
       },
-      getURLParamEventID: function getURLParamEventID() {
+      getURLParamEventID: function getURLParamEventID(param) {
         var qString = window.location.search;
         var params = new URLSearchParams(qString);
-        var idString = params.get('event');
-        return parseInt(idString);
+        var idString = params.get(param);
+        idString = idString !== null && Number(idString) !== NaN ? parseInt(idString) : null;
+        return idString;
       }
     };
   }();
 
   var UIController = function () {
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var DOM = {
       pageWrapper: document.querySelector("#page-wrapper"),
       calendarSwiper: document.querySelector(".calendar-swiper"),
@@ -4883,16 +4833,9 @@ window.addEventListener("DOMContentLoaded", function () {
       eventModalContents: document.querySelector(".event-modal .inner"),
       eventModalClose: document.querySelector(".event-modal .close-btn"),
       filter: document.querySelector(".filter"),
-      filterBtn: document.querySelector('.filter .btn'),
-      filterMenu: document.querySelector('.filter .filter-menu'),
-      filterSpans: Array.prototype.slice.call(document.querySelectorAll('.filter .btn span'))
-    };
-    var DOMStrings = {
-      monthNavs: {
-        next: "#next-month-nav",
-        prev: "#prev-month-nav"
-      },
-      fadeEls: ".fade-in"
+      filterBtn: document.querySelector(".filter .btn"),
+      filterMenu: document.querySelector(".filter .filter-menu"),
+      filterSpans: Array.prototype.slice.call(document.querySelectorAll(".filter .btn span"))
     };
 
     var getEventClasses = function getEventClasses(event) {
@@ -4909,7 +4852,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     return {
       DOM: DOM,
-      DOMStrings: DOMStrings,
+      months: months,
       toggleNavArrows: function toggleNavArrows(currentMonth) {
         if (currentMonth == 0) {
           DOM.nextMonthBtn.style.opacity = "1";
@@ -4975,10 +4918,12 @@ window.addEventListener("DOMContentLoaded", function () {
 
         return "<div class=\"convention-feature\"><i class=\"fas fa-circle\"></i><div class=\"text\"><div class=\"title\">National Convention</div><div class=\"details\">".concat(conventionDates.length > 0 ? "<div class=\"date\">".concat(conventionDates, "</div>") : "").concat(conventionEvent.venue !== null && conventionEvent.venue.city.length > 0 ? "<div class=\"city\">".concat(conventionEvent.venue.city, "</div>") : "", "</div></div><i class=\"fas fa-circle\"></i></div></div>");
       },
+      // Most important function, writes the calendar grid with events for a given month
       writeCalendarGrid: function writeCalendarGrid(month, events) {
         var getDaysInMonth = function getDaysInMonth(monthNum, year) {
           return new Date(year, monthNum, 0).getDate();
-        };
+        }; // generates the HTML of events for a given day inside a calendar square
+
 
         var writeDaysEvents = function writeDaysEvents(day, events) {
           var eventList = "";
@@ -4986,19 +4931,24 @@ window.addEventListener("DOMContentLoaded", function () {
             var eventClasses = getEventClasses(event);
 
             if (event.start_date.day == day || event.end_date.day >= day && event.start_date.day < day) {
-              eventList += "<div class=\"day-event ".concat(eventClasses, "\" data-event-id=\"").concat(event.ID, "\">").concat(event.type === "seasonal" ? "" : "<div class=\"color-bar\"></div>").concat(event.type === "seasonal" && event.tags !== null && event.tags.includes('significant') ? "<img class=\"cal-event-bg-img\" src=\"".concat(event.image.cal !== undefined ? event.image.cal : event.image.full, "\">") : '', "<span>").concat(event.title, "</span></div>");
+              eventList += "<div class=\"day-event ".concat(eventClasses, "\" data-event-id=\"").concat(event.ID, "\">").concat(event.type === "seasonal" ? "" : "<div class=\"color-bar\"></div>").concat(event.type === "seasonal" && event.tags !== null && event.tags.includes("significant") ? "<img class=\"cal-event-bg-img\" src=\"".concat(event.image.cal !== undefined ? event.image.cal : event.image.full, "\">") : "", "<span>").concat(event.title, "</span></div>");
             }
           });
           return eventList;
         };
 
         var year = new Date().getFullYear();
-        var daysInMonth = getDaysInMonth(month, year);
-        var monthString = month < 10 ? "0".concat(month) : "".concat(month);
-        var dayOne = new Date("".concat(year, "-").concat(monthString, "-01"));
-        var dayOneIndex = dayOne.getDay();
-        var squares = 0;
-        var HTML = "";
+        var daysInMonth = getDaysInMonth(month, year); // converts the month number into a string for use in Date
+
+        var monthString = month < 10 ? "0".concat(month) : "".concat(month); // create date object of first day of the month
+
+        var dayOne = new Date("".concat(year, "-").concat(monthString, "-01")); // get the day index of first day of the month
+
+        var dayOneIndex = dayOne.getDay(); // tracks number of calendar squares that have been created
+
+        var squares = 0; // HTML string of calendar grid squares to be appended to calendar grid container
+
+        var HTML = ""; // this function creates innactive squares for the days of the previous and following month that are visible on the calendar
 
         var innactiveSquare = function innactiveSquare(curMonth, steps) {
           var placement = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "before";
@@ -5094,16 +5044,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
           if (event.classList.contains("training")) {
             trainingEvents.push(event);
-          } // stateStrings.forEach((state, i) => {
-          //   const stateStr = state;
-          //   if (event.classList.contains(state)) {
-          //     if (stateEvents[stateStr] === undefined) {
-          //       stateEvents[stateStr] = new Array();
-          //     };
-          //     stateEvents[stateStr].push(event);
-          //   }
-          // });
-
+          }
 
           if (type === "all" && state === "all") {
             event.classList.remove("hidden");
@@ -5182,12 +5123,12 @@ window.addEventListener("DOMContentLoaded", function () {
         DOM.filterSpans.forEach(function (span, i) {
           setTimeout(function () {
             span.style.animationDuration = "".concat(animationDuration, "ms");
-            span.style.animationIterationCount = '1';
+            span.style.animationIterationCount = "1";
             span.style.animationName = "filter-prompt";
           }, step * i + animationDelay);
         });
         setTimeout(function () {
-          DOM.filterBtn.classList.add('minimised');
+          DOM.filterBtn.classList.add("minimised");
         }, DOM.filterSpans.length * step + fadeDelay);
       }
     };
@@ -5217,7 +5158,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
         if (e.target.closest("div.day-event") !== null) {
           var ID = parseInt(e.target.closest("div.day-event").dataset.eventId);
-          var monthEvents = dataCtrl.state.events[months[dataCtrl.state.currentMonth]];
+          var monthEvents = dataCtrl.state.events[UICtrl.months[dataCtrl.state.currentMonth]];
           monthEvents.forEach(function (event) {
             if (event.ID === ID) {
               dataCtrl.ics = ics();
@@ -5305,21 +5246,24 @@ window.addEventListener("DOMContentLoaded", function () {
         dataCtrl.state.filter.type = "all"; // __calEvents is the global JS object of events from the WP database that is
         // added to the HTML page when it's rendered
 
-        dataCtrl.state.events = __calEvents;
+        dataCtrl.state.events = __calEvents; // get the convention event, if one present
+
         var convention = dataCtrl.getConvention(dataCtrl.state.events); // writing the DOM
 
         UICtrl.DOM.monthSlides.forEach(function (slide, i) {
-          // if not landing page
+          // if not landing page, write calendar grid
           if (i !== 0) {
-            var monthEvents = dataCtrl.state.events[months[i]];
+            var monthEvents = dataCtrl.state.events[UICtrl.months[i]];
             var calendar = slide.querySelector(".calendar .grid");
             calendar.innerHTML = UICtrl.writeCalendarGrid(i + 1, monthEvents);
-          }
+          } // write the convention banner for the convention month
+
 
           if (convention && i == convention.start_date.month - 1) {
-            slide.querySelector('.event-summary').innerHTML = UICtrl.writeConventionBanner(convention);
+            slide.querySelector(".event-summary").innerHTML = UICtrl.writeConventionBanner(convention);
           }
-        });
+        }); // NAV / months swiper
+
         var monthTextSwiper = new Swiper(document.querySelector(".month-text-container"), {
           slidesPerView: 1,
           freeMode: false,
@@ -5328,11 +5272,12 @@ window.addEventListener("DOMContentLoaded", function () {
           allowTouchMove: false,
           speed: 400
         });
-        dataCtrl.state.monthTextSwiper = monthTextSwiper;
+        dataCtrl.state.monthTextSwiper = monthTextSwiper; // Calendar swiper
+
         var calendarSwiper = new Swiper(document.querySelector(".calendar-swiper"), {
           navigation: {
-            nextEl: document.querySelector(UICtrl.DOMStrings.monthNavs.next),
-            prevEl: document.querySelector(UICtrl.DOMStrings.monthNavs.prev)
+            nextEl: UICtrl.DOM.nextMonthBtn,
+            prevEl: UICtrl.DOM.prevMonthBtn
           },
           thumbs: {
             swiper: monthTextSwiper
@@ -5352,7 +5297,7 @@ window.addEventListener("DOMContentLoaded", function () {
               dataCtrl.state.monthsVisited.push(this.activeIndex);
               dataCtrl.state.slideHasBeenChanged = false;
               var nextSlide = UICtrl.DOM.monthSlides[this.activeIndex + 1];
-              var bgImg = nextSlide.querySelector('.calendar-bg-img');
+              var bgImg = nextSlide.querySelector(".calendar-bg-img");
 
               if (bgImg !== null) {
                 setImgSrc(bgImg);
@@ -5377,7 +5322,7 @@ window.addEventListener("DOMContentLoaded", function () {
               }
 
               slides.forEach(function (slide) {
-                var bgImg = slide.querySelector('.calendar-bg-img');
+                var bgImg = slide.querySelector(".calendar-bg-img");
 
                 if (bgImg !== null) {
                   setImgSrc(bgImg);
@@ -5390,7 +5335,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
               dataCtrl.state.currentMonth = this.activeIndex;
               UICtrl.setActiveMenuMonth(dataCtrl.state.currentMonth);
-              UICtrl.toggleNavArrows(dataCtrl.state.currentMonth); // perform these actions only on the first slide change 
+              UICtrl.toggleNavArrows(dataCtrl.state.currentMonth); // perform these actions only on the first slide change
 
               if (!dataCtrl.state.slideHasBeenChanged) {
                 UICtrl.animateFilterBtn();
@@ -5400,19 +5345,24 @@ window.addEventListener("DOMContentLoaded", function () {
             }
           }
         });
-        dataCtrl.state.calendarSwiper = calendarSwiper;
+        dataCtrl.state.calendarSwiper = calendarSwiper; // page is ready
+
         setupEventListeners();
         UICtrl.hideLoader();
-        UICtrl.setNavArrowAnimation();
-        var urlEventID = dataCtrl.getURLParamEventID();
+        UICtrl.setNavArrowAnimation(); // reading URL for event ID - if parameter present and ID is valid, skip calendar to that page and open event modal
 
-        if (urlEventID !== NaN) {
+        var urlEventID = dataCtrl.getURLParamEventID("event");
+
+        if (urlEventID !== null) {
           var urlEvent = dataCtrl.getEvent(urlEventID, dataCtrl.state.events);
-          var eventMonth = urlEvent.start_date.month;
-          dataCtrl.state.calendarSwiper.slideTo(eventMonth - 1, 750);
-          setTimeout(function () {
-            UICtrl.openEventModal(urlEvent);
-          }, 750);
+
+          if (urlEvent) {
+            var eventMonth = urlEvent.start_date.month;
+            dataCtrl.state.calendarSwiper.slideTo(eventMonth - 1, 750);
+            setTimeout(function () {
+              UICtrl.openEventModal(urlEvent);
+            }, 750);
+          }
         }
       }
     };

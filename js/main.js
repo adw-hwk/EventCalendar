@@ -37,12 +37,14 @@ window.addEventListener("DOMContentLoaded", () => {
         return event;
       },
 
-      getURLParamEventID: () => {
+      getURLParamEventID: (param) => {
         const qString = window.location.search;
         const params = new URLSearchParams(qString);
-        const idString = params.get("event");
+        let idString = params.get(param);
 
-        return parseInt(idString);
+        idString = idString !== null && Number(idString) !== NaN ? parseInt(idString) : null;
+
+        return idString;
       },
     };
   })();
@@ -486,16 +488,6 @@ window.addEventListener("DOMContentLoaded", () => {
           if (event.classList.contains("training")) {
             trainingEvents.push(event);
           }
-          // stateStrings.forEach((state, i) => {
-          //   const stateStr = state;
-          //   if (event.classList.contains(state)) {
-          //     if (stateEvents[stateStr] === undefined) {
-          //       stateEvents[stateStr] = new Array();
-          //     };
-          //     stateEvents[stateStr].push(event);
-          //   }
-          // });
-
           if (type === "all" && state === "all") {
             event.classList.remove("hidden");
           } else if (type === "all") {
@@ -752,14 +744,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
         // __calEvents is the global JS object of events from the WP database that is
         // added to the HTML page when it's rendered
-
         dataCtrl.state.events = __calEvents;
 
+        // get the convention event, if one present
         const convention = dataCtrl.getConvention(dataCtrl.state.events);
 
         // writing the DOM
         UICtrl.DOM.monthSlides.forEach((slide, i) => {
-          // if not landing page
+          // if not landing page, write calendar grid
           if (i !== 0) {
             const monthEvents = dataCtrl.state.events[UICtrl.months[i]];
 
@@ -768,12 +760,16 @@ window.addEventListener("DOMContentLoaded", () => {
             calendar.innerHTML = UICtrl.writeCalendarGrid(i + 1, monthEvents);
           }
 
+
+          // write the convention banner for the convention month
           if (convention && i == convention.start_date.month - 1) {
             slide.querySelector(
               ".event-summary"
             ).innerHTML = UICtrl.writeConventionBanner(convention);
           }
         });
+
+        // NAV / months swiper
 
         const monthTextSwiper = new Swiper(
           document.querySelector(".month-text-container"),
@@ -786,8 +782,9 @@ window.addEventListener("DOMContentLoaded", () => {
             speed: 400,
           }
         );
-
         dataCtrl.state.monthTextSwiper = monthTextSwiper;
+
+        // Calendar swiper
 
         const calendarSwiper = new Swiper(
           document.querySelector(".calendar-swiper"),
@@ -881,24 +878,28 @@ window.addEventListener("DOMContentLoaded", () => {
             },
           }
         );
-
         dataCtrl.state.calendarSwiper = calendarSwiper;
 
+
+        // page is ready
         setupEventListeners();
-
         UICtrl.hideLoader();
-
         UICtrl.setNavArrowAnimation();
 
-        const urlEventID = dataCtrl.getURLParamEventID();
+        // reading URL for event ID - if parameter present and ID is valid, skip calendar to that page and open event modal
 
-        if (urlEventID !== NaN) {
+        const urlEventID = dataCtrl.getURLParamEventID("event");
+
+        if (urlEventID !== null) {
           const urlEvent = dataCtrl.getEvent(urlEventID, dataCtrl.state.events);
-          const eventMonth = urlEvent.start_date.month;
-          dataCtrl.state.calendarSwiper.slideTo(eventMonth - 1, 750);
-          setTimeout(() => {
-            UICtrl.openEventModal(urlEvent);
-          }, 750);
+          if (urlEvent) {
+            const eventMonth = urlEvent.start_date.month;
+            dataCtrl.state.calendarSwiper.slideTo(eventMonth - 1, 750);
+            setTimeout(() => {
+              UICtrl.openEventModal(urlEvent);
+            }, 750);
+          }
+
         }
       },
     };
